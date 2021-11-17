@@ -124,7 +124,7 @@ def confirm_neighbor(top_k, length_k_sub_trajectory, list_potential_neighbor, di
 
     for potential_neighbor in list_potential_neighbor:
 
-        top_k_max, max_distance = max_euclidean.calculate_top_k(top_k, length_k_sub_trajectory,
+        top_k_max, max_distance = hausdorff_distance.calculate_top_k(top_k, length_k_sub_trajectory,
                                                                 potential_neighbor[1])
         if max_distance <= distance_threshold:
             list_neighbor.append(potential_neighbor[0])
@@ -386,7 +386,7 @@ def stat_dsm(trajectory_table, point_table, candidate_table, original_list_label
                     new_neighbor_start_idx = neighbor_start_idx
                     new_neighbor_end_idx = neighbor_end_idx + 1
 
-                    last_point_distance = max_euclidean. \
+                    last_point_distance = hausdorff_distance. \
                         calculate_point_distance(trajectory[candidate_end_idx],
                                                  dict_neighbor_full_trajectory[neighbor_tid][new_neighbor_end_idx])
 
