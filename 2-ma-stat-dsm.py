@@ -8,7 +8,7 @@ sys.setrecursionlimit(10000)
 import os
 os.chdir("...")
 
-# import max_euclidean
+import max_euclidean
 import hausdorff_distance
 from scipy.special import comb
 
@@ -386,7 +386,7 @@ def stat_dsm(trajectory_table, point_table, candidate_table, original_list_label
                     new_neighbor_start_idx = neighbor_start_idx
                     new_neighbor_end_idx = neighbor_end_idx + 1
 
-                    last_point_distance = hausdorff_distance. \
+                    last_point_distance = max_euclidean. \
                         calculate_point_distance(trajectory[candidate_end_idx],
                                                  dict_neighbor_full_trajectory[neighbor_tid][new_neighbor_end_idx])
 
