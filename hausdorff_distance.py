@@ -10,4 +10,4 @@ def calculate_hausdorff_distance(agent_df, play_indx1, play_indx2, base_distance
   return d
 
 # example
-hausdorff_d = calculate_hausdorff_distance(offense_df, 1040, 1042, 'euclidean')
+# hausdorff_d = calculate_hausdorff_distance(offense_df, 1040, 1042, 'euclidean')
