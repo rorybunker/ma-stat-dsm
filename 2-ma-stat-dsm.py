@@ -6,7 +6,7 @@ import sys
 sys.setrecursionlimit(10000)
 
 import os
-os.chdir("...")
+os.chdir("/Users/rorybunker/")
 
 import max_euclidean
 import hausdorff_distance
@@ -41,14 +41,14 @@ def get_list_phase_tid(table_name):
     rows = cur.fetchall()
     return rows
 
-def get_trajectory(trajectory_table, tid):
+def get_trajectory(trajectory_table, tid, num_agents):
 
     sql = """select ST_AsGeoJSON(geom) from """ + str(trajectory_table) + """ where tid = """ + str(tid) + """ """
 
     cur.execute(sql)
     rows = cur.fetchall()
 
-    return json.loads(rows[0][0])['coordinates']
+    return [json.loads(rows[i][0])['coordinates'] for i in range(0,num_agents)]
 
 def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_trajectory, point_table, distance_threshold, top_k):
     distance_threshold = distance_threshold * top_k
@@ -302,6 +302,7 @@ def stat_dsm(trajectory_table, point_table, candidate_table, original_list_label
     max_iter = parameter["max_iter"]
     alpha = parameter["alpha"]
     positive_label = parameter["positive_label"]
+    num_agents = parameter["num_agents"]
 
     dict_lower_bound = {}
 
@@ -310,8 +311,8 @@ def stat_dsm(trajectory_table, point_table, candidate_table, original_list_label
 
         list_tree = []
 
-        trajectory = get_trajectory(trajectory_table, trajectory_tid)
-        trajectory_length = len(trajectory)
+        trajectory = get_trajectory(trajectory_table, trajectory_tid, num_agents)
+        trajectory_length = len(trajectory[0])
         trajectory_label = original_list_label[trajectory_tid]
 
         if trajectory_length < min_length:
@@ -466,11 +467,13 @@ def main():
 
     positive_label = '1'
     negative_label = '0'
-    max_iter = 1000
+    max_iter = 1
     min_length = 10
     alpha = 0.05
     distance_threshold = 1.5
     top_k = 1
+    
+    num_agents = 5
 
     positive_number = count_label_number(trajectory_table, positive_label)
     negative_number = count_label_number(trajectory_table, negative_label)
@@ -502,7 +505,8 @@ def main():
         "distance_threshold": distance_threshold,
         "top_k": top_k,
         "positive_number": positive_number,
-        "negative_number": negative_number
+        "negative_number": negative_number,
+        "num_agents": num_agents
     }
 
     delta = stat_dsm(trajectory_table, point_table, candidate_table, original_list_label, list_permuted_dataset, list_min_p, list_phase_tid, parameter)
