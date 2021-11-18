@@ -124,16 +124,16 @@ def create_point_csv(agent_df_list):
     with open('point.csv', 'w') as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(['id', 'aid', 'tid', 'pid', 'label', 'geom'])
+        row_num = 0
         for a in range(0,len(agent_df_list)):
             df = agent_df_list[a]
 
-
-            row_num = 0
             traj_num = 0
             u = 0
             df_index_unique = df.index.drop_duplicates()
             
             for u in range(0, len(df_index_unique)):
+
                 traj_num = df_index_unique[u]
                 df_sub = df.loc[traj_num]
                 for p in range(0,len(df_sub)):
