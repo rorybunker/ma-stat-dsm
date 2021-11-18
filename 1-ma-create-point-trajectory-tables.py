@@ -122,11 +122,12 @@ agent_name_list = ["ball", "shooter", "lp", "shooter_defender", "lp_defender"]
 
 def create_point_csv(agent_df_list):
     with open('point.csv', 'w') as csvfile:
-        
+        writer = csv.writer(csvfile)
+        writer.writerow(['id', 'aid', 'tid', 'pid', 'label', 'geom'])
         for a in range(0,len(agent_df_list)):
             df = agent_df_list[a]
-            writer = csv.writer(csvfile)
-            writer.writerow(['id', 'aid', 'tid', 'pid', 'label', 'geom'])
+
+
             row_num = 0
             traj_num = 0
             u = 0
@@ -149,10 +150,11 @@ create_point_csv(agent_df_list)
 
 def create_trajectory_csv(agent_df_list):
     with open('trajectory.csv', 'w') as csvfile:
+        writer= csv.writer(csvfile)
+        writer.writerow(['id', 'aid', 'tid', 'label','geom'])
         for a in range(0,len(agent_df_list)):
             df = agent_df_list[a]
-            writer= csv.writer(csvfile)
-            writer.writerow(['id', 'aid', 'tid', 'label','geom'])
+
             df_index_unique = df.index.drop_duplicates()
             for u in range(0, len(df_index_unique)):
                 traj_num = df_index_unique[u]
