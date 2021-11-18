@@ -195,18 +195,6 @@ def delete_table_rows(table_name):
 delete_table_rows('phase_point_ma')
 delete_table_rows('phase_trajectory_ma')
 delete_table_rows('candidates') 
-
-
-def import_csv_files_to_postgres(filename):
-    conn = connect(param_dic)
-    cur = conn.cursor()
-    sql = """COPY phase_point(id, aid, tid, pid, label, geom) FROM '""" + filename +""".csv' 
-            DELIMITER ',' 
-            CSV HEADER;"""
-    cur.execute(sql)
-    conn.commit()
-    cur.close()
-    conn.close()
     
 # now, in pgadmin, run these commands to import the csv files generated 
 # into postgres database:
