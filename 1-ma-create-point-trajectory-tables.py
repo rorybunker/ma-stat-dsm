@@ -152,6 +152,7 @@ def create_trajectory_csv(agent_df_list):
     with open('trajectory.csv', 'w') as csvfile:
         writer= csv.writer(csvfile)
         writer.writerow(['id', 'aid', 'tid', 'label','geom'])
+        row_num = 0
         for a in range(0,len(agent_df_list)):
             df = agent_df_list[a]
 
@@ -160,8 +161,9 @@ def create_trajectory_csv(agent_df_list):
                 traj_num = df_index_unique[u]
                 df_sub = df.loc[traj_num]
                 if len(df_sub) > 0:
-                    writer.writerow([u, a, u, int(effective[u]),
+                    writer.writerow([row_num, a, u, int(effective[u]),
                                          LineString((df_sub.iloc[:,1:3]).to_numpy())])
+                row_num+=1
 
 create_trajectory_csv(agent_df_list)
 
