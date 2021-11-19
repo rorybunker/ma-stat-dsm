@@ -9,11 +9,11 @@ import os
 os.chdir("/Users/rorybunker/")
 
 import max_euclidean
-import hausdorff_distance
+from hausdorff import hausdorff_distance
 from scipy.special import comb
 
 try:
-    conn = psycopg2.connect("dbname='' user='' host='' password=''")
+    conn = psycopg2.connect("dbname='postgres' user='postgres' host='localhost' password='9408'")
     # for example, conn = psycopg2.connect("dbname='postgres' user='postgres' host='localhost' password='1234'")
 except:
     print("I am unable to connect to the database")
@@ -116,6 +116,22 @@ def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_trajectory, po
     return total_length_k_potential_neighbor
 
 
+def calculate_top_k(k, trajectory_1, trajectory_2):
+    max = []
+    for i in range(k):
+        max.append(0)
+
+    for i in range(len(trajectory_1)):
+        dist = hausdorff_distance(np.array(trajectory_1[i]), np.array(trajectory_2[i]))
+        if dist > max[0]:
+            max.append(dist)
+            max.sort()
+            max = max[1:]
+
+    return max, (sum(max) / k)
+
+
+
 def confirm_neighbor(top_k, length_k_sub_trajectory, list_potential_neighbor, distance_threshold):
     list_neighbor = []
     list_top_k_max = []
@@ -124,7 +140,7 @@ def confirm_neighbor(top_k, length_k_sub_trajectory, list_potential_neighbor, di
 
     for potential_neighbor in list_potential_neighbor:
 
-        top_k_max, max_distance = hausdorff_distance.calculate_top_k(top_k, length_k_sub_trajectory,
+        top_k_max, max_distance = calculate_top_k(top_k, length_k_sub_trajectory,
                                                                 potential_neighbor[1])
         if max_distance <= distance_threshold:
             list_neighbor.append(potential_neighbor[0])
@@ -321,8 +337,11 @@ def stat_dsm(trajectory_table, point_table, candidate_table, original_list_label
         for i in range(trajectory_length - min_length + 1):
             length_k_sub_trajectory = []
 
+
             for j in range(min_length):
-                length_k_sub_trajectory.append(trajectory[i + j])
+                for a in range(num_agents):
+                    #length_k_sub_trajectory.append(trajectory[a][i + j])
+                    length_k_sub_trajectory.append(trajectory[a][i + j])
 
             potential_neighbor = find_length_k_potential_neighbor(trajectory_tid, length_k_sub_trajectory, point_table,
                                                                   distance_threshold, top_k)
@@ -495,6 +514,10 @@ def main():
     list_phase_tid = get_list_phase_tid(trajectory_table)
     list_phase_tid = np.array(list_phase_tid)
     list_phase_tid = list_phase_tid[:, 0].tolist()
+    
+    list_phase_tid_set = set(list_phase_tid)
+    list_phase_tid = list(list_phase_tid_set)
+    
 
     parameter = {
         "positive_label": positive_label,
