@@ -1,7 +1,7 @@
 # Multi-Agent Statistically Discriminative Sub-trajectory Mining (MA-Stat-DSM)
-Code for original (Single-agent) Statistically Discriminative Sub-trajectory Mining and Multi-Agent Statistically Discriminative Sub-trajectory Mining
+Code for original (Single-agent) Statistically Discriminative Sub-trajectory Mining, proposed by Le Vo et al., 2020, and a new Multi-Agent Statistically Discriminative Sub-trajectory Mining (MA-Stat-DSM), which handles the trajectories of multiple agents (e.g., players and the ball in sport). The "ma" in .py file name denotes that it relates to MA-Stat-DSM.
 
-Stat-DSM was proposed by Le Vo et al. (2020): https://ieeexplore.ieee.org/abstract/document/9093199
+Le Vo et al. (2020): https://ieeexplore.ieee.org/abstract/document/9093199
 
 **Instructions for how to run (Single-Agent) Stat-DSM**
 1. Install PostgreSQL https://www.postgresql.org/download/ (this installer includes pgAdmin). You need to be able to run queries in this database and access the postgres shell (on Mac it is recommended to also install https://postgresapp.com/ since it provides quick access to the postgres shell).
