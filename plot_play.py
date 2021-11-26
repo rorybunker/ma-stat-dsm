@@ -1,17 +1,10 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Oct 29 13:21:31 2021
-
-@author: rorybunker
-"""
 import 1_create_point_and_trajectory_tables
 
 def plot_trajectory_on_court(phase_num, index_array, save_fig=False):
     if phase_num not in indices:
         print('Cannot plot that play')
     else:
-        court_path ='/Users/rorybunker/Google Drive/Research/Applying discriminative sub-trajectory mining to spatio-temporal data in sport/data/basketball_scoring/nba_court_T.png'
+        court_path ='/.../nba_court_T.png'
         feet_m = 0.3048 
         img = mpimg.imread(court_path) 
         plt.imshow(img, extent=[0,94*feet_m,0,50*feet_m], zorder=0) 
