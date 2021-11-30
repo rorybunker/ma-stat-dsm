@@ -1,4 +1,4 @@
-import 1_create_point_and_trajectory_tables
+import 1-create-point-trajectory-tables
 
 def plot_trajectory_on_court(phase_num, index_array, save_fig=False):
     if phase_num not in indices:
