@@ -8,7 +8,6 @@ sys.setrecursionlimit(10000)
 import os
 os.chdir("...")
 
-import max_euclidean
 from hausdorff import hausdorff_distance
 from scipy.special import comb
 
@@ -194,9 +193,9 @@ def calculate_upper_p_value(positive_support, negative_support, positive_number,
 
     for i in range(positive_support, min(positive_number, support) + 1):
         a = i
-        c = support - i
+        #c = support - i
         b = positive_number - a
-        d = negative_number - c
+        #d = negative_number - c
         n = positive_number + negative_number
 
         p_value = p_value + (comb(support, a, exact=True) * comb(n - support, b, exact=True)) / \
@@ -215,9 +214,9 @@ def calculate_lower_p_value(positive_support, negative_support, positive_number,
 
     for i in range(max(0, support - negative_number), positive_support + 1):
         a = i
-        c = support - i
+        #c = support - i
         b = positive_number - a
-        d = negative_number - c
+        #d = negative_number - c
         n = positive_number + negative_number
 
         p_value = p_value + (comb(support, a, exact=True) * comb(n - support, b, exact=True)) / \
@@ -475,7 +474,7 @@ def main():
     positive_label = '1'
     negative_label = '0'
     max_iter = 1
-    min_length = 20
+    min_length = 50
     alpha = 0.05
     distance_threshold = 1.5
     # top_k = 1
