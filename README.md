@@ -7,7 +7,7 @@ Le Vo et al. (2020): https://ieeexplore.ieee.org/abstract/document/9093199
 1. Install PostgreSQL https://www.postgresql.org/download/ (this installer includes pgAdmin). You need to be able to run queries in this database and access the postgres shell (on Mac it is recommended to also install https://postgresapp.com/ since it provides quick access to the postgres shell).
 2. Create a PostgreSQL database, and then create the tables in 0-create-postgres-database.sql (right click on the database in pgAdmin -> Query tool), which are required to run the Stat-DSM code.
 
-**Instructions for how to run (Single-Agent) Stat-DSM**. 
+**Instructions for how to run (Single-Agent) Stat-DSM**.   
 3. In 1-create-point-trajectory-tables.py:    
     - Enter your working directory in line 27.  
     - Enter your Postgres database details in param_dic (lines 166--171).  
