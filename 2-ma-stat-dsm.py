@@ -6,14 +6,13 @@ import sys
 sys.setrecursionlimit(10000)
 
 import os
-os.chdir("...")
+os.chdir("/../../")
 
 from hausdorff import hausdorff_distance
 from scipy.special import comb
 
 try:
-    conn = psycopg2.connect("dbname='' user='' host='' password=''")
-    # for example, conn = psycopg2.connect("dbname='postgres' user='postgres' host='localhost' password='1234'")
+    conn = psycopg2.connect("dbname='postgres' user='postgres' host='localhost' password='1234'")
 except:
     print("I am unable to connect to the database")
 
@@ -130,12 +129,12 @@ def confirm_neighbor(length_k_sub_trajectory, list_potential_neighbor, distance_
     for potential_neighbor in list_potential_neighbor:
 
         distance = calculate_h_diff(length_k_sub_trajectory, potential_neighbor[1])
+        
         if distance <= distance_threshold:
             list_neighbor.append(potential_neighbor[0])
             #list_top_k_max.append(top_k_max)
 
     return list_neighbor
-
 
 def get_list_neighbor_tid(list_neighbor):
     list_neighbor_tid = []
@@ -473,12 +472,11 @@ def main():
 
     positive_label = '1'
     negative_label = '0'
-    max_iter = 1
-    min_length = 50
+    max_iter = 1000
+    min_length = 20
     alpha = 0.05
     distance_threshold = 1.5
     # top_k = 1
-    
     num_agents = 5
 
     positive_number = count_label_number(trajectory_table, positive_label)
