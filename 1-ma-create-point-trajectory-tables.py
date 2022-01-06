@@ -36,7 +36,11 @@ label = array(data[1], dtype=object)
 
 label_df = pd.DataFrame(label, index=indices)
 # or if you want to select specific teams e.g. Golden state warriors
-# label_df= label_df[(label_df[6]==1610612744) | (label_df[6]==1610612759)] 
+# nba_team_id = 1610612744
+# label_df = label_df[(label_df[6]==nba_team_id)] 
+# and or fixed number of plays e.g. for testing purposes
+# number_of_plays = 500
+# label_df = label_df.iloc[0:number_of_plays]
 
 #label data is in the format [label_i,t1,t2,score,shooterID,passerID,team_ID]
 effective = label_df.iloc[:,0]
@@ -169,10 +173,10 @@ create_trajectory_csv(agent_df_list)
 
 # enter your postgres database details in param_dic
 param_dic = {
-    "host"      : "[hostname]",
-    "database"  : "[database]",
-    "user"      : "[username]",
-    "password"  : "[password]"
+    "host"      : "localhost",
+    "database"  : "postgres",
+    "user"      : "postgres",
+    "password"  : " "
 }
 
 def connect(params_dic):
