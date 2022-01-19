@@ -6,7 +6,7 @@ import sys
 sys.setrecursionlimit(10000)
 
 import os
-os.chdir("/../../")
+os.chdir("/Users/.../")
 
 from hausdorff import hausdorff_distance
 from scipy.special import comb
@@ -19,64 +19,83 @@ except:
 cur = conn.cursor()
         
 def count_label_number(trajectory_table, label):
-    sql = """select count(*) from """ + str(trajectory_table) + """ where label = '""" + str(label) + """'"""
-
+    sql = """select count(distinct tid) from """ + str(trajectory_table) + """ where label = '""" + str(label) + """'"""
+    
     cur.execute(sql)
     rows = cur.fetchall()
     return rows[0][0]
 
 def get_list_label(trajectory_table):
-    sql = """select label from """ + str(trajectory_table) + """ order by tid asc"""
-
+    sql = """select label from """ + str(trajectory_table) + """ group by tid, label order by tid asc"""
+    
     cur.execute(sql)
     rows = cur.fetchall()
     return rows
 
 def get_list_phase_tid(table_name):
-    sql = """select tid from """ + str(table_name) + """ order by tid asc"""
+    sql = """select distinct tid from """ + str(table_name) + """ order by tid asc"""
 
     cur.execute(sql)
     rows = cur.fetchall()
     return rows
 
-def get_trajectory(trajectory_table, tid, num_agents):
+def get_list_agent_aid(table_name):
+    sql = """select distinct aid from """ + str(table_name) + """ order by aid asc"""
 
+    cur.execute(sql)
+    rows = cur.fetchall()
+    return rows
+
+def get_trajectory_matrix(trajectory_table, tid, num_agents):
     sql = """select ST_AsGeoJSON(geom) from """ + str(trajectory_table) + """ where tid = """ + str(tid) + """ """
 
     cur.execute(sql)
     rows = cur.fetchall()
-
     return [json.loads(rows[i][0])['coordinates'] for i in range(0,num_agents)]
 
-def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_trajectory, point_table, distance_threshold):#, top_k):
+def get_agent_trajectory(trajectory_table, tid, aid):
+    
+    sql = """select ST_AsGeoJSON(geom) from """ + str(trajectory_table) + """ where tid = """ + str(tid) + """ and aid = """ + str(aid) + """ """
+    cur.execute(sql)
+    rows = cur.fetchall()
+
+    return json.loads(rows[0][0])['coordinates']
+
+def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_matrix, point_table, trajectory_table, distance_threshold):#, top_k):
     #distance_threshold = distance_threshold * top_k
 
-    total_length_k_potential_neighbor = [] # [[tid, trajectory], ...]
+    total_length_k_potential_neighbor = [] # [[tid, trajectory_matrix], ...]
 
-    length = len(length_k_sub_trajectory)
-
-    sql = """select tid, pid, label, ST_AsGeoJSON(geom) from """ + str(point_table) + """
+    length = len(length_k_sub_matrix)
+    
+    sql = """select tid, aid, label, ST_AsGeoJSON(geom) from """ + str(trajectory_table) + """
                 where tid != """ + str(trajectory_tid) + """
                 and """
+                
     count = 0
-    for point in length_k_sub_trajectory:
+    for traj in length_k_sub_matrix:
         count = count + 1
-
+        
+        line_string_list = [[] for _ in range(length)]
+        
+        for a in range(length):
+            for point in length_k_sub_matrix[a]:
+                line_string_list[a].append(str(point[0]) + " " + str(point[1]))
+                
         if count == 1:
-            sql = sql + """ (ST_DWithin('POINT(""" + str(point[0]) + " " + str(
-                point[1]) + """)'::geometry, geom, """ + str(
+            sql = sql + """ (ST_DWithin('LINESTRING(""" + str(line_string_list) + """)'::geometry, geom, """ + str(
                 distance_threshold) + """) or """
 
             continue
 
         if count == length:
-            sql = sql + """ ST_DWithin('POINT(""" + str(point[0]) + " " + str(
-                point[1]) + """)'::geometry, geom, """ + str(
-                distance_threshold) + """)) ORDER BY tid ASC, pid ASC;"""
+            sql = sql + """ ST_DWithin('LINESTRING(""" + str(line_string_list) + """)'::geometry, geom, """ + str(
+                distance_threshold) + """)) ORDER BY tid ASC, aid ASC, pid ASC;"""
 
             break
 
-        sql = sql + """ ST_DWithin('POINT(""" + str(point[0]) + " " + str(point[1]) + """)'::geometry, geom, """ + str(
+        sql = sql + """ ST_DWithin('LINESTRING(""" + str(line_string_list) 
+        + """)'::geometry, geom, """ + str(
             distance_threshold) + """) or """
 
     cur.execute(sql)
@@ -120,7 +139,7 @@ def calculate_h_diff(trajectory_1, trajectory_2):
     return dist
 
 
-def confirm_neighbor(length_k_sub_trajectory, list_potential_neighbor, distance_threshold):
+def confirm_neighbor(length_k_sub_matrix, list_potential_neighbor, distance_threshold):
     list_neighbor = []
     #list_top_k_max = []
 
@@ -128,7 +147,7 @@ def confirm_neighbor(length_k_sub_trajectory, list_potential_neighbor, distance_
     
     for potential_neighbor in list_potential_neighbor:
 
-        distance = calculate_h_diff(length_k_sub_trajectory, potential_neighbor[1])
+        distance = calculate_h_diff(length_k_sub_matrix, potential_neighbor[1])
         
         if distance <= distance_threshold:
             list_neighbor.append(potential_neighbor[0])
@@ -296,7 +315,7 @@ def insert_list_tree(candidate_table, list_tree):
     conn.commit()
 
 
-def stat_dsm(trajectory_table, point_table, candidate_table, original_list_label, list_permuted_dataset, list_min_p, list_phase_tid, parameter):
+def ma_stat_dsm(trajectory_table, point_table, candidate_table, original_list_label, list_permuted_dataset, list_min_p, list_phase_tid, list_agent_aid, parameter):
     min_length = parameter["min_length"]
     distance_threshold = parameter["distance_threshold"]
     # top_k = parameter["top_k"]
@@ -314,26 +333,28 @@ def stat_dsm(trajectory_table, point_table, candidate_table, original_list_label
 
         list_tree = []
 
-        trajectory = get_trajectory(trajectory_table, trajectory_tid, num_agents)
-        trajectory_length = len(trajectory[0])
+        trajectory_matrix = get_trajectory_matrix(trajectory_table, trajectory_tid, num_agents)
+        trajectory_length = len(trajectory_matrix[0])
         trajectory_label = original_list_label[trajectory_tid]
 
         if trajectory_length < min_length:
             continue
 
         for i in range(trajectory_length - min_length + 1):
-            length_k_sub_trajectory = []
-
-
+            # rows, cols = (5, trajectory_length)
+            # length_k_sub_matrix = [[]*cols]*rows
+            
+            length_k_sub_matrix = [[] for _ in range(num_agents)]
+        
             for j in range(min_length):
                 for a in range(num_agents):
-                    #length_k_sub_trajectory.append(trajectory[a][i + j])
-                    length_k_sub_trajectory.append(trajectory[a][i + j])
+                    # length_k_sub_matrix = [trajectory_matrix[a][0:i+j] for a in range(len(trajectory_matrix))]
+                    length_k_sub_matrix[a].append(trajectory_matrix[a][i + j])
 
-            potential_neighbor = find_length_k_potential_neighbor(trajectory_tid, length_k_sub_trajectory, point_table,
+            potential_neighbor = find_length_k_potential_neighbor(trajectory_tid, length_k_sub_matrix, point_table,
                                                                   distance_threshold)#, top_k)
 
-            list_neighbor = confirm_neighbor(length_k_sub_trajectory, potential_neighbor,
+            list_neighbor = confirm_neighbor(length_k_sub_matrix, potential_neighbor,
                                                              distance_threshold)
 
             if len(list_neighbor) == 0:
@@ -393,7 +414,7 @@ def stat_dsm(trajectory_table, point_table, candidate_table, original_list_label
                     new_neighbor_start_idx = neighbor_start_idx
                     new_neighbor_end_idx = neighbor_end_idx + 1
 
-                    dist = hausdorff_distance(trajectory[candidate_end_idx],
+                    dist = hausdorff_distance(trajectory_matrix[candidate_end_idx],
                                                  dict_neighbor_full_trajectory[neighbor_tid][new_neighbor_end_idx])
 
                     #if last_point_distance > local_top_k_max[0]:
@@ -500,10 +521,13 @@ def main():
     list_phase_tid = np.array(list_phase_tid)
     list_phase_tid = list_phase_tid[:, 0].tolist()
     
-    list_phase_tid_set = set(list_phase_tid)
-    list_phase_tid = list(list_phase_tid_set)
+    #list_phase_tid_set = set(list_phase_tid)
+    #list_phase_tid = list(list_phase_tid_set)
     
-
+    list_agent_aid = get_list_agent_aid(trajectory_table)
+    list_agent_aid = np.array(list_agent_aid)
+    list_agent_aid = list_agent_aid[:, 0].tolist()
+    
     parameter = {
         "positive_label": positive_label,
         "negative_label": negative_label,
@@ -517,7 +541,7 @@ def main():
         "num_agents": num_agents
     }
 
-    delta = stat_dsm(trajectory_table, point_table, candidate_table, original_list_label, list_permuted_dataset, list_min_p, list_phase_tid, parameter)
+    delta = ma_stat_dsm(trajectory_table, point_table, candidate_table, original_list_label, list_permuted_dataset, list_min_p, list_phase_tid, parameter)
 
     print(delta)
 
