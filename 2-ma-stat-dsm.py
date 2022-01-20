@@ -9,6 +9,7 @@ import os
 os.chdir("/Users/.../")
 
 from hausdorff import hausdorff_distance
+from scipy.spatial.distance import directed_hausdorff
 from scipy.special import comb
 
 try:
@@ -61,7 +62,7 @@ def get_agent_trajectory(trajectory_table, tid, aid):
 
     return json.loads(rows[0][0])['coordinates']
 
-def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_matrix, point_table, trajectory_table, distance_threshold):#, top_k):
+def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_matrix, trajectory_table, distance_threshold):#, top_k):
     #distance_threshold = distance_threshold * top_k
 
     total_length_k_potential_neighbor = [] # [[tid, trajectory_matrix], ...]
@@ -76,26 +77,25 @@ def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_matrix, point_
     for traj in length_k_sub_matrix:
         count = count + 1
         
-        line_string_list = [[] for _ in range(length)]
+        # line_string_list = [[] for _ in range(length)]
         
-        for a in range(length):
-            for point in length_k_sub_matrix[a]:
-                line_string_list[a].append(str(point[0]) + " " + str(point[1]))
+        #for a in range(length):
+        #    for point in length_k_sub_matrix[a]:
+        #        line_string_list[a].append(str(point[0]) + " " + str(point[1]))
                 
         if count == 1:
-            sql = sql + """ (ST_DWithin('LINESTRING(""" + str(line_string_list) + """)'::geometry, geom, """ + str(
+            sql = sql + """ (ST_DWithin('LINESTRING(""" + str(length_k_sub_matrix[count-1])[1:-1] + """)'::geometry, geom, """ + str(
                 distance_threshold) + """) or """
 
             continue
 
         if count == length:
-            sql = sql + """ ST_DWithin('LINESTRING(""" + str(line_string_list) + """)'::geometry, geom, """ + str(
+            sql = sql + """ ST_DWithin('LINESTRING(""" + str(length_k_sub_matrix[count-1])[1:-1] + """)'::geometry, geom, """ + str(
                 distance_threshold) + """)) ORDER BY tid ASC, aid ASC, pid ASC;"""
 
             break
 
-        sql = sql + """ ST_DWithin('LINESTRING(""" + str(line_string_list) 
-        + """)'::geometry, geom, """ + str(
+        sql = sql + """ ST_DWithin('LINESTRING(""" + str(length_k_sub_matrix[count-1])[1:-1] + """)'::geometry, geom, """ + str(
             distance_threshold) + """) or """
 
     cur.execute(sql)
@@ -138,16 +138,15 @@ def calculate_h_diff(trajectory_1, trajectory_2):
                               np.array(trajectory_2))
     return dist
 
-
-def confirm_neighbor(length_k_sub_matrix, list_potential_neighbor, distance_threshold):
+def confirm_neighbor(length_k_sub_matrix_concat, list_potential_neighbor, distance_threshold):
     list_neighbor = []
     #list_top_k_max = []
 
     # Each potential neighbor: [[2, 0, 1], [[5.5, 14], [7, 14]]]
-    
+        
     for potential_neighbor in list_potential_neighbor:
-
-        distance = calculate_h_diff(length_k_sub_matrix, potential_neighbor[1])
+        
+        distance = calculate_h_diff(length_k_sub_matrix_concat, potential_neighbor[1])
         
         if distance <= distance_threshold:
             list_neighbor.append(potential_neighbor[0])
@@ -350,8 +349,12 @@ def ma_stat_dsm(trajectory_table, point_table, candidate_table, original_list_la
                 for a in range(num_agents):
                     # length_k_sub_matrix = [trajectory_matrix[a][0:i+j] for a in range(len(trajectory_matrix))]
                     length_k_sub_matrix[a].append(trajectory_matrix[a][i + j])
+                    
+            length_k_sub_matrix_concat = np.concatenate(([length_k_sub_matrix[i] for i in range(num_agents)]), axis=0)
 
-            potential_neighbor = find_length_k_potential_neighbor(trajectory_tid, length_k_sub_matrix, point_table,
+            potential_neighbor = find_length_k_potential_neighbor(trajectory_tid, 
+                                                                  length_k_sub_matrix_concat, 
+                                                                  trajectory_table, 
                                                                   distance_threshold)#, top_k)
 
             list_neighbor = confirm_neighbor(length_k_sub_matrix, potential_neighbor,
