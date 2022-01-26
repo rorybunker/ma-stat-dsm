@@ -25,7 +25,7 @@ import sys
 #index: corresponding to the file at root\nba_attack2\nba_datalength.csv
 
 # enter your working directory under path:
-path = '/.../dataset_as_a_file_600_games.pkl'
+path = '/Users/.../dataset_as_a_file_600_games.pkl'
 
 f = open(path, 'rb')
 data = pickle.load(f)
@@ -36,11 +36,11 @@ label = array(data[1], dtype=object)
 
 label_df = pd.DataFrame(label, index=indices)
 # or if you want to select specific teams e.g. Golden state warriors
-# nba_team_id = 1610612744
-# label_df = label_df[(label_df[6]==nba_team_id)] 
+nba_team_id = 1610612744
+label_df = label_df[(label_df[6]==nba_team_id)] 
 # and or fixed number of plays e.g. for testing purposes
-# number_of_plays = 500
-# label_df = label_df.iloc[0:number_of_plays]
+number_of_plays = 100
+label_df = label_df.iloc[0:number_of_plays]
 
 #label data is in the format [label_i,t1,t2,score,shooterID,passerID,team_ID]
 effective = label_df.iloc[:,0]
