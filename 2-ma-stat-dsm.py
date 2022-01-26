@@ -3,14 +3,17 @@ import json
 import time
 import numpy as np
 import sys
+import shapely
 sys.setrecursionlimit(10000)
 
 import os
 os.chdir("/Users/.../")
 
-from hausdorff import hausdorff_distance
-from scipy.spatial.distance import directed_hausdorff
+#from hausdorff import hausdorff_distance
+#from scipy.spatial.distance import directed_hausdorff
 from scipy.special import comb
+from shapely.geometry import MultiLineString
+# from shapely.geometry import Point
 
 try:
     conn = psycopg2.connect("dbname='postgres' user='postgres' host='localhost' password='1234'")
@@ -62,45 +65,50 @@ def get_agent_trajectory(trajectory_table, tid, aid):
 
     return json.loads(rows[0][0])['coordinates']
 
+def convert_list_of_lists_to_mls(play_list_of_lists):
+    coords = [tuple(tuple(point) for point in agent_traj) for agent_traj in play_list_of_lists]
+    
+    return MultiLineString(coords)
+
 def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_matrix, trajectory_table, distance_threshold):#, top_k):
     #distance_threshold = distance_threshold * top_k
 
     total_length_k_potential_neighbor = [] # [[tid, trajectory_matrix], ...]
 
-    length = len(length_k_sub_matrix)
+    length = len(length_k_sub_matrix[0])
     
     sql = """select tid, aid, label, ST_AsGeoJSON(geom) from """ + str(trajectory_table) + """
                 where tid != """ + str(trajectory_tid) + """
                 and """
                 
     count = 0
-    for traj in length_k_sub_matrix:
+    for agent_traj in length_k_sub_matrix:
+        #ST_Distance('LINESTRING(-122.33 47.606, 0.0 51.5)'::
+        
         count = count + 1
-        
-        # line_string_list = [[] for _ in range(length)]
-        
-        #for a in range(length):
-        #    for point in length_k_sub_matrix[a]:
-        #        line_string_list[a].append(str(point[0]) + " " + str(point[1]))
-                
+
         if count == 1:
-            sql = sql + """ (ST_DWithin('LINESTRING(""" + str(length_k_sub_matrix[count-1])[1:-1] + """)'::geometry, geom, """ + str(
+            sql = sql + """ (ST_DWithin('LINESTRING(""" + str(agent_traj)[1:-1].replace("'", "") + """)'::geometry, geom, """ + str(
                 distance_threshold) + """) or """
 
             continue
 
         if count == length:
-            sql = sql + """ ST_DWithin('LINESTRING(""" + str(length_k_sub_matrix[count-1])[1:-1] + """)'::geometry, geom, """ + str(
+            sql = sql + """ ST_DWithin('LINESTRING(""" + str(agent_traj)[1:-1].replace("'", "") + """)'::geometry, geom, """ + str(
                 distance_threshold) + """)) ORDER BY tid ASC, aid ASC, pid ASC;"""
 
             break
 
-        sql = sql + """ ST_DWithin('LINESTRING(""" + str(length_k_sub_matrix[count-1])[1:-1] + """)'::geometry, geom, """ + str(
+        sql = sql + """ ST_DWithin('LINESTRING(""" + str(agent_traj)[1:-1].replace("'", "") + """)'::geometry, geom, """ + str(
             distance_threshold) + """) or """
 
     cur.execute(sql)
     nearest_points = cur.fetchall()
-
+    
+    length_k_sub_matrix_mls = convert_list_of_lists_to_mls(length_k_sub_matrix)
+    
+    nearest_trajectories = []
+    
     s = -1
     e = 0
 
@@ -132,10 +140,9 @@ def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_matrix, trajec
 
     return total_length_k_potential_neighbor
 
-
-def calculate_h_diff(trajectory_1, trajectory_2):
-    dist = hausdorff_distance(np.array(trajectory_1), 
-                              np.array(trajectory_2))
+def calculate_h_diff(object_1, object_2):
+    dist = shapely.hausdorff_distance(np.array(object_1), 
+                              np.array(object_2))
     return dist
 
 def confirm_neighbor(length_k_sub_matrix_concat, list_potential_neighbor, distance_threshold):
@@ -313,6 +320,8 @@ def insert_list_tree(candidate_table, list_tree):
     cur.executemany(sql, tuple(list_tree))
     conn.commit()
 
+def convert(lst):
+    return ' '.join(lst)
 
 def ma_stat_dsm(trajectory_table, point_table, candidate_table, original_list_label, list_permuted_dataset, list_min_p, list_phase_tid, list_agent_aid, parameter):
     min_length = parameter["min_length"]
@@ -340,20 +349,19 @@ def ma_stat_dsm(trajectory_table, point_table, candidate_table, original_list_la
             continue
 
         for i in range(trajectory_length - min_length + 1):
-            # rows, cols = (5, trajectory_length)
-            # length_k_sub_matrix = [[]*cols]*rows
             
             length_k_sub_matrix = [[] for _ in range(num_agents)]
         
             for j in range(min_length):
                 for a in range(num_agents):
-                    # length_k_sub_matrix = [trajectory_matrix[a][0:i+j] for a in range(len(trajectory_matrix))]
                     length_k_sub_matrix[a].append(trajectory_matrix[a][i + j])
                     
-            length_k_sub_matrix_concat = np.concatenate(([length_k_sub_matrix[i] for i in range(num_agents)]), axis=0)
-
+            # length_k_sub_matrix_concat = np.concatenate(([length_k_sub_matrix[i] for i in range(num_agents)]), axis=0)
+            
+            length_k_sub_matrix = [[str(point[0]) + ' ' + str(point[1]) for point in agent_traj] for agent_traj in length_k_sub_matrix]
+            
             potential_neighbor = find_length_k_potential_neighbor(trajectory_tid, 
-                                                                  length_k_sub_matrix_concat, 
+                                                                  length_k_sub_matrix, 
                                                                   trajectory_table, 
                                                                   distance_threshold)#, top_k)
 
@@ -417,7 +425,7 @@ def ma_stat_dsm(trajectory_table, point_table, candidate_table, original_list_la
                     new_neighbor_start_idx = neighbor_start_idx
                     new_neighbor_end_idx = neighbor_end_idx + 1
 
-                    dist = hausdorff_distance(trajectory_matrix[candidate_end_idx],
+                    dist = shapely.hausdorff_distance(trajectory_matrix[candidate_end_idx],
                                                  dict_neighbor_full_trajectory[neighbor_tid][new_neighbor_end_idx])
 
                     #if last_point_distance > local_top_k_max[0]:
