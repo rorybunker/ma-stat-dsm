@@ -85,6 +85,21 @@ def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_matrix, length
 
     length = len(length_k_sub_matrix[0])
     
+    traj_matrices_all_lol = get_all_traj_matrices_list_of_lists(trajectory_table, num_agents)
+    traj_matrices_all_shapely = get_all_traj_matrices_shapely_fmt(traj_matrices_all_lol)
+    
+    length_k_sub_matrix_mls = convert_list_of_lists_to_mls(length_k_sub_matrix_lol)
+    
+    matrix_within_dist_threshold = []
+    
+    for matrix in traj_matrices_all_lol:
+        haus_dist = (MultiLineString(matrix)).hausdorff_distance(length_k_sub_matrix_mls)
+        print(haus_dist)
+        if haus_dist < distance_threshold:
+            matrix_within_dist_threshold.append(matrix)
+    
+    
+    
     sql = """select tid, aid, label, ST_AsGeoJSON(geom) from """ + str(trajectory_table) + """
                 where tid != """ + str(trajectory_tid) + """
                 and """
@@ -112,12 +127,25 @@ def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_matrix, length
     cur.execute(sql)
     nearest_matrices = cur.fetchall()
     
-    # length_k_sub_matrix_mls = convert_list_of_lists_to_mls(length_k_sub_matrix_lol)
+    # matrix_within_dist_threshold[play_num][agent_no][s:e]
+    # matrix_within_dist_threshold[0][4][0:5]
+    
     
     s = -1
     e = 0
 
     potential_neighbor = []
+    
+    s = 0
+    e = 20
+    
+    for m in range(len(matrix_within_dist_threshold)):
+        for a in range(num_agents):
+            print((matrix_within_dist_threshold[m][a][s:e][0][0],
+                        matrix_within_dist_threshold[m][a][s:e][0][1]))
+            
+        
+        
 
     while s < (len(nearest_matrices) - length):
         s = s + 1
@@ -145,7 +173,7 @@ def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_matrix, length
 
     return total_length_k_potential_neighbor
 
-def confirm_neighbor(length_k_sub_matrix_lol, list_potential_neighbor, distance_threshold):
+def confirm_neighbor(length_k_sub_matrix_mls, list_potential_neighbor, distance_threshold):
     list_neighbor = []
     #list_top_k_max = []
 
@@ -153,7 +181,7 @@ def confirm_neighbor(length_k_sub_matrix_lol, list_potential_neighbor, distance_
         
     for potential_neighbor in list_potential_neighbor:
         
-        distance = length_k_sub_matrix_lol.hausdorff_distance(potential_neighbor[1])
+        distance = length_k_sub_matrix_mls.hausdorff_distance(potential_neighbor[1])
         
         if distance <= distance_threshold:
             list_neighbor.append(potential_neighbor[0])
@@ -351,8 +379,10 @@ def ma_stat_dsm(trajectory_table, point_table, candidate_table, original_list_la
         
             for j in range(min_length):
                 for a in range(num_agents):
+                    #list of lists format
                     length_k_sub_matrix_lol[a].append(trajectory_matrix[a][i + j])
             
+            #shapely format
             length_k_sub_matrix = [[str(point[0]) + ' ' + str(point[1]) for point in agent_traj] for agent_traj in length_k_sub_matrix_lol]
             
             potential_neighbor = find_length_k_potential_neighbor(trajectory_tid, 
