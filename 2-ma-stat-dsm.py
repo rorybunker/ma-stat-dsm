@@ -7,7 +7,7 @@ import shapely
 sys.setrecursionlimit(10000)
 
 import os
-os.chdir("/Users/.../")
+os.chdir("/Users/rorybunker/")
 
 #from hausdorff import hausdorff_distance
 #from scipy.spatial.distance import directed_hausdorff
@@ -16,7 +16,7 @@ from shapely.geometry import MultiLineString
 from shapely.geometry import Point
 
 try:
-    conn = psycopg2.connect("dbname='postgres' user='postgres' host='localhost' password='1234'")
+    conn = psycopg2.connect("dbname='postgres' user='postgres' host='localhost' password='9408'")
 except:
     print("I am unable to connect to the database")
 
@@ -534,7 +534,7 @@ def main():
     max_iter = 1000
     min_length = 20
     alpha = 0.05
-    distance_threshold = 1.5
+    distance_threshold = 5
     # top_k = 1
     num_agents = 5
 
