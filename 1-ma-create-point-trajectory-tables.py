@@ -25,7 +25,7 @@ import sys
 #index: corresponding to the file at root\nba_attack2\nba_datalength.csv
 
 # enter your working directory under path:
-path = '/Users/rorybunker/dataset_as_a_file_600_games.pkl'
+path = '/Users/.../dataset_as_a_file_600_games.pkl'
 
 f = open(path, 'rb')
 data = pickle.load(f)
