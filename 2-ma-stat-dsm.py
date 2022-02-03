@@ -7,7 +7,7 @@ import shapely
 sys.setrecursionlimit(10000)
 
 import os
-os.chdir("/Users/rorybunker/")
+os.chdir("/Users/.../")
 
 #from hausdorff import hausdorff_distance
 #from scipy.spatial.distance import directed_hausdorff
@@ -16,7 +16,7 @@ from shapely.geometry import MultiLineString
 from shapely.geometry import Point
 
 try:
-    conn = psycopg2.connect("dbname='postgres' user='postgres' host='localhost' password='9408'")
+    conn = psycopg2.connect("dbname='postgres' user='postgres' host='localhost' password='1234'")
 except:
     print("I am unable to connect to the database")
 
@@ -94,79 +94,75 @@ def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_matrix, length
     
     for matrix in traj_matrices_all_lol:
         haus_dist = (MultiLineString(matrix)).hausdorff_distance(length_k_sub_matrix_mls)
-        print(haus_dist)
+        #print(haus_dist)
+        
         if haus_dist < distance_threshold:
             matrix_within_dist_threshold.append(matrix)
     
-    
-    
-    sql = """select tid, aid, label, ST_AsGeoJSON(geom) from """ + str(trajectory_table) + """
-                where tid != """ + str(trajectory_tid) + """
-                and """
+    # sql = """select tid, aid, label, ST_AsGeoJSON(geom) from """ + str(trajectory_table) + """
+    #             where tid != """ + str(trajectory_tid) + """
+    #             and """
                 
-    count = 0
-    for traj in length_k_sub_matrix:
-        count = count + 1
-        for agent_traj in traj:
+    #count = 0
+    # for traj in length_k_sub_matrix:
+    #     count = count + 1
+    #     for agent_traj in traj:
         
-            if count == 1:
-                sql = sql + """ (ST_DWithin('LINESTRING(""" + str(agent_traj)[1:-1].replace("'", "") + """)'::geometry, geom, """ + str(
-                    distance_threshold) + """) or """
+    #         if count == 1:
+    #             sql = sql + """ (ST_DWithin('LINESTRING(""" + str(agent_traj)[1:-1].replace("'", "") + """)'::geometry, geom, """ + str(
+    #                 distance_threshold) + """) or """
     
-                continue
+    #             continue
     
-            if count == length:
-                sql = sql + """ ST_DWithin('LINESTRING(""" + str(agent_traj)[1:-1].replace("'", "") + """)'::geometry, geom, """ + str(
-                    distance_threshold) + """)) ORDER BY tid ASC, aid ASC, pid ASC;"""
+    #         if count == length:
+    #             sql = sql + """ ST_DWithin('LINESTRING(""" + str(agent_traj)[1:-1].replace("'", "") + """)'::geometry, geom, """ + str(
+    #                 distance_threshold) + """)) ORDER BY tid ASC, aid ASC, pid ASC;"""
     
-                break
+    #             break
     
-            sql = sql + """ ST_DWithin('LINESTRING(""" + str(agent_traj)[1:-1].replace("'", "") + """)'::geometry, geom, """ + str(
-                distance_threshold) + """) or """
+    #         sql = sql + """ ST_DWithin('LINESTRING(""" + str(agent_traj)[1:-1].replace("'", "") + """)'::geometry, geom, """ + str(
+    #             distance_threshold) + """) or """
 
-    cur.execute(sql)
-    nearest_matrices = cur.fetchall()
+    # cur.execute(sql)
+    # nearest_matrices = cur.fetchall()
     
     # matrix_within_dist_threshold[play_num][agent_no][s:e]
     # matrix_within_dist_threshold[0][4][0:5]
     
     
+    nearest_matrices = matrix_within_dist_threshold
+    
     s = -1
     e = 0
 
     potential_neighbor = []
-    
-    s = 0
-    e = 20
-    
-    for m in range(len(matrix_within_dist_threshold)):
-        for a in range(num_agents):
-            print((matrix_within_dist_threshold[m][a][s:e][0][0],
-                        matrix_within_dist_threshold[m][a][s:e][0][1]))
+
+    # for m in range(len(nearest_matrices)):
+    #     for a in range(num_agents):
+    #         print(a, m, nearest_matrices[m][a][s:e][0][0],
+    #                nearest_matrices[m][a][s:e][0][1])
             
-        
-        
 
     while s < (len(nearest_matrices) - length):
         s = s + 1
-        current_traj = list(nearest_matrices[s])
+        current_ma_traj = list(nearest_matrices[s])
 
         if len(potential_neighbor) == 0:
-            potential_neighbor.append(json.loads(current_traj[3])['coordinates'])
+            potential_neighbor.append(current_ma_traj)
 
         while (e - s + 1) < length:
             e = e + 1
 
-            end_point = list(nearest_matrices[e])
-            if (list(nearest_matrices[e - 1])[0] == end_point[0]) and (end_point[1] == list(nearest_matrices[e - 1])[1] + 1):
-                potential_neighbor.append(json.loads(end_point[3])['coordinates'])
+            end_ma_traj = list(nearest_matrices[e])
+            if nearest_matrices[e - 1] == end_ma_traj:# + 1):
+                potential_neighbor.append(end_ma_traj)
             else:
                 break
 
         if len(potential_neighbor) == length:
-            total_length_k_potential_neighbor.append([[current_traj[0], current_traj[1], list(nearest_matrices[e])[1]],
+            total_length_k_potential_neighbor.append([[trajectory_tid, s, e],
                                                       potential_neighbor])
-            potential_neighbor = potential_neighbor[1:]
+            potential_neighbor = [[traj[1:] for traj in ma_traj] for ma_traj in potential_neighbor]
         else:
             s = e - 1
             potential_neighbor = []
@@ -325,23 +321,21 @@ def update_list_min_p(list_min_p, list_permuted_dataset, list_neighbor_tid, curr
 
     return list_min_p
 
-
 def get_neighbor_trajectories(trajectory_table, list_tid):
     if len(list_tid) == 1:
-        sql = """select tid, ST_AsGeoJSON(geom) from """ + str(trajectory_table) + """ where tid = """ + str(list_tid[0]) + """ """
+        sql = """select tid, aid, ST_AsGeoJSON(geom) from """ + str(trajectory_table) + """ where tid = """ + str(list_tid[0]) + """ """
     else:
-        sql = """select tid, ST_AsGeoJSON(geom) from """ + str(trajectory_table) + """ where tid in """ + str(
-            tuple(list_tid)) + """ """
+        sql = """select tid, aid, ST_AsGeoJSON(geom) from """ + str(trajectory_table) + """ where tid in """ + str(
+            tuple(list_tid)) + """ order by tid asc, aid asc"""
 
     cur.execute(sql)
     rows = cur.fetchall()
 
     list_trajectory = {}
     for row in rows:
-        list_trajectory.update({row[0] : json.loads(row[1])['coordinates']})
+        list_trajectory.update({(row[0],row[1]) : json.loads(row[2])['coordinates']})
 
     return list_trajectory
-
 
 def insert_list_tree(candidate_table, list_tree):
     sql = """INSERT INTO """ + str(candidate_table) + """ (candidate) VALUES (%(candidate)s)"""
@@ -534,7 +528,7 @@ def main():
     max_iter = 1000
     min_length = 20
     alpha = 0.05
-    distance_threshold = 5
+    distance_threshold = 6
     # top_k = 1
     num_agents = 5
 
@@ -579,7 +573,7 @@ def main():
         "num_agents": num_agents
     }
 
-    delta = ma_stat_dsm(trajectory_table, point_table, candidate_table, original_list_label, list_permuted_dataset, list_min_p, list_phase_tid, parameter)
+    delta = ma_stat_dsm(trajectory_table, point_table, candidate_table, original_list_label, list_permuted_dataset, list_min_p, list_phase_tid, list_agent_aid, parameter)
 
     print(delta)
 
