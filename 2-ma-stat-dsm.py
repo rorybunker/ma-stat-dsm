@@ -92,7 +92,7 @@ def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_matrix, length
     
     for matrix in traj_matrices_all_lol:
         haus_dist = (MultiLineString(matrix)).hausdorff_distance(length_k_sub_matrix_mls)
-        #print(haus_dist)
+        print(haus_dist)
         
         if haus_dist < distance_threshold:
             nearest_matrices.append(matrix)
@@ -100,25 +100,26 @@ def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_matrix, length
     s = -1
     e = 0
 
-    potential_neighbor = []
+    potential_neighbor = []# [[] for _ in range(num_agents)]
 
     while s < (len(nearest_matrices) - length):
         s = s + 1
-        current_ma_traj = list(nearest_matrices[s])
+        current_ma_traj = nearest_matrices[s]
 
         if len(potential_neighbor) == 0:
+            #for a in range(num_agents):
             potential_neighbor.append(current_ma_traj)
 
         while (e - s + 1) < length:
             e = e + 1
 
-            end_ma_traj = list(nearest_matrices[e])
+            end_ma_traj = nearest_matrices[e]
             if nearest_matrices[e - 1] == end_ma_traj:# + 1):
                 potential_neighbor.append(end_ma_traj)
             else:
                 break
 
-        if len(potential_neighbor[0][0]) == length:
+        if len(potential_neighbor) == length:
             total_length_k_potential_neighbor.append([[trajectory_tid, s, e],
                                                       potential_neighbor])
             potential_neighbor = [[traj[1:] for traj in ma_traj] for ma_traj in potential_neighbor]
@@ -135,7 +136,6 @@ def confirm_neighbor(length_k_sub_matrix_mls, list_potential_neighbor, distance_
     # Each potential neighbor: [[2, 0, 1], [[5.5, 14], [7, 14]]]
         
     for potential_neighbor in list_potential_neighbor:
-        
         distance = length_k_sub_matrix_mls.hausdorff_distance(potential_neighbor[1])
         
         if distance <= distance_threshold:
@@ -153,7 +153,6 @@ def get_list_neighbor_tid(list_neighbor):
 
     return list_neighbor_tid
 
-
 def calculate_upper_lower_bound(support, positive_number, negative_number):
     n = positive_number + negative_number
     if support <= positive_number:
@@ -167,7 +166,6 @@ def calculate_upper_lower_bound(support, positive_number, negative_number):
                   comb(n, x, exact=True)
 
     return lower_bound
-
 
 def calculate_lower_lower_bound(support, positive_number, negative_number):
     n = positive_number + negative_number
@@ -183,7 +181,6 @@ def calculate_lower_lower_bound(support, positive_number, negative_number):
 
     return lower_bound
 
-
 def calculate_lower_bound(support, positive_number, negative_number):
     upper_lower_bound = calculate_upper_lower_bound(support, positive_number, negative_number)
     lower_lower_bound = calculate_lower_lower_bound(support, positive_number, negative_number)
@@ -191,7 +188,6 @@ def calculate_lower_bound(support, positive_number, negative_number):
     lower_bound = min(upper_lower_bound, lower_lower_bound)
 
     return lower_bound
-
 
 def calculate_upper_p_value(positive_support, negative_support, positive_number, negative_number, current_min_p):
 
@@ -213,7 +209,6 @@ def calculate_upper_p_value(positive_support, negative_support, positive_number,
 
     return p_value
 
-
 def calculate_lower_p_value(positive_support, negative_support, positive_number, negative_number, current_min_p):
 
     p_value = 0
@@ -234,7 +229,6 @@ def calculate_lower_p_value(positive_support, negative_support, positive_number,
 
     return p_value
 
-
 def calculate_p_value(positive_support, negative_support, positive_number, negative_number, current_min_p):
 
     upper_p = calculate_upper_p_value(positive_support, negative_support, positive_number, negative_number, current_min_p)
@@ -243,7 +237,6 @@ def calculate_p_value(positive_support, negative_support, positive_number, negat
     p_value = min(1, 2 * min(upper_p, lower_p))
 
     return p_value
-
 
 def update_list_min_p(list_min_p, list_permuted_dataset, list_neighbor_tid, current_node_lower_bound, max_iter,
                       candidate_label, positive_number, negative_number, positive_label):
@@ -487,7 +480,7 @@ def main():
     max_iter = 1000
     min_length = 5
     alpha = 0.05
-    distance_threshold = 8
+    distance_threshold = 6
     # top_k = 1
     num_agents = 5
     
