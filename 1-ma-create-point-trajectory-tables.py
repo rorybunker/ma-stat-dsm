@@ -25,7 +25,7 @@ import sys
 #index: corresponding to the file at root\nba_attack2\nba_datalength.csv
 
 # enter your working directory under path:
-path = '/Users/.../dataset_as_a_file_600_games.pkl'
+path = '/Users/rorybunker/dataset_as_a_file_600_games.pkl'
 
 f = open(path, 'rb')
 data = pickle.load(f)
@@ -39,7 +39,7 @@ label_df = pd.DataFrame(label, index=indices)
 nba_team_id = 1610612744
 label_df = label_df[(label_df[6]==nba_team_id)] 
 # and or fixed number of plays e.g. for testing purposes
-number_of_plays = 100
+number_of_plays = 200
 label_df = label_df.iloc[0:number_of_plays]
 
 #label data is in the format [label_i,t1,t2,score,shooterID,passerID,team_ID]
@@ -176,7 +176,7 @@ param_dic = {
     "host"      : "localhost",
     "database"  : "postgres",
     "user"      : "postgres",
-    "password"  : " "
+    "password"  : "9408"
 }
 
 def connect(params_dic):
