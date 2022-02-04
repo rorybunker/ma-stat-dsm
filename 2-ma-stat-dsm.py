@@ -3,20 +3,16 @@ import json
 import time
 import numpy as np
 import sys
-import shapely
 sys.setrecursionlimit(10000)
 
 import os
-os.chdir("/Users/.../")
+os.chdir("/Users/rorybunker/")
 
-#from hausdorff import hausdorff_distance
-#from scipy.spatial.distance import directed_hausdorff
 from scipy.special import comb
 from shapely.geometry import MultiLineString
-from shapely.geometry import Point
 
 try:
-    conn = psycopg2.connect("dbname='postgres' user='postgres' host='localhost' password='1234'")
+    conn = psycopg2.connect("dbname='postgres' user='postgres' host='localhost' password='9408'")
 except:
     print("I am unable to connect to the database")
 
@@ -71,8 +67,10 @@ def convert_list_of_lists_to_mls(play_list_of_lists):
 
 def get_all_traj_matrices_list_of_lists(trajectory_table, num_agents):
     trajectory_matrices_all_lol = []
+    
     for tid in range(count_label_number(trajectory_table, 0) + count_label_number(trajectory_table, 1)):
         trajectory_matrices_all_lol.append(get_trajectory_matrix(trajectory_table, tid, num_agents))
+    
     return trajectory_matrices_all_lol
         
 def get_all_traj_matrices_shapely_fmt(trajectory_matrices_all_lol):
@@ -86,62 +84,23 @@ def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_matrix, length
     length = len(length_k_sub_matrix[0])
     
     traj_matrices_all_lol = get_all_traj_matrices_list_of_lists(trajectory_table, num_agents)
-    traj_matrices_all_shapely = get_all_traj_matrices_shapely_fmt(traj_matrices_all_lol)
+    # traj_matrices_all_shapely = get_all_traj_matrices_shapely_fmt(traj_matrices_all_lol)
     
     length_k_sub_matrix_mls = convert_list_of_lists_to_mls(length_k_sub_matrix_lol)
     
-    matrix_within_dist_threshold = []
+    nearest_matrices = [] # matrices within distance threshold 
     
     for matrix in traj_matrices_all_lol:
         haus_dist = (MultiLineString(matrix)).hausdorff_distance(length_k_sub_matrix_mls)
         #print(haus_dist)
         
         if haus_dist < distance_threshold:
-            matrix_within_dist_threshold.append(matrix)
-    
-    # sql = """select tid, aid, label, ST_AsGeoJSON(geom) from """ + str(trajectory_table) + """
-    #             where tid != """ + str(trajectory_tid) + """
-    #             and """
-                
-    #count = 0
-    # for traj in length_k_sub_matrix:
-    #     count = count + 1
-    #     for agent_traj in traj:
+            nearest_matrices.append(matrix)
         
-    #         if count == 1:
-    #             sql = sql + """ (ST_DWithin('LINESTRING(""" + str(agent_traj)[1:-1].replace("'", "") + """)'::geometry, geom, """ + str(
-    #                 distance_threshold) + """) or """
-    
-    #             continue
-    
-    #         if count == length:
-    #             sql = sql + """ ST_DWithin('LINESTRING(""" + str(agent_traj)[1:-1].replace("'", "") + """)'::geometry, geom, """ + str(
-    #                 distance_threshold) + """)) ORDER BY tid ASC, aid ASC, pid ASC;"""
-    
-    #             break
-    
-    #         sql = sql + """ ST_DWithin('LINESTRING(""" + str(agent_traj)[1:-1].replace("'", "") + """)'::geometry, geom, """ + str(
-    #             distance_threshold) + """) or """
-
-    # cur.execute(sql)
-    # nearest_matrices = cur.fetchall()
-    
-    # matrix_within_dist_threshold[play_num][agent_no][s:e]
-    # matrix_within_dist_threshold[0][4][0:5]
-    
-    
-    nearest_matrices = matrix_within_dist_threshold
-    
     s = -1
     e = 0
 
     potential_neighbor = []
-
-    # for m in range(len(nearest_matrices)):
-    #     for a in range(num_agents):
-    #         print(a, m, nearest_matrices[m][a][s:e][0][0],
-    #                nearest_matrices[m][a][s:e][0][1])
-            
 
     while s < (len(nearest_matrices) - length):
         s = s + 1
@@ -159,7 +118,7 @@ def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_matrix, length
             else:
                 break
 
-        if len(potential_neighbor) == length:
+        if len(potential_neighbor[0][0]) == length:
             total_length_k_potential_neighbor.append([[trajectory_tid, s, e],
                                                       potential_neighbor])
             potential_neighbor = [[traj[1:] for traj in ma_traj] for ma_traj in potential_neighbor]
@@ -518,7 +477,7 @@ def ma_stat_dsm(trajectory_table, point_table, candidate_table, original_list_la
 
 def main():
     start_time = time.time()
-    # update these table names as required according to the names of your postgres database tables
+
     trajectory_table = 'phase_trajectory_ma'
     point_table = 'phase_point_ma'
     candidate_table = 'candidates'
@@ -526,12 +485,12 @@ def main():
     positive_label = '1'
     negative_label = '0'
     max_iter = 1000
-    min_length = 20
+    min_length = 5
     alpha = 0.05
-    distance_threshold = 6
+    distance_threshold = 8
     # top_k = 1
     num_agents = 5
-
+    
     positive_number = count_label_number(trajectory_table, positive_label)
     negative_number = count_label_number(trajectory_table, negative_label)
 
@@ -552,9 +511,6 @@ def main():
     list_phase_tid = get_list_phase_tid(trajectory_table)
     list_phase_tid = np.array(list_phase_tid)
     list_phase_tid = list_phase_tid[:, 0].tolist()
-    
-    #list_phase_tid_set = set(list_phase_tid)
-    #list_phase_tid = list(list_phase_tid_set)
     
     list_agent_aid = get_list_agent_aid(trajectory_table)
     list_agent_aid = np.array(list_agent_aid)
