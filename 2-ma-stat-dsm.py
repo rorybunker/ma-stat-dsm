@@ -92,7 +92,7 @@ def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_matrix, length
     
     for matrix in traj_matrices_all_lol:
         haus_dist = (MultiLineString(matrix)).hausdorff_distance(length_k_sub_matrix_mls)
-        print(haus_dist)
+        #print(haus_dist)
         
         if haus_dist < distance_threshold:
             nearest_matrices.append(matrix)
@@ -100,32 +100,35 @@ def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_matrix, length
     s = -1
     e = 0
 
-    potential_neighbor = []# [[] for _ in range(num_agents)]
+    potential_neighbor = [[] for _ in range(num_agents)]
 
     while s < (len(nearest_matrices) - length):
         s = s + 1
         current_ma_traj = nearest_matrices[s]
 
-        if len(potential_neighbor) == 0:
-            #for a in range(num_agents):
-            potential_neighbor.append(current_ma_traj)
+        for a in range(num_agents):
+            if len(potential_neighbor[a]) == 0:
+                potential_neighbor[a].extend(current_ma_traj[a])
 
         while (e - s + 1) < length:
             e = e + 1
 
             end_ma_traj = nearest_matrices[e]
             if nearest_matrices[e - 1] == end_ma_traj:# + 1):
-                potential_neighbor.append(end_ma_traj)
+                for a in range(num_agents):
+                    potential_neighbor[a].extend(end_ma_traj[a])
             else:
                 break
-
+        
         if len(potential_neighbor) == length:
             total_length_k_potential_neighbor.append([[trajectory_tid, s, e],
                                                       potential_neighbor])
-            potential_neighbor = [[traj[1:] for traj in ma_traj] for ma_traj in potential_neighbor]
+            
+            for a in range(num_agents):
+                potential_neighbor[a] = potential_neighbor[a][1:]
         else:
             s = e - 1
-            potential_neighbor = []
+            potential_neighbor = [[] for _ in range(num_agents)]
 
     return total_length_k_potential_neighbor
 
@@ -135,11 +138,13 @@ def confirm_neighbor(length_k_sub_matrix_mls, list_potential_neighbor, distance_
 
     # Each potential neighbor: [[2, 0, 1], [[5.5, 14], [7, 14]]]
         
-    for potential_neighbor in list_potential_neighbor:
-        distance = length_k_sub_matrix_mls.hausdorff_distance(potential_neighbor[1])
+    for n in range(len(list_potential_neighbor)):
+        list_potential_neighbor[n][1] = convert_list_of_lists_to_mls(list_potential_neighbor[n][1])
+
+        distance = length_k_sub_matrix_mls.hausdorff_distance(list_potential_neighbor[n][1])
         
         if distance <= distance_threshold:
-            list_neighbor.append(potential_neighbor[0])
+            list_neighbor.append(list_potential_neighbor[n][0])
             #list_top_k_max.append(top_k_max)
 
     return list_neighbor
@@ -331,6 +336,8 @@ def ma_stat_dsm(trajectory_table, point_table, candidate_table, original_list_la
             #shapely format
             length_k_sub_matrix = [[str(point[0]) + ' ' + str(point[1]) for point in agent_traj] for agent_traj in length_k_sub_matrix_lol]
             
+            length_k_sub_matrix_mls = convert_list_of_lists_to_mls(length_k_sub_matrix_lol)
+            
             potential_neighbor = find_length_k_potential_neighbor(trajectory_tid, 
                                                                   length_k_sub_matrix,
                                                                   length_k_sub_matrix_lol,
@@ -338,7 +345,7 @@ def ma_stat_dsm(trajectory_table, point_table, candidate_table, original_list_la
                                                                   distance_threshold,
                                                                   num_agents)#, top_k)
 
-            list_neighbor = confirm_neighbor(length_k_sub_matrix, potential_neighbor,
+            list_neighbor = confirm_neighbor(length_k_sub_matrix_mls, potential_neighbor,
                                                              distance_threshold)
 
             if len(list_neighbor) == 0:
@@ -391,7 +398,7 @@ def ma_stat_dsm(trajectory_table, point_table, candidate_table, original_list_la
                     neighbor_start_idx = neighbor[1]
                     neighbor_end_idx = neighbor[2]
 
-                    if neighbor_end_idx == (len(dict_neighbor_full_trajectory[neighbor_tid]) - 1):
+                    if neighbor_end_idx == (len(dict_neighbor_full_trajectory[(neighbor_tid,0)]) - 1):
                         # del dict_neighbor_full_trajectory[neighbor_tid]
                         continue
 
