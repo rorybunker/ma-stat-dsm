@@ -404,8 +404,19 @@ def ma_stat_dsm(trajectory_table, point_table, candidate_table, original_list_la
 
                     new_neighbor_start_idx = neighbor_start_idx
                     new_neighbor_end_idx = neighbor_end_idx + 1
-
-                    dist = trajectory_matrix[candidate_end_idx].hausdorff_distance(dict_neighbor_full_trajectory[neighbor_tid][new_neighbor_end_idx])
+                    
+                    trajectory_matrix = [[str(point[0]) + ' ' + str(point[1]) for point in agent_traj] for agent_traj in trajectory_matrix]
+                    trajectory_matrix = [tuple(tuple(point) for point in agent_traj) for agent_traj in trajectory_matrix]
+                    trajectory_matrix_cand_end_idx = [[] for _ in range(num_agents)]
+                    
+                    for a in range(num_agents):
+                        trajectory_matrix_cand_end_idx[a].extend(trajectory_matrix[:][a][4:6])
+                    
+                    trajectory_matrix_cand_end_idx = convert_list_of_lists_to_mls(trajectory_matrix_cand_end_idx)
+                    
+                    neighbor_full_trajectory_lol = [dict_neighbor_full_trajectory[(neighbor_tid,a)][new_neighbor_end_idx:new_neighbor_end_idx+2] for a in range(num_agents)]
+                    neighbor_full_trajectory_mls = convert_list_of_lists_to_mls(neighbor_full_trajectory_lol)         
+                    dist = trajectory_matrix_cand_end_idx.hausdorff_distance(neighbor_full_trajectory_mls)
                                                  
                     
                     #if last_point_distance > local_top_k_max[0]:
@@ -485,9 +496,9 @@ def main():
     positive_label = '1'
     negative_label = '0'
     max_iter = 1000
-    min_length = 5
+    min_length = 2
     alpha = 0.05
-    distance_threshold = 6
+    distance_threshold = 8
     # top_k = 1
     num_agents = 5
     
