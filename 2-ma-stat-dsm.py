@@ -405,7 +405,7 @@ def ma_stat_dsm(trajectory_table, point_table, candidate_table, original_list_la
                     new_neighbor_start_idx = neighbor_start_idx
                     new_neighbor_end_idx = neighbor_end_idx + 1
                     
-                    trajectory_matrix = [[str(point[0]) + ' ' + str(point[1]) for point in agent_traj] for agent_traj in trajectory_matrix]
+                    # trajectory_matrix = [[str(point[0]) + ' ' + str(point[1]) for point in agent_traj] for agent_traj in trajectory_matrix]
                     trajectory_matrix = [tuple(tuple(point) for point in agent_traj) for agent_traj in trajectory_matrix]
                     trajectory_matrix_cand_end_idx = [[] for _ in range(num_agents)]
                     
@@ -496,7 +496,7 @@ def main():
     positive_label = '1'
     negative_label = '0'
     max_iter = 1000
-    min_length = 2
+    min_length = 15
     alpha = 0.05
     distance_threshold = 8
     # top_k = 1
