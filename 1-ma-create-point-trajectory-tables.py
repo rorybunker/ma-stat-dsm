@@ -39,7 +39,7 @@ label_df = pd.DataFrame(label, index=indices)
 nba_team_id = 1610612744
 label_df = label_df[(label_df[6]==nba_team_id)] 
 # and or fixed number of plays e.g. for testing purposes
-number_of_plays = 50
+number_of_plays = 200
 label_df = label_df.iloc[0:number_of_plays]
 
 #label data is in the format [label_i,t1,t2,score,shooterID,passerID,team_ID]
@@ -207,11 +207,11 @@ delete_table_rows('candidates')
 # now, in pgadmin, run these commands to import the csv files generated 
 # into postgres database:
 # COPY phase_point_ma(id, aid, tid, pid, label, geom)
-# FROM '.../[filename].csv'
+# FROM '.../point.csv'
 # DELIMITER ',' 
 # CSV HEADER;
 
 # COPY phase_trajectory_ma(id, aid, tid, label, geom)
-# FROM '.../[filename].csv'
+# FROM '.../trajectory.csv'
 # DELIMITER ',' 
 # CSV HEADER;
