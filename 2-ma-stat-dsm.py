@@ -129,7 +129,7 @@ def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_matrix, length
         else:
             s = e - 1
             potential_neighbor = [[] for _ in range(num_agents)]
-
+        
     return total_length_k_potential_neighbor
 
 def confirm_neighbor(length_k_sub_matrix_mls, list_potential_neighbor, distance_threshold):
@@ -139,12 +139,13 @@ def confirm_neighbor(length_k_sub_matrix_mls, list_potential_neighbor, distance_
     # Each potential neighbor: [[2, 0, 1], [[5.5, 14], [7, 14]]]
         
     for n in range(len(list_potential_neighbor)):
-        list_potential_neighbor[n][1] = convert_list_of_lists_to_mls(list_potential_neighbor[n][1])
+        list_potential_neighbor_id_s_e = list_potential_neighbor[n][0]
+        list_potential_neighbor_mls = convert_list_of_lists_to_mls(list_potential_neighbor[n][1])
 
-        distance = length_k_sub_matrix_mls.hausdorff_distance(list_potential_neighbor[n][1])
+        distance = length_k_sub_matrix_mls.hausdorff_distance(list_potential_neighbor_mls)
         
         if distance <= distance_threshold:
-            list_neighbor.append(list_potential_neighbor[n][0])
+            list_neighbor.append(list_potential_neighbor_id_s_e)
             #list_top_k_max.append(top_k_max)
 
     return list_neighbor
@@ -338,13 +339,15 @@ def ma_stat_dsm(trajectory_table, point_table, candidate_table, original_list_la
             
             length_k_sub_matrix_mls = convert_list_of_lists_to_mls(length_k_sub_matrix_lol)
             
+            
             potential_neighbor = find_length_k_potential_neighbor(trajectory_tid, 
                                                                   length_k_sub_matrix,
                                                                   length_k_sub_matrix_lol,
                                                                   trajectory_table, 
                                                                   distance_threshold,
                                                                   num_agents)#, top_k)
-
+            #print(potential_neighbor)
+            
             list_neighbor = confirm_neighbor(length_k_sub_matrix_mls, potential_neighbor,
                                                              distance_threshold)
 
@@ -496,7 +499,7 @@ def main():
     positive_label = '1'
     negative_label = '0'
     max_iter = 1000
-    min_length = 15
+    min_length = 5
     alpha = 0.05
     distance_threshold = 8
     # top_k = 1
