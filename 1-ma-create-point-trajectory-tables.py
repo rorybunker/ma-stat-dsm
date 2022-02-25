@@ -39,7 +39,7 @@ label_df = pd.DataFrame(label, index=indices)
 nba_team_id = 1610612744
 label_df = label_df[(label_df[6]==nba_team_id)] 
 # and or fixed number of plays e.g. for testing purposes
-number_of_plays = 100
+number_of_plays = 1000
 label_df = label_df.iloc[0:number_of_plays]
 
 #label data is in the format [label_i,t1,t2,score,shooterID,passerID,team_ID]
