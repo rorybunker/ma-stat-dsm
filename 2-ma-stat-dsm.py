@@ -117,7 +117,7 @@ def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_matrix, length
     
                 end_sub_matrix = [nearest_matrices[m][a][e] for a in range(num_agents)]
                 
-                if nearest_matrices[e - 1] == end_sub_matrix:# + 1):
+                if [nearest_matrices[m][a][e - 1] for a in range(num_agents)] == end_sub_matrix:# + 1):
                     potential_neighbor.append(end_sub_matrix)
                 else:
                     break
