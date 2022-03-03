@@ -499,9 +499,9 @@ def main():
     positive_label = '1'
     negative_label = '0'
     max_iter = 1000
-    min_length = 5
+    min_length = 20
     alpha = 0.05
-    distance_threshold = 8
+    distance_threshold = 10
     # top_k = 1
     num_agents = 5
     
