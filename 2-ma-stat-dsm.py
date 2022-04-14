@@ -62,7 +62,13 @@ def get_agent_trajectory(trajectory_table, tid, aid):
     return json.loads(rows[0][0])['coordinates']
 
 def convert_list_of_lists_to_mls(play_list_of_lists):
-    coords = [tuple(tuple(point) for point in agent_traj) for agent_traj in play_list_of_lists]
+    lol = [[]]
+    if len(play_list_of_lists) > 1:
+        for x in play_list_of_lists:
+            lol[0].append(x[0])
+        coords = lol
+    else:
+        coords = [tuple(tuple(point) for point in agent_traj) for agent_traj in play_list_of_lists]
     return MultiLineString(coords)
 
 def get_all_traj_matrices_list_of_lists(trajectory_table, num_agents):
@@ -90,12 +96,15 @@ def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_matrix, length
     
     nearest_matrices = [] # matrices within distance threshold 
     
+    mid = 0
     for matrix in traj_matrices_all_lol:
         haus_dist = (MultiLineString(matrix)).hausdorff_distance(length_k_sub_matrix_mls)
         #print(haus_dist)
         
         if haus_dist < distance_threshold:
-            nearest_matrices.append(matrix)
+            nearest_matrices.append([mid, matrix])
+            
+        mid += 1
         
     s = -1
     e = 0
@@ -104,9 +113,9 @@ def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_matrix, length
     potential_neighbor = []
     
     for m in range(len(nearest_matrices)):
-        while s < (len(nearest_matrices[m][0]) - length):
+        while s < (len(nearest_matrices[m][1][0]) - length):
             s = s + 1
-            current_sub_matrix = [nearest_matrices[m][a][s] for a in range(num_agents)]
+            current_sub_matrix = [nearest_matrices[m][1][a][s] for a in range(num_agents)]
     
             #for a in range(num_agents):
             if len(potential_neighbor) == 0:
@@ -115,9 +124,18 @@ def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_matrix, length
             while (e - s + 1) < length:
                 e = e + 1
     
-                end_sub_matrix = [nearest_matrices[m][a][e] for a in range(num_agents)]
+                end_sub_matrix = [nearest_matrices[m][1][a][e] for a in range(num_agents)]
                 
-                if [nearest_matrices[m][a][e - 1] for a in range(num_agents)] == end_sub_matrix:# + 1):
+                
+                #if tid of second to last sub-matrix = the tid of the last sub-matrix
+	            #and the pid of the second to last sub-matrix + 1 = the pid of the last sub-matrix
+
+                #then append the last sub-matrix to potential neighbor
+
+                #if [nearest_matrices[m][a][e - 1] for a in range(num_agents)] == end_sub_matrix:# + 1):
+                #    potential_neighbor.append(end_sub_matrix)
+                    
+                if nearest_matrices[e - 1][0] + 1 == nearest_matrices[e][0]:
                     potential_neighbor.append(end_sub_matrix)
                 else:
                     break
@@ -499,11 +517,11 @@ def main():
     positive_label = '1'
     negative_label = '0'
     max_iter = 1000
-    min_length = 20
+    min_length = 10
     alpha = 0.05
     distance_threshold = 10
     # top_k = 1
-    num_agents = 5
+    num_agents = 1
     
     positive_number = count_label_number(trajectory_table, positive_label)
     negative_number = count_label_number(trajectory_table, negative_label)
