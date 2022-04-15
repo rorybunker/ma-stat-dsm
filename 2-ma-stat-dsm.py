@@ -125,12 +125,6 @@ def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_matrix, length
                 e = e + 1
     
                 end_sub_matrix = [nearest_matrices[m][1][a][e] for a in range(num_agents)]
-                
-                
-                #if tid of second to last sub-matrix = the tid of the last sub-matrix
-	            #and the pid of the second to last sub-matrix + 1 = the pid of the last sub-matrix
-
-                #then append the last sub-matrix to potential neighbor
 
                 #if [nearest_matrices[m][a][e - 1] for a in range(num_agents)] == end_sub_matrix:# + 1):
                 #    potential_neighbor.append(end_sub_matrix)
@@ -358,7 +352,7 @@ def ma_stat_dsm(trajectory_table, point_table, candidate_table, original_list_la
             
             length_k_sub_matrix_mls = convert_list_of_lists_to_mls(length_k_sub_matrix_lol)
             
-            potential_neighbor = find_length_k_potential_neighbor(trajectory_tid, 
+            potential_neighbor = find_length_k_potential_neighbor(trajectory_tid,
                                                                   length_k_sub_matrix,
                                                                   length_k_sub_matrix_lol,
                                                                   trajectory_table, 
@@ -519,9 +513,9 @@ def main():
     max_iter = 1000
     min_length = 10
     alpha = 0.05
-    distance_threshold = 10
+    distance_threshold = 7.5
     # top_k = 1
-    num_agents = 1
+    num_agents = 5
     
     positive_number = count_label_number(trajectory_table, positive_label)
     negative_number = count_label_number(trajectory_table, negative_label)
