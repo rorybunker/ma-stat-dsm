@@ -511,11 +511,11 @@ def main():
     positive_label = '1'
     negative_label = '0'
     max_iter = 1000
-    min_length = 10
+    min_length = 2
     alpha = 0.05
-    distance_threshold = 7.5
+    distance_threshold = 15
     # top_k = 1
-    num_agents = 5
+    num_agents = 1
     
     positive_number = count_label_number(trajectory_table, positive_label)
     negative_number = count_label_number(trajectory_table, negative_label)
