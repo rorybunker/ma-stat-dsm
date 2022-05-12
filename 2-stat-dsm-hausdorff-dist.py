@@ -12,8 +12,7 @@ from hausdorff import hausdorff_distance
 from scipy.special import comb
 
 try:
-    conn = psycopg2.connect("dbname='postgres' user='postgres' host='localhost' password='9408'")
-    # for example, conn = psycopg2.connect("dbname='postgres' user='postgres' host='localhost' password='1234'")
+    conn = psycopg2.connect("dbname='postgres' user='postgres' host='localhost' password='1234'")
 except:
     print("I am unable to connect to the database")
 
