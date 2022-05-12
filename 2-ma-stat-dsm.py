@@ -12,7 +12,7 @@ from scipy.special import comb
 from shapely.geometry import MultiLineString
 
 try:
-    conn = psycopg2.connect("dbname='postgres' user='postgres' host='localhost' password='9408'")
+    conn = psycopg2.connect("dbname='postgres' user='postgres' host='localhost' password='1234'")
 except:
     print("I am unable to connect to the database")
 
