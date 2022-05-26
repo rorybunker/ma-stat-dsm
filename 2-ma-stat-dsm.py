@@ -10,6 +10,9 @@ os.chdir("/Users/rorybunker/")
 
 from scipy.special import comb
 from shapely.geometry import MultiLineString
+from hausdorff import hausdorff_distance
+from shapely.geometry import LineString
+from shapely.geometry import Point
 
 try:
     conn = psycopg2.connect("dbname='postgres' user='postgres' host='localhost' password='1234'")
@@ -17,7 +20,11 @@ except:
     print("I am unable to connect to the database")
 
 cur = conn.cursor()
-        
+
+def calculate_hausdorff_distance(X, Y, base_dist = 'euclidean'):
+    h_dist = hausdorff_distance(np.array(X), np.array(Y), base_dist)
+    return h_dist
+
 def count_label_number(trajectory_table, label):
     sql = """select count(distinct tid) from """ + str(trajectory_table) + """ where label = '""" + str(label) + """'"""
     
@@ -69,13 +76,18 @@ def convert_list_of_lists_to_mls(play_list_of_lists):
         coords = lol
     else:
         coords = [tuple(tuple(point) for point in agent_traj) for agent_traj in play_list_of_lists]
-    return MultiLineString(coords)
+    if len(coords) == 1:
+        return Point(coords[0][0])
+    elif len(coords) == 2:
+        return LineString(coords)
+    else:
+        return MultiLineString(coords)
 
 def get_all_traj_matrices_list_of_lists(trajectory_table, num_agents):
     trajectory_matrices_all_lol = []
     
     for tid in range(count_label_number(trajectory_table, 0) + count_label_number(trajectory_table, 1)):
-        trajectory_matrices_all_lol.append(get_trajectory_matrix(trajectory_table, tid, num_agents))
+        trajectory_matrices_all_lol.append([tid, get_trajectory_matrix(trajectory_table, tid, num_agents)])
     
     return trajectory_matrices_all_lol
         
@@ -94,17 +106,27 @@ def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_matrix, length
     
     length_k_sub_matrix_mls = convert_list_of_lists_to_mls(length_k_sub_matrix_lol)
     
-    nearest_matrices = [] # matrices within distance threshold 
+    nearest_columns = [] # matrix columns that are within distance threshold 
     
-    mid = 0
-    for matrix in traj_matrices_all_lol:
-        haus_dist = (MultiLineString(matrix)).hausdorff_distance(length_k_sub_matrix_mls)
-        #print(haus_dist)
+    for traj in traj_matrices_all_lol:
+        mid = traj[0] # matrix id
+        matrix = traj[1]
+        cid = 0 # column id
         
-        if haus_dist < distance_threshold:
-            nearest_matrices.append([mid, matrix])
-            
-        mid += 1
+        if mid != trajectory_tid:
+            for agent_traj in matrix:
+                column_list = []
+                for cid in range(len(agent_traj)):
+                    column_list.append([tuple(agent_traj[cid]) for agent_traj in matrix])
+    
+                    if len(column_list[0]) == 1:
+                        haus_dist = (Point(column_list[0])).hausdorff_distance(length_k_sub_matrix_mls)
+                    else:
+                        haus_dist = (LineString(column_list[0])).hausdorff_distance(length_k_sub_matrix_mls)
+                        
+                    if haus_dist < distance_threshold:
+                        nearest_columns.append([mid, cid, column_list[cid]])
+                    # column_list = []
         
     s = -1
     e = 0
@@ -112,54 +134,46 @@ def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_matrix, length
     #potential_neighbor = [[] for _ in range(num_agents)]
     potential_neighbor = []
     
-    for m in range(len(nearest_matrices)):
-        while s < (len(nearest_matrices[m][1][0]) - length):
-            s = s + 1
-            current_sub_matrix = [nearest_matrices[m][1][a][s] for a in range(num_agents)]
-    
-            #for a in range(num_agents):
-            if len(potential_neighbor) == 0:
-                potential_neighbor.append(current_sub_matrix)
-    
-            while (e - s + 1) < length:
-                e = e + 1
-    
-                end_sub_matrix = [nearest_matrices[m][1][a][e] for a in range(num_agents)]
+    while s < (len(nearest_columns) - length):
+        s = s + 1
+        current_column = list(nearest_columns[s])
 
-                #if [nearest_matrices[m][a][e - 1] for a in range(num_agents)] == end_sub_matrix:# + 1):
-                #    potential_neighbor.append(end_sub_matrix)
-                    
-                if nearest_matrices[e - 1][0] + 1 == nearest_matrices[e][0]:
-                    potential_neighbor.append(end_sub_matrix)
-                else:
-                    break
-            
-            if len(potential_neighbor) == length:
-                total_length_k_potential_neighbor.append([[trajectory_tid, s, e],
-                                                          potential_neighbor])
-                
-                potential_neighbor = potential_neighbor[1:]
+        if len(potential_neighbor) == 0:
+            potential_neighbor.append(current_column[2])
+
+        while (e - s + 1) < length:
+            e = e + 1
+
+            end_column = list(nearest_columns[e])
+            if (list(nearest_columns[e - 1])[0] == end_column[0]) and (end_column[1] == list(nearest_columns[e - 1])[1] + 1):
+                potential_neighbor.append(end_column[2])
             else:
-                s = e - 1
-                potential_neighbor = []
+                break
+
+        if len(potential_neighbor) == length:
+            total_length_k_potential_neighbor.append([[current_column[0], current_column[1], list(nearest_columns[e])[1]],
+                                                      potential_neighbor])
+            potential_neighbor = potential_neighbor[1:]
+        else:
+            s = e - 1
+            potential_neighbor = []
        
     return total_length_k_potential_neighbor
 
 def confirm_neighbor(length_k_sub_matrix_mls, list_potential_neighbor, distance_threshold):
     list_neighbor = []
-    #list_top_k_max = []
 
     # Each potential neighbor: [[2, 0, 1], [[5.5, 14], [7, 14]]]
-        
-    for p in range(len(list_potential_neighbor)):
-        list_potential_neighbor_id_s_e = list_potential_neighbor[p][0]
-        list_potential_neighbor_mls = convert_list_of_lists_to_mls(list_potential_neighbor[p][1])
 
-        distance = length_k_sub_matrix_mls.hausdorff_distance(list_potential_neighbor_mls)
+    for potential_neighbor in list_potential_neighbor:
         
-        if distance <= distance_threshold:
-            list_neighbor.append(list_potential_neighbor_id_s_e)
-            #list_top_k_max.append(top_k_max)
+        if len(potential_neighbor[1][0]) == 1:
+            haus_dist = (Point(potential_neighbor[1][0])).hausdorff_distance(length_k_sub_matrix_mls)
+        else:
+            haus_dist = (MultiLineString(potential_neighbor[1])).hausdorff_distance(length_k_sub_matrix_mls)
+        
+        if haus_dist <= distance_threshold:
+            list_neighbor.append(potential_neighbor[0])
 
     return list_neighbor
 
@@ -388,7 +402,7 @@ def ma_stat_dsm(trajectory_table, point_table, candidate_table, original_list_la
 
             current_list_neighbor = list_neighbor
             current_list_neighbor_tid = list_neighbor_tid
-            # current_list_top_k_max = list_top_k_max
+            #current_list_top_k_max = list_top_k_max
 
             dict_neighbor_full_trajectory = get_neighbor_trajectories(trajectory_table, current_list_neighbor_tid)
 
@@ -432,15 +446,14 @@ def ma_stat_dsm(trajectory_table, point_table, candidate_table, original_list_la
                     neighbor_full_trajectory_lol = [dict_neighbor_full_trajectory[(neighbor_tid,a)][new_neighbor_end_idx:new_neighbor_end_idx+2] for a in range(num_agents)]
                     neighbor_full_trajectory_mls = convert_list_of_lists_to_mls(neighbor_full_trajectory_lol)         
                     dist = trajectory_matrix_cand_end_idx.hausdorff_distance(neighbor_full_trajectory_mls)
-                                                 
-                    
+
                     #if last_point_distance > local_top_k_max[0]:
                     #    local_top_k_max.append(last_point_distance)
                     #    local_top_k_max.sort()
                     #    local_top_k_max = local_top_k_max[1:]
 
                     # dist = sum(local_top_k_max) / min_length
-                    # dist = sum(local_top_k_max) / top_k
+                    #dist = sum(local_top_k_max) / top_k
 
                     # _, dist = max_euclidean.calculate_top_k(top_k,
                     #                                         trajectory[candidate_start_idx:(candidate_end_idx + 1)],
@@ -500,7 +513,6 @@ def ma_stat_dsm(trajectory_table, point_table, candidate_table, original_list_la
 
     return 'FAIL'
 
-
 def main():
     start_time = time.time()
 
@@ -511,9 +523,9 @@ def main():
     positive_label = '1'
     negative_label = '0'
     max_iter = 1000
-    min_length = 2
+    min_length = 10
     alpha = 0.05
-    distance_threshold = 15
+    distance_threshold = 7
     # top_k = 1
     num_agents = 1
     
