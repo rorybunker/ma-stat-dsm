@@ -434,18 +434,11 @@ def ma_stat_dsm(trajectory_table, point_table, candidate_table, original_list_la
                     new_neighbor_start_idx = neighbor_start_idx
                     new_neighbor_end_idx = neighbor_end_idx + 1
                     
-                    # trajectory_matrix = [[str(point[0]) + ' ' + str(point[1]) for point in agent_traj] for agent_traj in trajectory_matrix]
-                    trajectory_matrix = [tuple(tuple(point) for point in agent_traj) for agent_traj in trajectory_matrix]
-                    trajectory_matrix_cand_end_idx = [[] for _ in range(num_agents)]
-                    
-                    for a in range(num_agents):
-                        trajectory_matrix_cand_end_idx[a].extend(trajectory_matrix[:][a][4:6])
-                    
-                    trajectory_matrix_cand_end_idx = convert_list_of_lists_to_mls(trajectory_matrix_cand_end_idx)
-                    
-                    neighbor_full_trajectory_lol = [dict_neighbor_full_trajectory[(neighbor_tid,a)][new_neighbor_end_idx:new_neighbor_end_idx+2] for a in range(num_agents)]
-                    neighbor_full_trajectory_mls = convert_list_of_lists_to_mls(neighbor_full_trajectory_lol)         
-                    dist = trajectory_matrix_cand_end_idx.hausdorff_distance(neighbor_full_trajectory_mls)
+                    if num_agents == 1:
+                        dist = np.linalg.norm(np.array(trajectory_matrix[0][candidate_end_idx]) - np.array(dict_neighbor_full_trajectory[(neighbor_tid,0)][new_neighbor_end_idx]))
+                    elif num_agents > 1:
+                        dist = calculate_hausdorff_distance([trajectory_matrix[a][candidate_end_idx] for a in range(num_agents)],
+                                                 [dict_neighbor_full_trajectory[(neighbor_tid,a)][new_neighbor_end_idx] for a in range(num_agents)])
 
                     #if last_point_distance > local_top_k_max[0]:
                     #    local_top_k_max.append(last_point_distance)
@@ -494,7 +487,7 @@ def ma_stat_dsm(trajectory_table, point_table, candidate_table, original_list_la
 
                 root.append([[trajectory_tid, candidate_start_idx, candidate_end_idx], current_list_neighbor_tid])
 
-            list_tree.append({"candidate": json.dumps({'candidates': root})})
+            list_tree.append({"candidate": json.dumps({'candidates_ma': root})})
 
         insert_list_tree(candidate_table, list_tree)
 
@@ -518,12 +511,12 @@ def main():
 
     trajectory_table = 'phase_trajectory_ma'
     point_table = 'phase_point_ma'
-    candidate_table = 'candidates'
+    candidate_table = 'candidates_ma'
 
     positive_label = '1'
     negative_label = '0'
     max_iter = 1000
-    min_length = 10
+    min_length = 5
     alpha = 0.05
     distance_threshold = 7
     # top_k = 1
@@ -579,5 +572,5 @@ def main():
 if __name__ == "__main__":
     main()
     
-# TO EXPORT THE candidates TABLE FROM POSTGRES TO A CSV FILE
-# In postgres' psql shell, execute the following command \copy (SELECT * FROM candidates) to '/.../candidates.csv' with csv;
+# TO EXPORT THE candidates_ma TABLE FROM POSTGRES TO A CSV FILE
+# In postgres' psql shell, execute the following command \copy (SELECT * FROM candidates_ma) to '/.../candidates_ma.csv' with csv;
