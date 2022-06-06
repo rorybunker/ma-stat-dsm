@@ -24,7 +24,7 @@ import sys
 #index: corresponding to the file at root\nba_attack2\nba_datalength.csv
 
 # enter your working directory under path:
-path = '.../dataset_as_a_file_600_games.pkl'
+path = '/Users/rorybunker/Documents/dataset_as_a_file_600_games.pkl'
 
 f = open(path, 'rb')
 data = pickle.load(f)
@@ -35,7 +35,8 @@ label = array(data[1], dtype=object)
 
 label_df = pd.DataFrame(label, index=indices)
 # or if you want to select specific teams e.g. Golden state warriors and 
-# label_df= label_df[(label_df[6]==1610612744) | (label_df[6]==1610612759)] 
+# label_df= label_df[(label_df[6]==1610612744)] 
+# label_df = label_df[0:100]
 
 #label data is in the format [label_i,t1,t2,score,shooterID,passerID,team_ID]
 effective = label_df.iloc[:,0]
@@ -164,10 +165,10 @@ create_trajectory_csv(offense_df, 'offense_df')
 
 # enter your postgres database details in below param_dic
 param_dic = {
-    "host"      : "...",
-    "database"  : "...",
-    "user"      : "...",
-    "password"  : "..."
+    "host"      : "localhost",
+    "database"  : "postgres",
+    "user"      : "postgres",
+    "password"  : "1234"
 }
 
 def connect(params_dic):
@@ -195,18 +196,38 @@ delete_table_rows('phase_point')
 delete_table_rows('phase_trajectory')
 delete_table_rows('candidates') 
 
-
-def import_csv_files_to_postgres(filename):
-    conn = connect(param_dic)
+def import_point_table_into_postgres(filename):
+    conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/postgres')
     cur = conn.cursor()
-    sql = """COPY phase_point(id, tid, pid, label, geom) FROM '""" + filename +""".csv' 
-            DELIMITER ',' 
-            CSV HEADER;"""
-    cur.execute(sql)
-    conn.commit()
-    cur.close()
-    conn.close()
-    
+    copy_sql = """
+               COPY phase_point(id, tid, pid, label, geom)
+               FROM '/Users/rorybunker/""" + filename + """.csv' 
+               DELIMITER ',' 
+               CSV HEADER;
+               """
+    with open(path, 'r') as f:
+        cur.copy_expert(sql=copy_sql, file=f)
+        conn.commit()
+        cur.close()
+
+import_point_table_into_postgres('offense_df_point')
+
+def import_traj_table_into_postgres(filename):
+    conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/postgres')
+    cur = conn.cursor()
+    copy_sql = """
+               COPY phase_trajectory(id, tid, label, geom)
+               FROM '/Users/rorybunker/""" + filename + """.csv' 
+               DELIMITER ',' 
+               CSV HEADER;
+               """
+    with open(path, 'r') as f:
+        cur.copy_expert(sql=copy_sql, file=f)
+        conn.commit()
+        cur.close()
+        
+import_traj_table_into_postgres('offense_df_trajectory')
+
 # Now, in pgadmin, run these commands to import the csv files that were generated 
 # into the postgres database:
 # COPY phase_point(id, tid, pid, label, geom)
