@@ -6,14 +6,13 @@ import sys
 sys.setrecursionlimit(10000)
 
 import os
-os.chdir("...")
+os.chdir("/Users/rorybunker")
 
 import max_euclidean
 from scipy.special import comb
 
 try:
-    conn = psycopg2.connect("dbname='' user='' host='' password=''")
-    # for example, conn = psycopg2.connect("dbname='postgres' user='postgres' host='localhost' password='1234'")
+    conn = psycopg2.connect("dbname='postgres' user='postgres' host='localhost' password='1234'")
 except:
     print("I am unable to connect to the database")
 
