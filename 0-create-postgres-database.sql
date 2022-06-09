@@ -1,23 +1,23 @@
 CREATE EXTENSION postgis;
 
-DROP TABLE IF EXISTS phase_point;
-CREATE TABLE phase_point
+DROP TABLE IF EXISTS point;
+CREATE TABLE point
 (
     id serial NOT NULL,
 	tid integer,
 	pid integer,
 	label character varying(5),
     geom geometry,
-    CONSTRAINT phase_point_id PRIMARY KEY (id)
+    CONSTRAINT point_id PRIMARY KEY (id)
 )
 
-CREATE INDEX phase_point_idx
-  ON phase_point
+CREATE INDEX point_idx
+  ON point
   USING GIST (geom);
   
 -------------------------------------
-DROP TABLE IF EXISTS phase_point_ma;
-CREATE TABLE phase_point_ma
+DROP TABLE IF EXISTS point_ma;
+CREATE TABLE point_ma
 (
     id serial NOT NULL,
 	aid integer,
@@ -25,44 +25,44 @@ CREATE TABLE phase_point_ma
 	pid integer,
 	label character varying(5),
     geom geometry,
-    CONSTRAINT phase_point_ma_id PRIMARY KEY (id)
+    CONSTRAINT point_ma_id PRIMARY KEY (id)
 )
 
-CREATE INDEX phase_point_ma_idx
-  ON phase_point_ma
+CREATE INDEX point_ma_idx
+  ON point_ma
   USING GIST (geom);
 
 
 -----------------------------------------------------
 
-DROP TABLE IF EXISTS phase_trajectory;
-CREATE TABLE phase_trajectory
+DROP TABLE IF EXISTS trajectory;
+CREATE TABLE trajectory
 (
     id serial NOT NULL,
 	tid integer,
 	label character varying(5),
     geom geometry,
-    CONSTRAINT phase_trajectory_id PRIMARY KEY (id)
+    CONSTRAINT trajectory_id PRIMARY KEY (id)
 )
 
-CREATE INDEX phase_trajectory_idx
-  ON phase_trajectory
+CREATE INDEX trajectory_idx
+  ON trajectory
   USING GIST (geom);
 
 -----------------------------------------------------
-DROP TABLE IF EXISTS phase_trajectory_ma;
-CREATE TABLE phase_trajectory_ma
+DROP TABLE IF EXISTS trajectory_ma;
+CREATE TABLE trajectory_ma
 (
     id serial NOT NULL,
 	aid integer,
 	tid integer,
 	label character varying(5),
     geom geometry,
-    CONSTRAINT phase_trajectory_ma_id PRIMARY KEY (id)
+    CONSTRAINT trajectory_ma_id PRIMARY KEY (id)
 )
 
-CREATE INDEX phase_trajectory_ma_idx
-  ON phase_trajectory_ma
+CREATE INDEX trajectory_ma_idx
+  ON trajectory_ma
   USING GIST (geom);
 
 -----------------------------------------------------
