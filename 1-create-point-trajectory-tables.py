@@ -17,12 +17,6 @@ from shapely.geometry import Point
 import psycopg2
 import sys
 
-# data is in the format [feature, label, index]
-#feature: Position(23:OFxy,DFxy,Ballxyz), player_ID(10), Clock, ShotClock, 
-# Ball_OF, Ball_Hold
-#label: effective attack (1) or ineffective attack (0), T1, T2, score or not
-#index: corresponding to the file at root\nba_attack2\nba_datalength.csv
-
 # enter your postgres database details
 param_dic = {
     "host"      : "localhost",
@@ -184,28 +178,40 @@ def main():
     f = open(path, 'rb')
     data = pickle.load(f)
     
+    # data is in the format [feature, label, index]
+    # feature: Position(23:OFxy,DFxy,Ballxyz), player_ID(10), Clock, ShotClock, 
+    # Ball_OF, Ball_Hold
+    # label: effective attack (1) or ineffective attack (0), T1, T2, score or not
+    # index: corresponding to the file at root\nba_attack2\nba_datalength.csv
+
     indices = array(data[2].astype(int), dtype=object)
     trajectories = array(data[0], dtype=object)
     label = array(data[1], dtype=object)
     
+    id_team_df = pd.read_csv('id_team.csv')
+    
+    #pd.merge(product,customer,on='Product_ID',how='left')
+    
     label_df = pd.DataFrame(label, index=indices)
     # or if you want to select specific teams e.g. Golden state warriors and 
-    # label_df= label_df[(label_df[6]==1610612744)] 
-    label_df = label_df[0:200]
+    # Cleveland: 1610612739, Golden State Warriors 1610612744
+    label_df= label_df[(label_df[6]==1610612739)]
+    # label_df = label_df[0:1000]
     
     # label data is in the format [label_i,t1,t2,score,shooterID,passerID,team_ID]
     effective = label_df.iloc[:,0]
     
-    # time intervals
-    t1 = label_df.iloc[:,1]
-    t2 = label_df.iloc[:,2]
-    t2 = label_df.iloc[:,2][t2>0]
-
     # specify the agent - 'ball', 'shooter', 'shooterdefender', 'lastpasser' 
     # or 'lastpasserdefender'
-    agent_name = 'shooterdefender'
+    agent_name = 'shooter'
     # specify the time interval - t1 or t2
-    t_interval = t2
+    time_interval = 't2'
+    
+    if time_interval == 't1':
+        t_interval = label_df.iloc[:,1]
+    elif time_interval == 't2':
+        t2 = label_df.iloc[:,2]
+        t_interval = label_df.iloc[:,2][t2>0]
     
     # create dataframe for agent with time interval specified 
     agent_df = create_agent_df(agent_name, t_interval, trajectories)
@@ -222,4 +228,5 @@ def main():
     import_point_table_into_postgres(agent_name + '_point', path)
     import_traj_table_into_postgres(agent_name + '_trajectory', path)
     
-main()
+if __name__ == '__main__':
+    main()
