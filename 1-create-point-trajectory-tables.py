@@ -188,7 +188,7 @@ def main():
     trajectories = array(data[0], dtype=object)
     label = array(data[1], dtype=object)
     
-    id_team_df = pd.read_csv('id_team.csv')
+    # id_team_df = pd.read_csv('id_team.csv')
     
     #pd.merge(product,customer,on='Product_ID',how='left')
     
@@ -200,6 +200,7 @@ def main():
     
     # label data is in the format [label_i,t1,t2,score,shooterID,passerID,team_ID]
     effective = label_df.iloc[:,0]
+    score = label_df.iloc[:,3]
     
     # specify the agent - 'ball', 'shooter', 'shooterdefender', 'lastpasser' 
     # or 'lastpasserdefender'
