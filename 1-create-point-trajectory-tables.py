@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Import 600-game NBA dataset .plk file, export point-level and trajectory-level 
+Import 600-game NBA dataset .pkl file, export point-level and trajectory-level 
 csv files for each agent which are then created in the PostgreSQL database, 
 which then are inputs to the Stat-DSM algorithm.
 
