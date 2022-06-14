@@ -458,8 +458,8 @@ def stat_dsm(trajectory_table, point_table, candidate_table, original_list_label
 def main():
     start_time = time.time()
     # update these table names as required according to the names of your postgres database tables
-    trajectory_table = 'phase_trajectory'
-    point_table = 'phase_point'
+    trajectory_table = 'trajectory'
+    point_table = 'point'
     candidate_table = 'candidates'
 
     positive_label = '1'
