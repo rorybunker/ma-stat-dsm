@@ -13,7 +13,7 @@ The "ma" in .py filenames denote that it relates to MA-Stat-DSM.
 - In the main() function, update the path to dataset_as_a_file_600_games.pkl
 - If you want to run for a specific team, uncomment and enter the team ID in the line 
 ```label_df= label_df[(label_df[6]==1610612739)]```. The team ID 1610612739 is Cleveland.
-- If you want to run for a fewer number of matches, uncomment the line below and set a number, e.g., 100 in ```label_df = label_df[0:100]```
+- If you want to run for a fewer number of matches, uncomment and set a number, e.g., 100 in ```label_df = label_df[0:100]```
 - Specify agent_name as either 'ball', 'shooter', 'shooterdefender', 'lastpasser' or 'lastpasserdefender'
 - Specify time_interval as either 't1' or 't2'
 ![image](https://user-images.githubusercontent.com/29388472/173998123-ad0bade2-e42d-4261-89dd-40a4bc7834d3.png)
