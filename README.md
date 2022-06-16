@@ -16,11 +16,10 @@ The "ma" in .py filenames denote that it relates to MA-Stat-DSM.
 - specify agent_name as either 'ball', 'shooter', 'shooterdefender', 'lastpasser' or 'lastpasserdefender'
 - specify time_interval as either 't1' or 't2'
 
-4. In 2-stat-dsm.py:  
-    - Set your working directory in line 9.  
-    - Specify your Postgres database details in line 15.  
-    - Set the Stat-DSM parameters from lines 469--472.   
-Run 2-stat-dsm.py.  
+### 2-stat-dsm.py:  
+- Set your working directory in os.chdir(" ")
+- Specify min_length and distance_threshold (in principle, the other parameters should remain fixed) 
+
 5. In postgres' psql shell, which is a terminal with postgres=# (if on Mac, you can use postgres.app and double click on your postgres database to open the shell), execute the following command:
     \copy (SELECT * FROM candidates) to '/.../candidates.csv' with csv;
 6. In 3-calculate-candidate-subtraj-pvalues.py:  
