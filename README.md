@@ -16,6 +16,7 @@ The "ma" in .py filenames denote that it relates to MA-Stat-DSM.
 - If you want to run for a fewer number of matches, uncomment the line below and set a number, e.g., 100 in ```label_df = label_df[0:100]```
 - Specify agent_name as either 'ball', 'shooter', 'shooterdefender', 'lastpasser' or 'lastpasserdefender'
 - Specify time_interval as either 't1' or 't2'
+![image](https://user-images.githubusercontent.com/29388472/173998123-ad0bade2-e42d-4261-89dd-40a4bc7834d3.png)
 
 ### 2-stat-dsm.py:  
 - Set your working directory in os.chdir(" ")
