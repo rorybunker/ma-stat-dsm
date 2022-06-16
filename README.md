@@ -7,9 +7,8 @@ Le Vo, D. N., Sakuma, T., Ishiyama, T., Toda, H., Arai, K., Karasuyama, M., ... 
 
 ## STEP 1: Setup PostgreSQL database environment
 1. Install PostgreSQL https://www.postgresql.org/download/, which also includes pgAdmin (on Mac it is recommended to also install https://postgresapp.com/).
-2. Create a PostgreSQL database with \\
-dbname dbname = 'postgres', user = 'postgres', host = 'localhost', password = 1234, and port 5432.\\
-Then, in pgadmin, run the queries in 0-create-postgres-database.sql to create the required database tables.
+2. Create a PostgreSQL database with the following: dbname dbname = 'postgres', user = 'postgres', host = 'localhost', password = 1234, and port 5432.
+3. In pgadmin, run the queries in 0-create-postgres-database.sql to create the required database tables.
 
 ## STEP 2: Running Stat-DSM 
 3. In 1-create-point-trajectory-tables.py:    
