@@ -1,13 +1,17 @@
 # Multi-Agent Statistically Discriminative Sub-trajectory Mining (MA-Stat-DSM)
-Code for original (Single-agent) Statistically Discriminative Sub-trajectory Mining, proposed by Le Vo et al., 2020, and a new Multi-Agent Statistically Discriminative Sub-trajectory Mining (MA-Stat-DSM), which handles the trajectories of multiple agents (e.g., players and the ball in sport). The "ma" in .py file name denotes that it relates to MA-Stat-DSM.
+Code for original Stat-DSM, proposed by Le Vo et al. (2020), and a new Multi-Agent Statistically Discriminative Sub-trajectory Mining (MA-Stat-DSM), which extends Stat-DSM to handle the trajectories of multiple agents (e.g., multiple players and the ball in sport). 
 
-Le Vo et al. (2020): https://ieeexplore.ieee.org/abstract/document/9093199
+The "ma" in .py filenames denote that it relates to MA-Stat-DSM.
 
-**Intitial setup**
-1. Install PostgreSQL https://www.postgresql.org/download/ (this installer includes pgAdmin). You need to be able to run queries in this database and access the postgres shell (on Mac it is recommended to also install https://postgresapp.com/ since it provides quick access to the postgres shell).
-2. Create a PostgreSQL database, and then create the tables in 0-create-postgres-database.sql (right click on the database in pgAdmin -> Query tool), which are required to run the Stat-DSM code.
+Le Vo, D. N., Sakuma, T., Ishiyama, T., Toda, H., Arai, K., Karasuyama, M., ... & Takeuchi, I. (2020). Stat-DSM: Statistically Discriminative Sub-Trajectory Mining With Multiple Testing Correction. IEEE Transactions on Knowledge and Data Engineering. DOI: 10.1109/TKDE.2020.2994344
 
-**Instructions for how to run (Single-Agent) Stat-DSM**.   
+## STEP 1: Setup PostgreSQL database environment
+1. Install PostgreSQL https://www.postgresql.org/download/, which also includes pgAdmin (on Mac it is recommended to also install https://postgresapp.com/).
+2. Create a PostgreSQL database with \\
+dbname dbname = 'postgres', user = 'postgres', host = 'localhost', password = 1234, and port 5432.\\
+Then, in pgadmin, run the queries in 0-create-postgres-database.sql to create the required database tables.
+
+## STEP 2: Running Stat-DSM 
 3. In 1-create-point-trajectory-tables.py:    
     - Enter your working directory in line 27.  
     - Enter your Postgres database details in param_dic (lines 166--171).  
