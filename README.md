@@ -9,12 +9,13 @@ The "ma" in .py filenames denote that it relates to MA-Stat-DSM.
 3. In pgadmin, run the queries in 0-create-postgres-database.sql to create the required database tables.
 
 ## STEP 2: Running Stat-DSM 
-3. In 1-create-point-trajectory-tables.py:    
-    - Enter your working directory in line 27.  
-    - Enter your Postgres database details in param_dic (lines 166--171).  
-    - Uncomment one of the lines 140--144 and lines 159--163 based on the agent you are considering.   
-Run 1-create-point-trajectory-tables.py.   
-3. In pgAdmin, right click on the database -> Query tool, run the two queries that are commented in lines 211 onwards (update the FROM line based on where your csv files were exported to).  
+### 1-create-point-trajectory-tables.py:    
+- In the main() function, update the path to dataset_as_a_file_600_games.pkl
+- If you want to run for a specific team, enter the team ID in the line 
+label_df= label_df[(label_df[6]==1610612739)]. The team ID 1610612739 is Cleveland.
+- specify the agent as either 'ball', 'shooter', 'shooterdefender', 'lastpasser' or 'lastpasserdefender' under agent_name, e.g., agent_name = 'shooter'
+- specify the time_interval as either 't1' or 't2'
+
 4. In 2-stat-dsm.py:  
     - Set your working directory in line 9.  
     - Specify your Postgres database details in line 15.  
