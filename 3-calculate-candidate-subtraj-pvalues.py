@@ -15,19 +15,19 @@ from scipy.special import comb
 sys.setrecursionlimit(10000)
 from sqlalchemy import create_engine
 
-engine = create_engine('postgresql://[dbname]:[password]@[host]:[port]/[user]')
+engine = create_engine('postgresql://postgres:1234@localhost:5432/postgres')
 os.chdir("...")
 delta_star = 0.00013399037455212777 # ENTER THE DELTA* VALUE CALCULATED BY STAT-DSM
 
 try:
-    conn = psycopg2.connect("dbname='[dbname]' user='[user]' host='[host]' password='[password]'")
+    conn = psycopg2.connect("dbname='postgres' user='postgres' host='localhost' password='1234'")
 except:
     print("I am unable to connect to the database")
     
 cur = conn.cursor()
 
-trajectory_table = 'phase_trajectory'
-point_table = 'phase_point'
+trajectory_table = 'trajectory'
+point_table = 'point'
 candidate_table = 'candidates'
 
 positive_label = '1'
