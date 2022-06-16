@@ -3,12 +3,12 @@ Code for original Stat-DSM, proposed by Le Vo et al. (2020) and a new Multi-Agen
 
 The "ma" in .py filenames denote that it relates to MA-Stat-DSM.
 
-## STEP 1: Setup PostgreSQL database environment
+## Step 1: Setup PostgreSQL database environment
 1. Install PostgreSQL https://www.postgresql.org/download/, which also includes pgAdmin (on Mac it is recommended to also install https://postgresapp.com/).
 2. Create a PostgreSQL database with the following: dbname dbname = 'postgres', user = 'postgres', host = 'localhost', password = 1234, and port 5432.
 3. In pgadmin, run the queries in 0-create-postgres-database.sql to create the required database tables.
 
-## STEP 2: Running Stat-DSM 
+## Step 2: Running Stat-DSM 
 ### 1-create-point-trajectory-tables.py:    
 - In the main() function, update the path to dataset_as_a_file_600_games.pkl
 - If you want to run for a specific team, uncomment and enter the team ID in the line 
