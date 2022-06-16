@@ -2,6 +2,7 @@ import psycopg2
 import json
 import time
 import numpy as np
+import pandas as pd
 import sys
 sys.setrecursionlimit(10000)
 
@@ -465,9 +466,9 @@ def main():
     positive_label = '1'
     negative_label = '0'
     max_iter = 1000
-    min_length = 10
+    min_length = 100
     alpha = 0.05
-    distance_threshold = 1.5
+    distance_threshold = 25
     top_k = 1
 
     positive_number = count_label_number(trajectory_table, positive_label)
@@ -506,7 +507,10 @@ def main():
     delta = stat_dsm(trajectory_table, point_table, candidate_table, original_list_label, list_permuted_dataset, list_min_p, list_phase_tid, parameter)
 
     print(delta)
-
+    
+    candidates_df = pd.read_sql("SELECT * FROM candidates", conn)
+    candidates_df.to_csv('candidates.csv')
+    
     cur.close()
     conn.close()
     print("--- %s seconds ---" % (time.time() - start_time))
@@ -514,6 +518,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
-# TO EXPORT THE candidates TABLE FROM POSTGRES TO A CSV FILE
-# In postgres' psql shell, execute the following command \copy (SELECT * FROM candidates) to '/.../candidates.csv' with csv;
