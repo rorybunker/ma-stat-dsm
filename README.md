@@ -3,8 +3,6 @@ Code for original Stat-DSM, proposed by Le Vo et al. (2020), and a new Multi-Age
 
 The "ma" in .py filenames denote that it relates to MA-Stat-DSM.
 
-Le Vo, D. N., Sakuma, T., Ishiyama, T., Toda, H., Arai, K., Karasuyama, M., ... & Takeuchi, I. (2020). Stat-DSM: Statistically Discriminative Sub-Trajectory Mining With Multiple Testing Correction. IEEE Transactions on Knowledge and Data Engineering. DOI: 10.1109/TKDE.2020.2994344
-
 ## STEP 1: Setup PostgreSQL database environment
 1. Install PostgreSQL https://www.postgresql.org/download/, which also includes pgAdmin (on Mac it is recommended to also install https://postgresapp.com/).
 2. Create a PostgreSQL database with the following: dbname dbname = 'postgres', user = 'postgres', host = 'localhost', password = 1234, and port 5432.
@@ -28,7 +26,7 @@ Run 2-stat-dsm.py.
     - Specify lines 18--20 and line 23 - where line 20 is the delta* value that was output from 2-stat-dsm.py.   
 Run 3-calculate-candidate-subtraj-pvalues.py
 
-**Instructions for how to run (Multi-Agent) MA-Stat-DSM**.   
+## Running MA-Stat-DSM   
 The python scripts relating to MA-Stat-DSM have "ma" in their title.    
 3. In 1-ma-create-point-trajectory-tables.py:  
     - Enter your working directory. 
@@ -45,3 +43,6 @@ Run 2-ma-stat-dsm.py.
 6. In 3-ma-calculate-candidate-subtraj-pvalues.py:  
     - Specify lines 18--20 and line 23 - where line 20 is the delta* value that was output from 2-ma-stat-dsm.py.   
 Run 3-ma-calculate-candidate-subtraj-pvalues.py
+
+# References
+Le Vo, D. N., Sakuma, T., Ishiyama, T., Toda, H., Arai, K., Karasuyama, M., ... & Takeuchi, I. (2020). Stat-DSM: Statistically Discriminative Sub-Trajectory Mining With Multiple Testing Correction. IEEE Transactions on Knowledge and Data Engineering. DOI: 10.1109/TKDE.2020.2994344
