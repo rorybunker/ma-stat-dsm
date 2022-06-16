@@ -20,11 +20,10 @@ The "ma" in .py filenames denote that it relates to MA-Stat-DSM.
 - Set your working directory in os.chdir(" ")
 - Specify min_length and distance_threshold (in principle, the other parameters should remain fixed) 
 
-5. In postgres' psql shell, which is a terminal with postgres=# (if on Mac, you can use postgres.app and double click on your postgres database to open the shell), execute the following command:
+5. In postgres' psql shell, execute the following command:
     \copy (SELECT * FROM candidates) to '/.../candidates.csv' with csv;
-6. In 3-calculate-candidate-subtraj-pvalues.py:  
-    - Specify lines 18--20 and line 23 - where line 20 is the delta* value that was output from 2-stat-dsm.py.   
-Run 3-calculate-candidate-subtraj-pvalues.py
+### 3-calculate-candidate-subtraj-pvalues.py:  
+- Set the delta* value that was printed at the end of running 2-stat-dsm.py   
 
 ## Running MA-Stat-DSM   
 
