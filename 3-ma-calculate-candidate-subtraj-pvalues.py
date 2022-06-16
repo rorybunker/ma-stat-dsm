@@ -15,12 +15,12 @@ from scipy.special import comb
 sys.setrecursionlimit(10000)
 from sqlalchemy import create_engine
 
-engine = create_engine('postgresql://[dbname]:[password]@[host]:[port]/[user]')
+engine = create_engine('postgresql://postgres:1234@localhost:5432/postgres')
 os.chdir("...")
-delta_star = 0.00013399037455212777 # ENTER THE DELTA* VALUE CALCULATED BY STAT-DSM
+delta_star = 0.00013399037455212777 # ENTER THE DELTA* VALUE CALCULATED BY MA-STAT-DSM in the last step
 
 try:
-    conn = psycopg2.connect("dbname='[dbname]' user='[user]' host='[host]' password='[password]'")
+    conn = psycopg2.connect("dbname='postgres' user='postgres' host='localhost' password='1234'")
 except:
     print("I am unable to connect to the database")
     
@@ -198,7 +198,7 @@ def change_column_types():
 change_column_types()
 
 delete_table('discriminative_points')   
-sql = "create table discriminative_points as select p.* from phase_point p inner join discriminative_subtraj d on p.tid=d.tid where p.pid between d.start_idx and d.end_idx;"
+sql = "CREATE TABLE discriminative_points AS SELECT p.* FROM phase_point p INNER JOIN discriminative_subtraj d ON p.tid=d.tid WHERE p.pid BETWEEN d.start_idx AND d.end_idx;"
 cur.execute(sql)
 conn.commit()
 
