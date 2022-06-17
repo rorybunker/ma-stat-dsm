@@ -9,7 +9,7 @@ The "ma" in .py filenames denote that it relates to MA-Stat-DSM.
 3. In pgadmin, run the queries in 0-create-postgres-database.sql to create the required database tables.
 
 ## Step 2: Running Stat-DSM 
-### 1-create-point-trajectory-tables.py:    
+### 1-data-preprocessing-stat-dsm.py:    
 - In the main() function, update the path to dataset_as_a_file_600_games.pkl
 - If you want to run for a specific team, uncomment and enter the team ID in the line 
 ```label_df= label_df[(label_df[6]==1610612739)]```. The team ID 1610612739 is Cleveland.
