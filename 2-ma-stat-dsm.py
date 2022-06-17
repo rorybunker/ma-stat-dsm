@@ -509,8 +509,8 @@ def ma_stat_dsm(trajectory_table, point_table, candidate_table, original_list_la
 def main():
     start_time = time.time()
 
-    trajectory_table = 'phase_trajectory_ma'
-    point_table = 'phase_point_ma'
+    trajectory_table = 'trajectory_ma'
+    point_table = 'point_ma'
     candidate_table = 'candidates_ma'
 
     positive_label = '1'
