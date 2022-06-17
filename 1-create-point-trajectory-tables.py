@@ -25,7 +25,7 @@ param_dic = {
     "password"  : "1234"
 }
 
-def create_agent_df(agent_name, t_interval, trajectories):
+def create_agent_df(agent_name, t_interval, trajectories, num_include):
     ball_xy = []
     offense_xy_shooter = []
     offense_xy_last_passer = []
@@ -36,31 +36,32 @@ def create_agent_df(agent_name, t_interval, trajectories):
     point_num = 0
     for play_num in range(0,len(t_interval)):
             for point_num in range(0,len(trajectories[play_num])):
-                if agent_name == 'ball':
-                    ball_xy.append([t_interval.index[play_num][0], 
-                                    point_num,
-                                    (trajectories[play_num][point_num][0]),
-                                    (trajectories[play_num][point_num][1])])
-                elif agent_name == 'shooter':
-                    offense_xy_shooter.append([t_interval.index[play_num][0], 
-                                               point_num,
-                                    (trajectories[play_num][point_num][2]),
-                                    (trajectories[play_num][point_num][3])])
-                elif agent_name == 'lastpasser':
-                    offense_xy_last_passer.append([t_interval.index[play_num][0], 
-                                                   point_num,
-                                    (trajectories[play_num][point_num][4]),
-                                    (trajectories[play_num][point_num][5])])
-                elif agent_name == 'shooterdefender':
-                    defense_xy_shooter.append([t_interval.index[play_num][0], 
-                                               point_num,
-                                    (trajectories[play_num][point_num][12]),
-                                    (trajectories[play_num][point_num][13])])
-                elif agent_name == 'lastpasserdefender':
-                    defense_xy_last_passer.append([t_interval.index[play_num][0], 
-                                                   point_num,
-                                    (trajectories[play_num][point_num][14]),
-                                    (trajectories[play_num][point_num][15])])
+                if point_num % num_include == 0:
+                    if agent_name == 'ball':
+                        ball_xy.append([t_interval.index[play_num][0], 
+                                        int(point_num/num_include),
+                                        (trajectories[play_num][point_num][0]),
+                                        (trajectories[play_num][point_num][1])])
+                    elif agent_name == 'shooter':
+                        offense_xy_shooter.append([t_interval.index[play_num][0], 
+                                                   int(point_num/num_include),
+                                        (trajectories[play_num][point_num][2]),
+                                        (trajectories[play_num][point_num][3])])
+                    elif agent_name == 'lastpasser':
+                        offense_xy_last_passer.append([t_interval.index[play_num][0], 
+                                                       int(point_num/num_include),
+                                        (trajectories[play_num][point_num][4]),
+                                        (trajectories[play_num][point_num][5])])
+                    elif agent_name == 'shooterdefender':
+                        defense_xy_shooter.append([t_interval.index[play_num][0], 
+                                                   int(point_num/num_include),
+                                        (trajectories[play_num][point_num][12]),
+                                        (trajectories[play_num][point_num][13])])
+                    elif agent_name == 'lastpasserdefender':
+                        defense_xy_last_passer.append([t_interval.index[play_num][0], 
+                                                       int(point_num/num_include),
+                                        (trajectories[play_num][point_num][14]),
+                                        (trajectories[play_num][point_num][15])])
                     
     if agent_name == 'ball':            
         return pd.DataFrame([ball_xy[i][1:4] 
@@ -107,7 +108,8 @@ def create_point_csv(df, name, effective):
             for p in range(0,len(df_sub)):
                 writer.writerow([row_num, 
                                          u,
-                                         int(df_sub.iloc[1]['point']),
+                                         #int(df_sub.iloc[1]['point']),
+                                         p,
                                          effective[(traj_num,)],
                                          Point(df_sub.iloc[p]['x'],
                                                df_sub.iloc[p]['y'])])
@@ -172,7 +174,7 @@ def import_traj_table_into_postgres(filename, path):
         cur.copy_expert(sql=copy_sql, file=f)
         conn.commit()
         cur.close()
-        
+ 
 def main():
     path = '/Users/rorybunker/dataset_as_a_file_600_games.pkl'
     f = open(path, 'rb')
@@ -195,8 +197,9 @@ def main():
     label_df = pd.DataFrame(label, index=indices)
     # or if you want to select specific teams e.g. Golden state warriors and 
     # Cleveland: 1610612739, Golden State Warriors 1610612744
-    label_df= label_df[(label_df[6]==1610612739)]
-    # label_df = label_df[0:1000]
+    #team_id = 1610612739
+    #label_df= label_df[(label_df[6]==team_id)]
+    label_df = label_df[0:100]
     
     # label data is in the format [label_i,t1,t2,score,shooterID,passerID,team_ID]
     effective = label_df.iloc[:,0]
@@ -207,6 +210,12 @@ def main():
     agent_name = 'shooter'
     # specify the time interval - t1 or t2
     time_interval = 't2'
+    # number of points to include
+    # e.g. if num_include = 3, include every third point
+    # if num_include = 2, include every second point
+    # if num_include = 1, include every point
+    num_include = 4
+    run_type = 'statdsm'
     
     if time_interval == 't1':
         t_interval = label_df.iloc[:,1]
@@ -215,19 +224,20 @@ def main():
         t_interval = label_df.iloc[:,2][t2>0]
     
     # create dataframe for agent with time interval specified 
-    agent_df = create_agent_df(agent_name, t_interval, trajectories)
+    agent_df = create_agent_df(agent_name, t_interval, trajectories, num_include)
     
-    # create point and trajectory csv files
-    create_point_csv(agent_df, agent_name, effective)
-    create_trajectory_csv(agent_df, agent_name, effective)
-    
-    # delete the existing  table rows in the postgres database tables
-    delete_table_rows('point')
-    delete_table_rows('trajectory')
-    delete_table_rows('candidates') 
-    # import the newly created csv files into postgres database
-    import_point_table_into_postgres(agent_name + '_point', path)
-    import_traj_table_into_postgres(agent_name + '_trajectory', path)
+    if run_type == 'statdsm':
+        # create point and trajectory csv files
+        create_point_csv(agent_df, agent_name, effective)
+        create_trajectory_csv(agent_df, agent_name, effective)
+        
+        # delete the existing  table rows in the postgres database tables
+        delete_table_rows('point')
+        delete_table_rows('trajectory')
+        delete_table_rows('candidates') 
+        # import the newly created csv files into postgres database
+        import_point_table_into_postgres(agent_name + '_point', path)
+        import_traj_table_into_postgres(agent_name + '_trajectory', path)
     
 if __name__ == '__main__':
     main()
