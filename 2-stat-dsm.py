@@ -11,6 +11,7 @@ os.chdir("/Users/rorybunker")
 
 import max_euclidean
 from scipy.special import comb
+from hausdorff import hausdorff_distance
 
 try:
     conn = psycopg2.connect("dbname='postgres' user='postgres' host='localhost' password='1234'")
@@ -18,7 +19,11 @@ except:
     print("I am unable to connect to the database")
 
 cur = conn.cursor()
-        
+
+def calculate_hausdorff_distance(X, Y, base_dist = 'euclidean'):
+    h_dist = hausdorff_distance(np.array(X), np.array(Y), base_dist)
+    return h_dist
+
 def count_label_number(trajectory_table, label):
     sql = """select count(*) from """ + str(trajectory_table) + """ where label = '""" + str(label) + """'"""
 
@@ -115,21 +120,33 @@ def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_trajectory, po
     return total_length_k_potential_neighbor
 
 
-def confirm_neighbor(top_k, length_k_sub_trajectory, list_potential_neighbor, distance_threshold):
+def confirm_neighbor_hausdorff(length_k_sub_trajectory, list_potential_neighbor, distance_threshold):
+    list_neighbor = []
+    # Each potential neighbor: [[2, 0, 1], [[5.5, 14], [7, 14]]]
+
+    for potential_neighbor in list_potential_neighbor:
+            max_distance = calculate_hausdorff_distance(length_k_sub_trajectory,
+                                                                potential_neighbor[1])
+            if max_distance <= distance_threshold:
+                list_neighbor.append(potential_neighbor[0])
+                #list_top_k_max.append(top_k_max)
+            
+            return list_neighbor
+
+def confirm_neighbor_euclidean(top_k, length_k_sub_trajectory, list_potential_neighbor, distance_threshold):
     list_neighbor = []
     list_top_k_max = []
 
     # Each potential neighbor: [[2, 0, 1], [[5.5, 14], [7, 14]]]
 
     for potential_neighbor in list_potential_neighbor:
+            top_k_max, max_distance = max_euclidean.calculate_top_k(top_k, length_k_sub_trajectory,
+                                                                    potential_neighbor[1])
+            if max_distance <= distance_threshold:
+                list_neighbor.append(potential_neighbor[0])
+                list_top_k_max.append(top_k_max)
 
-        top_k_max, max_distance = max_euclidean.calculate_top_k(top_k, length_k_sub_trajectory,
-                                                                potential_neighbor[1])
-        if max_distance <= distance_threshold:
-            list_neighbor.append(potential_neighbor[0])
-            list_top_k_max.append(top_k_max)
-
-    return list_top_k_max, list_neighbor
+            return list_top_k_max, list_neighbor
 
 
 def get_list_neighbor_tid(list_neighbor):
@@ -301,7 +318,8 @@ def stat_dsm(trajectory_table, point_table, candidate_table, original_list_label
     max_iter = parameter["max_iter"]
     alpha = parameter["alpha"]
     positive_label = parameter["positive_label"]
-
+    dist_type = parameter["dist_type"]
+    
     dict_lower_bound = {}
 
     for trajectory_tid in list_phase_tid:
@@ -324,10 +342,14 @@ def stat_dsm(trajectory_table, point_table, candidate_table, original_list_label
 
             potential_neighbor = find_length_k_potential_neighbor(trajectory_tid, length_k_sub_trajectory, point_table,
                                                                   distance_threshold, top_k)
-
-            list_top_k_max, list_neighbor = confirm_neighbor(top_k, length_k_sub_trajectory, potential_neighbor,
-                                                             distance_threshold)
-
+            
+            if dist_type == 'euclidean':
+                list_top_k_max, list_neighbor = confirm_neighbor_euclidean(top_k, length_k_sub_trajectory, potential_neighbor,
+                                                                 distance_threshold)
+            elif dist_type == 'hausdorff':
+                list_neighbor = confirm_neighbor_hausdorff(length_k_sub_trajectory, potential_neighbor,
+                                                                 distance_threshold)
+                
             if len(list_neighbor) == 0:
                 continue
 
@@ -353,7 +375,8 @@ def stat_dsm(trajectory_table, point_table, candidate_table, original_list_label
 
             current_list_neighbor = list_neighbor
             current_list_neighbor_tid = list_neighbor_tid
-            current_list_top_k_max = list_top_k_max
+            if dist_type == 'euclidean':
+                current_list_top_k_max = list_top_k_max
 
             dict_neighbor_full_trajectory = get_neighbor_trajectories(trajectory_table, current_list_neighbor_tid)
 
@@ -367,12 +390,14 @@ def stat_dsm(trajectory_table, point_table, candidate_table, original_list_label
                 candidate_end_idx = candidate_end_idx + 1
 
                 list_new_candidate_neighbor = []
-                temp_list_top_k_max = []
+                if dist_type == 'euclidean':
+                    temp_list_top_k_max = []
 
                 for neighbor_index in range(len(current_list_neighbor)):
 
                     neighbor = current_list_neighbor[neighbor_index]
-                    local_top_k_max = current_list_top_k_max[neighbor_index]
+                    if dist_type == 'euclidean':
+                        local_top_k_max = current_list_top_k_max[neighbor_index]
 
                     neighbor_tid = neighbor[0]
                     neighbor_start_idx = neighbor[1]
@@ -385,17 +410,25 @@ def stat_dsm(trajectory_table, point_table, candidate_table, original_list_label
                     new_neighbor_start_idx = neighbor_start_idx
                     new_neighbor_end_idx = neighbor_end_idx + 1
 
-                    last_point_distance = max_euclidean. \
-                        calculate_point_distance(trajectory[candidate_end_idx],
-                                                 dict_neighbor_full_trajectory[neighbor_tid][new_neighbor_end_idx])
-
-                    if last_point_distance > local_top_k_max[0]:
-                        local_top_k_max.append(last_point_distance)
-                        local_top_k_max.sort()
-                        local_top_k_max = local_top_k_max[1:]
+                    if dist_type == 'euclidean':
+                        last_point_distance = max_euclidean. \
+                            calculate_point_distance(trajectory[candidate_end_idx],
+                                                     dict_neighbor_full_trajectory[neighbor_tid][new_neighbor_end_idx])
+                    elif dist_type == 'hausdorff':
+                        last_point_distance_h = calculate_hausdorff_distance(np.array([trajectory[candidate_end_idx]]),
+                                                 np.array([dict_neighbor_full_trajectory[neighbor_tid][new_neighbor_end_idx]]))
+                    
+                    if dist_type == 'euclidean':
+                        if last_point_distance > local_top_k_max[0]:
+                            local_top_k_max.append(last_point_distance)
+                            local_top_k_max.sort()
+                            local_top_k_max = local_top_k_max[1:]
 
                     # dist = sum(local_top_k_max) / min_length
-                    dist = sum(local_top_k_max) / top_k
+                    if dist_type == 'euclidean':
+                        dist = sum(local_top_k_max) / top_k
+                    elif dist_type == 'hausdorff':
+                        dist = last_point_distance_h
 
                     # _, dist = max_euclidean.calculate_top_k(top_k,
                     #                                         trajectory[candidate_start_idx:(candidate_end_idx + 1)],
@@ -462,11 +495,12 @@ def main():
     trajectory_table = 'trajectory'
     point_table = 'point'
     candidate_table = 'candidates'
+    dist_type = 'hausdorff'
 
     positive_label = '1'
     negative_label = '0'
     max_iter = 1000
-    min_length = 100
+    min_length = 10
     alpha = 0.05
     distance_threshold = 25
     top_k = 1
@@ -501,7 +535,8 @@ def main():
         "distance_threshold": distance_threshold,
         "top_k": top_k,
         "positive_number": positive_number,
-        "negative_number": negative_number
+        "negative_number": negative_number,
+        "dist_type": dist_type
     }
 
     delta = stat_dsm(trajectory_table, point_table, candidate_table, original_list_label, list_permuted_dataset, list_min_p, list_phase_tid, parameter)
