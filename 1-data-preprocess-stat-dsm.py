@@ -199,10 +199,13 @@ def main():
     # Cleveland: 1610612739, Golden State Warriors 1610612744
     #team_id = 1610612739
     #label_df= label_df[(label_df[6]==team_id)]
-    label_df = label_df[0:100]
+    label_df = label_df[0:1000]
     
     # label data is in the format [label_i,t1,t2,score,shooterID,passerID,team_ID]
     effective = label_df.iloc[:,0]
+    # convert 2- and 3-pointer score variable to binary score/didn't score
+    label_df.iloc[label_df[3] == 2 , 3] = 1.0
+    label_df.iloc[label_df[3] == 3 , 3] = 1.0
     score = label_df.iloc[:,3]
     
     # specify the agent - 'ball', 'shooter', 'shooterdefender', 'lastpasser' 
@@ -214,7 +217,7 @@ def main():
     # e.g. if num_include = 3, include every third point
     # if num_include = 2, include every second point
     # if num_include = 1, include every point
-    num_include = 4
+    num_include = 5
     run_type = 'statdsm'
     
     if time_interval == 't1':
@@ -228,8 +231,8 @@ def main():
     
     if run_type == 'statdsm':
         # create point and trajectory csv files
-        create_point_csv(agent_df, agent_name, effective)
-        create_trajectory_csv(agent_df, agent_name, effective)
+        create_point_csv(agent_df, agent_name, score)
+        create_trajectory_csv(agent_df, agent_name, score)
         
         # delete the existing  table rows in the postgres database tables
         delete_table_rows('point')
