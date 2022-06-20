@@ -495,12 +495,12 @@ def main():
     trajectory_table = 'trajectory'
     point_table = 'point'
     candidate_table = 'candidates'
+    
     dist_type = 'euclidean'
-
     positive_label = '1'
     negative_label = '0'
     max_iter = 1000
-    min_length = 10
+    min_length = 20
     alpha = 0.05
     distance_threshold = 25
     top_k = 1
