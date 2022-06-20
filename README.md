@@ -12,8 +12,8 @@ The "ma" in .py filenames denote that it relates to MA-Stat-DSM.
 ### 1-data-preprocess-stat-dsm.py:    
 - In the main() function, update the path to dataset_as_a_file_600_games.pkl
 #### Preprocessing parameters: 
-- agent_name specify the agent: 'ball', 'shooter', 'shooterdefender', 'lastpasser' or 'lastpasserdefender'
-- time_inteval: specify the time interval - t1 or t2
+- agent_name: specify the agent - 'ball', 'shooter', 'shooterdefender', 'lastpasser' or 'lastpasserdefender'
+- time_inteval: specify the time interval - t1 or t2 (see figure below)
 - num_include: number of points to include, e.g., if num_include = 3, include every third point, if num_include = 1, include every point, etc.
 - run_type: 'statdsm' or (to add) 'mastatdsm'
 - initial_num_rows: run for smaller subset - useful for testing. If initial_num_rows = -1, run on entire dataset.
