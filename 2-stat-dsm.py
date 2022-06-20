@@ -495,7 +495,7 @@ def main():
     trajectory_table = 'trajectory'
     point_table = 'point'
     candidate_table = 'candidates'
-    dist_type = 'hausdorff'
+    dist_type = 'euclidean'
 
     positive_label = '1'
     negative_label = '0'
