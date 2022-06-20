@@ -176,6 +176,22 @@ def import_traj_table_into_postgres(filename, path):
         cur.close()
  
 def main():
+    # ---- DATA PRE-PROCESSING PARAMETERS ----
+    # label variable definition - score/did not score or effective/ineffective play
+    label_variable = 'score'    
+    # specify the agent: 'ball', 'shooter', 'shooterdefender', 'lastpasser' or 'lastpasserdefender'
+    agent_name = 'ball'
+    # specify the time interval - t1 or t2
+    time_interval = 't2'
+    # number of points to include, e.g., if num_include = 3, include every third point, etc.
+    num_include = 4
+    # 'statdsm' or 'mastatdsm'
+    run_type = 'statdsm' # to add: run_type = 'mastatdsm'
+    # run for smaller subset - useful for testing. If initial_num_rows = -1, run on entire dataset
+    initial_num_rows = 500 
+    # team ids are in id_team.csv. Cleveland 1610612739, GSW 1610612744. If team_id = 0, run for all teams
+    team_id = 0 
+    
     path = '/Users/rorybunker/dataset_as_a_file_600_games.pkl'
     f = open(path, 'rb')
     data = pickle.load(f)
@@ -186,58 +202,51 @@ def main():
     # label: effective attack (1) or ineffective attack (0), T1, T2, score or not
     # index: corresponding to the file at root\nba_attack2\nba_datalength.csv
 
-    indices = array(data[2].astype(int), dtype=object)
     trajectories = array(data[0], dtype=object)
     label = array(data[1], dtype=object)
-    
-    # id_team_df = pd.read_csv('id_team.csv')
-    
-    #pd.merge(product,customer,on='Product_ID',how='left')
+    indices = array(data[2].astype(int), dtype=object)
     
     label_df = pd.DataFrame(label, index=indices)
-    # or if you want to select specific teams e.g. Golden state warriors and 
-    # Cleveland: 1610612739, Golden State Warriors 1610612744
-    #team_id = 1610612739
-    #label_df= label_df[(label_df[6]==team_id)]
-    label_df = label_df[0:1000]
+    
+    if initial_num_rows != -1:
+        label_df = label_df[0:initial_num_rows]
+        
+    if team_id > 0:
+        label_df= label_df[(label_df[6]==team_id)]
     
     # label data is in the format [label_i,t1,t2,score,shooterID,passerID,team_ID]
     effective = label_df.iloc[:,0]
-    # convert 2- and 3-pointer score variable to binary score/didn't score
+    
+    # convert 2- and 3-pointer score variable to binary 1/0 = score/didn't score
     label_df.iloc[label_df[3] == 2 , 3] = 1.0
     label_df.iloc[label_df[3] == 3 , 3] = 1.0
     score = label_df.iloc[:,3]
     
-    # specify the agent - 'ball', 'shooter', 'shooterdefender', 'lastpasser' 
-    # or 'lastpasserdefender'
-    agent_name = 'shooter'
-    # specify the time interval - t1 or t2
-    time_interval = 't2'
-    # number of points to include
-    # e.g. if num_include = 3, include every third point
-    # if num_include = 2, include every second point
-    # if num_include = 1, include every point
-    num_include = 5
-    run_type = 'statdsm'
-    
+    if label_variable == 'score':
+        label = score
+    elif label_variable == 'effective':
+        label = effective
+
     if time_interval == 't1':
-        t_interval = label_df.iloc[:,1]
+        t1 = label_df.iloc[:,1]
+        t_interval = label_df.iloc[:,2][t1>0]
     elif time_interval == 't2':
         t2 = label_df.iloc[:,2]
         t_interval = label_df.iloc[:,2][t2>0]
     
-    # create dataframe for agent with time interval specified 
+    # create dataframe for the specified agent
     agent_df = create_agent_df(agent_name, t_interval, trajectories, num_include)
     
     if run_type == 'statdsm':
         # create point and trajectory csv files
-        create_point_csv(agent_df, agent_name, score)
-        create_trajectory_csv(agent_df, agent_name, score)
+        create_point_csv(agent_df, agent_name, label)
+        create_trajectory_csv(agent_df, agent_name, label)
         
-        # delete the existing  table rows in the postgres database tables
+        # delete the existing table rows in the postgres database tables
         delete_table_rows('point')
         delete_table_rows('trajectory')
         delete_table_rows('candidates') 
+        
         # import the newly created csv files into postgres database
         import_point_table_into_postgres(agent_name + '_point', path)
         import_traj_table_into_postgres(agent_name + '_trajectory', path)
