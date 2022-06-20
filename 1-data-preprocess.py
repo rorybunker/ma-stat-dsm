@@ -328,9 +328,9 @@ def main():
     # specify the time interval - t1 or t2
     time_interval = 't2'
     # number of points to include, e.g., if num_include = 3, include every third point, etc.
-    num_include = 5
+    num_include = 4
     # 'statdsm' or 'mastatdsm'
-    run_type = 'statdsm' # to add: run_type = 'mastatdsm'
+    run_type = 'mastatdsm' # to add: run_type = 'mastatdsm'
     # run for smaller subset - useful for testing. If initial_num_rows = -1, run on entire dataset
     initial_num_rows = -1 
     # team ids are in id_team.csv. Cleveland 1610612739, GSW 1610612744. If team_id = 0, run for all teams
