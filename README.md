@@ -1,4 +1,4 @@
-# Multi-Agent Statistically Discriminative Sub-trajectory Mining (MA-Stat-DSM)
+# Discriminative sub-trajectory mining of tracking data in NBA basketball
 Code for original Stat-DSM, proposed by Le Vo et al. (2020) and a new Multi-Agent Statistically Discriminative Sub-trajectory Mining (MA-Stat-DSM), which extends Stat-DSM to handle the trajectories of multiple agents (e.g., multiple players and the ball in sport), are provided. 
 
 The "ma" in .py filenames denote that it relates to MA-Stat-DSM.
