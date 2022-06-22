@@ -9,7 +9,7 @@ The "ma" in .py filenames denote that it relates to MA-Stat-DSM.
 3. In pgadmin, run the queries in 0-create-postgres-database.sql to create the required database tables.
 
 ## Step 2: Running Stat-DSM 
-### 1-data-preprocess-stat-dsm.py:    
+### 1-data-preprocess.py:    
 - In the main() function, update the path to dataset_as_a_file_600_games.pkl
 #### Preprocessing parameters: 
 - agent_name: specify the agent - 'ball', 'shooter', 'shooterdefender', 'lastpasser' or 'lastpasserdefender'
@@ -20,7 +20,7 @@ The "ma" in .py filenames denote that it relates to MA-Stat-DSM.
 - team_id: the team ids are in the csv file id_team.csv. Cleveland team_id=1610612739, Golden State Warriors team_id=1610612744. If team_id = 0, run for all teams
 ![image](https://user-images.githubusercontent.com/29388472/173998123-ad0bade2-e42d-4261-89dd-40a4bc7834d3.png)
 
-### 2-stat-dsm.py:  
+### 2-ma-stat-dsm-combined.py:  
 - Set your working directory in os.chdir(" ")
 - Specify min_length and distance_threshold (in principle, the other parameters should remain fixed) 
 
