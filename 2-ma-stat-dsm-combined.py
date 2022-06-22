@@ -180,7 +180,7 @@ def confirm_neighbor_hausdorff(length_k_sub_trajectory, list_potential_neighbor,
                 list_neighbor.append(potential_neighbor[0])
                 #list_top_k_max.append(top_k_max)
             
-            return list_neighbor
+    return list_neighbor
 
 def confirm_neighbor_euclidean(top_k, length_k_sub_trajectory, list_potential_neighbor, distance_threshold):
     list_neighbor = []
@@ -195,7 +195,7 @@ def confirm_neighbor_euclidean(top_k, length_k_sub_trajectory, list_potential_ne
                 list_neighbor.append(potential_neighbor[0])
                 list_top_k_max.append(top_k_max)
 
-            return list_top_k_max, list_neighbor
+    return list_top_k_max, list_neighbor
 
 
 def get_list_neighbor_tid(list_neighbor):
@@ -561,9 +561,9 @@ def main():
     positive_label = '1'
     negative_label = '0'
     max_iter = 1000
-    min_length = 20
+    min_length = 5
     alpha = 0.05
-    distance_threshold = 25
+    distance_threshold = 1.5
     top_k = 1
     agent_ids = [1]
 
