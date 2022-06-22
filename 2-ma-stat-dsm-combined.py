@@ -561,9 +561,9 @@ def main():
     positive_label = '1'
     negative_label = '0'
     max_iter = 1000
-    min_length = 5
+    min_length = 10
     alpha = 0.05
-    distance_threshold = 1.5
+    distance_threshold = 25
     top_k = 1
     agent_ids = [1]
 
