@@ -321,7 +321,7 @@ def import_traj_ma_table_into_postgres(filename, path):
 def main():
     # ---- DATA PRE-PROCESSING PARAMETERS ----
     # label variable definition - 'score' for score/did not score or 'effective' for effective/ineffective play
-    label_variable = 'effective'    
+    label_variable = 'score'    
     # specify the agent: 'ball', 'shooter', 'shooterdefender', 'lastpasser' or 'lastpasserdefender'
     agent_name = 'shooter'
     agent_list = ['ball','shooter','lastpasser','shooterdefender','lastpasserdefender']
@@ -330,9 +330,9 @@ def main():
     # number of points to include, e.g., if num_include = 3, include every third point, etc.
     num_include = 4
     # 'statdsm' or 'mastatdsm'
-    run_type = 'mastatdsm' # to add: run_type = 'mastatdsm'
+    run_type = 'statdsm'
     # run for smaller subset - useful for testing. If initial_num_rows = -1, run on entire dataset
-    initial_num_rows = -1 
+    initial_num_rows = -1
     # team ids are in id_team.csv. Cleveland 1610612739, GSW 1610612744. If team_id = 0, run for all teams
     team_id = 1610612744 
     
