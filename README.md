@@ -12,17 +12,23 @@ The "ma" in .py filenames denote that it relates to MA-Stat-DSM.
 ### 1-data-preprocess.py:    
 - In the main() function, update the path to dataset_as_a_file_600_games.pkl
 #### Preprocessing parameters: 
+- label_variable: 'score' or 'effective'
 - agent_name: specify the agent - 'ball', 'shooter', 'shooterdefender', 'lastpasser' or 'lastpasserdefender'
+- agent_list = ['ball','shooter','lastpasser','shooterdefender','lastpasserdefender']
 - time_inteval: specify the time interval - t1 or t2 (see figure below)
 - num_include: number of points to include, e.g., if num_include = 3, include every third point, if num_include = 1, include every point, etc.
-- run_type: 'statdsm' or (to add) 'mastatdsm'
+- run_type: 'statdsm' or 'mastatdsm', specify based on whichever you will run in Step 3.
 - initial_num_rows: run for smaller subset - useful for testing. If initial_num_rows = -1, run on entire dataset.
 - team_id: the team ids are in the csv file id_team.csv. Cleveland team_id=1610612739, Golden State Warriors team_id=1610612744. If team_id = 0, run for all teams
 ![image](https://user-images.githubusercontent.com/29388472/173998123-ad0bade2-e42d-4261-89dd-40a4bc7834d3.png)
 
 ### 2-ma-stat-dsm-combined.py:  
 - Set your working directory in os.chdir(" ")
-- Specify min_length and distance_threshold (in principle, the other parameters should remain fixed) 
+- Specify 
+  - min_length
+  - distance_threshold
+  - agent_ids: if agent_ids is a list with a single element, e.g., agent_ids = [1], run_type should be 'statdsm'. For run_type = 'mastatdsm', specify multiple agents corresponding to agent_list, e.g., [1, 3] for shooter and last passer, [0, 1, 2, 3, 4] for all agents. 
+ (in principle, the other parameters should remain fixed) 
 
 ### 3-calculate-candidate-subtraj-pvalues.py:  
 - Set the delta* value that was printed at the end of running 2-stat-dsm.py   
