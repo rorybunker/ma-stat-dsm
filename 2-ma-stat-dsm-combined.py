@@ -58,7 +58,7 @@ def get_trajectory(trajectory_table, tid, agent_ids):
     if len(agent_ids) == 1:
         return json.loads(rows[0][0])['coordinates']
     elif len(agent_ids) > 1:
-        return [json.loads(rows[a][0])['coordinates'] for a in agent_ids]
+        return [json.loads(rows[a-1][0])['coordinates'] for a in agent_ids]
 
 def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_trajectory, point_table, distance_threshold, top_k, agent_ids):
     distance_threshold = distance_threshold * top_k
@@ -348,6 +348,21 @@ def get_neighbor_trajectories(trajectory_table, list_tid):
 
     return list_trajectory
 
+def get_neighbor_ma_trajectories(trajectory_table, list_tid):
+    if len(list_tid) == 1:
+        sql = """select tid, aid, ST_AsGeoJSON(geom) from """ + str(trajectory_table) + """ where tid = """ + str(list_tid[0]) + """ """
+    else:
+        sql = """select tid, aid, ST_AsGeoJSON(geom) from """ + str(trajectory_table) + """ where tid in """ + str(
+            tuple(list_tid)) + """ order by tid asc, aid asc"""
+
+    cur.execute(sql)
+    rows = cur.fetchall()
+
+    list_trajectory = {}
+    for row in rows:
+        list_trajectory.update({(row[0],row[1]) : json.loads(row[2])['coordinates']})
+
+    return list_trajectory
 
 def insert_list_tree(candidate_table, list_tree):
     sql = """INSERT INTO """ + str(candidate_table) + """ (candidate) VALUES (%(candidate)s)"""
@@ -433,9 +448,10 @@ def stat_dsm(trajectory_table, point_table, candidate_table, original_list_label
             current_list_neighbor_tid = list_neighbor_tid
             if len(agent_ids) == 1:
                 current_list_top_k_max = list_top_k_max
-
-            dict_neighbor_full_trajectory = get_neighbor_trajectories(trajectory_table, current_list_neighbor_tid)
-
+                dict_neighbor_full_trajectory = get_neighbor_trajectories(trajectory_table, current_list_neighbor_tid)
+            if len(agent_ids) > 1:
+                dict_neighbor_full_trajectory_ma = get_neighbor_ma_trajectories(trajectory_table, current_list_neighbor_tid)
+            
             root = []
             root.append([[trajectory_tid, candidate_start_idx, candidate_end_idx], current_list_neighbor_tid])
 
@@ -471,8 +487,8 @@ def stat_dsm(trajectory_table, point_table, candidate_table, original_list_label
                             calculate_point_distance(trajectory[candidate_end_idx],
                                                      dict_neighbor_full_trajectory[neighbor_tid][new_neighbor_end_idx])
                     elif len(agent_ids) > 1:
-                        last_point_distance_h = calculate_hausdorff_distance(np.array([trajectory[candidate_end_idx]]),
-                                                 np.array([dict_neighbor_full_trajectory[neighbor_tid][new_neighbor_end_idx]]))
+                        last_point_distance_h = calculate_hausdorff_distance([trajectory[a][candidate_end_idx] for a in agent_ids],
+                                                 [dict_neighbor_full_trajectory_ma[(neighbor_tid,a)][new_neighbor_end_idx] for a in agent_ids])
                     
                     if len(agent_ids) == 1:
                         if last_point_distance > local_top_k_max[0]:
@@ -494,8 +510,9 @@ def stat_dsm(trajectory_table, point_table, candidate_table, original_list_label
                     if dist <= distance_threshold:
                         list_new_candidate_neighbor.append(
                             [neighbor_tid, new_neighbor_start_idx, new_neighbor_end_idx])
-
-                        temp_list_top_k_max.append(local_top_k_max)
+                        
+                        if len(agent_ids) == 1:
+                            temp_list_top_k_max.append(local_top_k_max)
 
                 if len(list_new_candidate_neighbor) == 0:
                     break
@@ -521,7 +538,8 @@ def stat_dsm(trajectory_table, point_table, candidate_table, original_list_label
 
                 current_list_neighbor = list_new_candidate_neighbor
                 current_list_neighbor_tid = list_new_neighbor_tid
-                current_list_top_k_max = temp_list_top_k_max
+                if len(agent_ids) == 1:
+                    current_list_top_k_max = temp_list_top_k_max
 
                 root.append([[trajectory_tid, candidate_start_idx, candidate_end_idx], current_list_neighbor_tid])
 
@@ -547,7 +565,6 @@ def stat_dsm(trajectory_table, point_table, candidate_table, original_list_label
 
 def main():
     start_time = time.time()
-    # update these table names as required according to the names of your postgres database tables
     
     positive_label = '1'
     negative_label = '0'
@@ -611,7 +628,6 @@ def main():
     cur.close()
     conn.close()
     print("--- %s seconds ---" % (time.time() - start_time))
-
 
 if __name__ == "__main__":
     main()
