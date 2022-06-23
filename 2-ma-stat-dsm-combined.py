@@ -12,10 +12,7 @@ os.chdir("/Users/rorybunker")
 import max_euclidean
 from scipy.special import comb
 from shapely.geometry import LineString
-from shapely.geometry import MultiLineString
-from shapely.geometry import Point
 from hausdorff import hausdorff_distance
-import string
 
 try:
     conn = psycopg2.connect("dbname='postgres' user='postgres' host='localhost' password='1234'")
@@ -43,17 +40,17 @@ def get_list_label(trajectory_table):
     return rows
 
 def get_list_phase_tid(table_name):
-    sql = """select tid from """ + str(table_name) + """ order by tid asc"""
+    sql = """select distinct tid from """ + str(table_name) + """ order by tid asc"""
 
     cur.execute(sql)
     rows = cur.fetchall()
     return rows
 
-def get_trajectory(trajectory_table, trajectory_ma_table, tid, agent_ids):
+def get_trajectory(trajectory_table, tid, agent_ids):
     if len(agent_ids) == 1:
         sql = """select ST_AsGeoJSON(geom) from """ + str(trajectory_table) + """ where tid = """ + str(tid) + ""
     elif len(agent_ids) > 1:
-        sql = """select ST_AsGeoJSON(geom) from """ + str(trajectory_ma_table) + """ where tid = """ + str(tid) + """ and aid in (""" + ', '.join(map(str, agent_ids)) + ")"
+        sql = """select ST_AsGeoJSON(geom) from """ + str(trajectory_table) + """ where tid = """ + str(tid) + """ and aid in (""" + ', '.join(map(str, agent_ids)) + ")"
 
     cur.execute(sql)
     rows = cur.fetchall()
@@ -61,9 +58,9 @@ def get_trajectory(trajectory_table, trajectory_ma_table, tid, agent_ids):
     if len(agent_ids) == 1:
         return json.loads(rows[0][0])['coordinates']
     elif len(agent_ids) > 1:
-        return [json.loads(rows[a-1][0])['coordinates'] for a in agent_ids]
+        return [json.loads(rows[a][0])['coordinates'] for a in agent_ids]
 
-def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_trajectory, point_table, point_ma_table, distance_threshold, top_k, agent_ids):
+def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_trajectory, point_table, distance_threshold, top_k, agent_ids):
     distance_threshold = distance_threshold * top_k
     total_length_k_potential_neighbor = [] # [[tid, trajectory], ...]
     length = len(length_k_sub_trajectory)
@@ -97,7 +94,7 @@ def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_trajectory, po
 
     elif len(agent_ids) > 1:
         
-        sql = """select tid, aid, pid, label, ST_AsGeoJSON(geom) from """ + str(point_ma_table) + """
+        sql = """select tid, aid, pid, label, ST_AsGeoJSON(geom) from """ + str(point_table) + """
                 where aid in (""" + ', '.join(map(str, agent_ids)) + ")"" and tid != """ + str(trajectory_tid) + """
                 and """
         
@@ -358,7 +355,7 @@ def insert_list_tree(candidate_table, list_tree):
     conn.commit()
 
 
-def stat_dsm(trajectory_table, trajectory_ma_table, point_table, point_ma_table, candidate_table, original_list_label, list_permuted_dataset, list_min_p, list_phase_tid, parameter):
+def stat_dsm(trajectory_table, point_table, candidate_table, original_list_label, list_permuted_dataset, list_min_p, list_phase_tid, parameter):
     min_length = parameter["min_length"]
     distance_threshold = parameter["distance_threshold"]
     top_k = parameter["top_k"]
@@ -376,7 +373,7 @@ def stat_dsm(trajectory_table, trajectory_ma_table, point_table, point_ma_table,
 
         list_tree = []
 
-        trajectory = get_trajectory(trajectory_table, trajectory_ma_table, trajectory_tid, agent_ids)
+        trajectory = get_trajectory(trajectory_table, trajectory_tid, agent_ids)
         
         if len(agent_ids) == 1:
             trajectory_length = len(trajectory)
@@ -400,8 +397,7 @@ def stat_dsm(trajectory_table, trajectory_ma_table, point_table, point_ma_table,
                 elif len(agent_ids) > 1:   
                     [length_k_sub_trajectory[a-1].append(trajectory[a-1][i + j]) for a in agent_ids]
 
-            potential_neighbor = find_length_k_potential_neighbor(trajectory_tid, length_k_sub_trajectory, point_table,
-                                                                  point_ma_table, distance_threshold, top_k, agent_ids)
+            potential_neighbor = find_length_k_potential_neighbor(trajectory_tid, length_k_sub_trajectory, point_table, distance_threshold, top_k, agent_ids)
             
             if len(agent_ids) == 1:
                 list_top_k_max, list_neighbor = confirm_neighbor_euclidean(top_k, length_k_sub_trajectory, potential_neighbor,
@@ -552,24 +548,28 @@ def stat_dsm(trajectory_table, trajectory_ma_table, point_table, point_ma_table,
 def main():
     start_time = time.time()
     # update these table names as required according to the names of your postgres database tables
-    trajectory_table = 'trajectory'
-    trajectory_ma_table = 'trajectory_ma'
-    point_table = 'point'
-    point_ma_table = 'point_ma'
-    candidate_table = 'candidates'
     
     positive_label = '1'
     negative_label = '0'
     max_iter = 1000
-    min_length = 10
+    min_length = 5
     alpha = 0.05
-    distance_threshold = 25
+    distance_threshold = 1.5
     top_k = 1
-    agent_ids = [1]
+    agent_ids = [0]
+    
+    candidate_table = 'candidates'
+
+    if len(agent_ids) == 1:
+        point_table = 'point'
+        trajectory_table = 'trajectory'
+    elif len(agent_ids) > 1:
+        point_table = 'point_ma'
+        trajectory_table = 'trajectory_ma'
 
     positive_number = count_label_number(trajectory_table, positive_label)
     negative_number = count_label_number(trajectory_table, negative_label)
-
+    
     original_list_label = get_list_label(trajectory_table)
     original_list_label = np.array(original_list_label)
     original_list_label = original_list_label[:, 0].tolist()
@@ -583,7 +583,7 @@ def main():
         permutation_list_label = original_list_label[list_idx]
         list_permuted_dataset.append(permutation_list_label)
         list_min_p.append(alpha)
-
+        
     list_phase_tid = get_list_phase_tid(trajectory_table)
     list_phase_tid = np.array(list_phase_tid)
     list_phase_tid = list_phase_tid[:, 0].tolist()
@@ -601,7 +601,7 @@ def main():
         "agent_ids": agent_ids
     }
 
-    delta = stat_dsm(trajectory_table, trajectory_ma_table, point_table, point_ma_table, candidate_table, original_list_label, list_permuted_dataset, list_min_p, list_phase_tid, parameter)
+    delta = stat_dsm(trajectory_table, point_table, candidate_table, original_list_label, list_permuted_dataset, list_min_p, list_phase_tid, parameter)
 
     print(delta)
     
