@@ -1,7 +1,7 @@
 # -----------------------------------------------------------------------------------------------------------------------------------------------------
 # -*- coding: utf-8 -*-
 """
-Calculate p-values for each of the candidate sub-trajectories generated from Stat-DSM
+Calculate p-values for each of the candidate sub-trajectories generated from Stat-DSM/MA-Stat-DSM
 
 @author: Rory Bunker
 """
@@ -18,6 +18,7 @@ from sqlalchemy import create_engine
 engine = create_engine('postgresql://postgres:1234@localhost:5432/postgres')
 os.chdir("...")
 delta_star = 0.00013399037455212777 # ENTER THE DELTA* VALUE CALCULATED BY STAT-DSM
+run_type = 'statdsm'
 
 try:
     conn = psycopg2.connect("dbname='postgres' user='postgres' host='localhost' password='1234'")
@@ -26,12 +27,18 @@ except:
     
 cur = conn.cursor()
 
-trajectory_table = 'trajectory'
-point_table = 'point'
+if run_type == 'statdsm':
+    trajectory_table = 'trajectory'
+    point_table = 'point'
+elif run_type == 'mastatdsm':
+    trajectory_table = 'trajectory_ma'
+    point_table = 'point_ma'
+
 candidate_table = 'candidates'
 
 positive_label = '1'
 negative_label = '0'
+
 # -----------------------------------------------------------------------------------------------------------------------------------------------------
 
 def count_label_number(trajectory_table, label):
@@ -46,7 +53,7 @@ negative_number = count_label_number(trajectory_table, negative_label)
 
 def import_candidate_table(filename):
     """
-    imports and processes the candidates.csv file generated from stat-DSM
+    imports and processes the candidates.csv file generated from Stat-DSM/MA-Stat-DSM
     
     Returns
     -------
