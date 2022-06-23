@@ -205,7 +205,7 @@ def change_column_types():
 change_column_types()
 
 delete_table('discriminative_points')   
-sql = "create table discriminative_points as select p.* from phase_point p inner join discriminative_subtraj d on p.tid=d.tid where p.pid between d.start_idx and d.end_idx;"
+sql = "CREATE TABLE discriminative_points AS select p.* FROM phase_point p INNER JOIN discriminative_subtraj d ON p.tid=d.tid WHERE p.pid BETWEEN d.start_idx AND d.end_idx;"
 cur.execute(sql)
 conn.commit()
 
