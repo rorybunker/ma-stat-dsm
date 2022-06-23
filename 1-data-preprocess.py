@@ -319,19 +319,20 @@ def import_traj_ma_table_into_postgres(filename, path):
  
 def main():
     path = '/Users/rorybunker/dataset_as_a_file_600_games.pkl'
-    agent_list = ['ball','shooter','lastpasser','shooterdefender','lastpasserdefender']
 
     # ---- DATA PRE-PROCESSING PARAMETERS ----
     # label variable definition - 'score' for score/did not score or 'effective' for effective/ineffective play
     label_variable = 'effective'    
+    # 'statdsm' or 'mastatdsm'
+    run_type = 'mastatdsm'
     # specify the agent: 'ball', 'shooter', 'shooterdefender', 'lastpasser' or 'lastpasserdefender'
     agent_name = 'shooter'
+    agent_list = ['ball','shooter','lastpasser','shooterdefender','lastpasserdefender']
     # specify the time interval - t1 or t2
     time_interval = 't2'
     # number of points to include, e.g., if num_include = 3, include every third point, etc.
     num_include = 5
-    # 'statdsm' or 'mastatdsm'
-    run_type = 'statdsm'
+
     # run for smaller subset - useful for testing. If initial_num_rows = -1, run on entire dataset
     initial_num_rows = 100
     # team ids are in id_team.csv. Cleveland 1610612739, GSW 1610612744. If team_id = 0, run for all teams
