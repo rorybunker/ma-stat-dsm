@@ -25,11 +25,6 @@ except:
     
 cur = conn.cursor()
 
-candidate_table = 'candidates'
-
-positive_label = '1'
-negative_label = '0'
-
 # -----------------------------------------------------------------------------------------------------------------------------------------------------
 
 def count_label_number(trajectory_table, label):
@@ -155,9 +150,15 @@ def create_discriminative_point_table(point_table):
 
 def main():
     # -------------- #
-    delta_star = 0.01349955466516803 # ENTER THE DELTA* VALUE CALCULATED BY STAT-DSM/MA-Stat-DSM
+    # Set the delta* value that was calculated from stat-dsm/ma-stat-dsm
+    delta_star = 0.01349955466516803
     run_type = 'mastatdsm'
     # -------------- #
+    
+    candidate_table = 'candidates'
+    
+    positive_label = '1'
+    negative_label = '0'
     
     if run_type == 'statdsm':
         trajectory_table = 'trajectory'
@@ -169,7 +170,7 @@ def main():
     positive_number = count_label_number(trajectory_table, positive_label)
     negative_number = count_label_number(trajectory_table, negative_label)
     
-    df = import_candidate_table('candidates.csv')
+    df = import_candidate_table(candidate_table + '.csv')
     
     eps_neighb_ids = df['neighb_tids'].values.tolist()
     
