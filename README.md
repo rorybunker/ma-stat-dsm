@@ -3,7 +3,7 @@ This repository contains an extended version of Stat-DSM, the statistically disc
 
 The method is illustrated in the context of sports, specificially NBA basketball, where the method can be used to determine discriminative sub-trajectories within labelled trajectories of multiple players and the ball.
 
-## Step 0: Setup PostgreSQL database environment
+## Step 0: Setting up PostgreSQL database environment
 1. Install PostgreSQL https://www.postgresql.org/download/, which also includes pgAdmin (on Mac it is recommended to also install https://postgresapp.com/).
 2. Create a PostgreSQL database with the following: dbname dbname = 'postgres', user = 'postgres', host = 'localhost', password = 1234, and port 5432.
 3. In pgadmin, run the queries in 0-create-postgres-database.sql to create the required database tables.
@@ -31,7 +31,7 @@ The method is illustrated in the context of sports, specificially NBA basketball
   - agent_ids: if agent_ids is a list with a single element, e.g., agent_ids = [1], run_type should be 'statdsm'. For run_type = 'mastatdsm', specify multiple agents corresponding to agent_list, e.g., [1, 3] for shooter and last passer, [0, 1, 2, 3, 4] for all agents. 
  (in principle, the other parameters should remain fixed) 
 
-## Step 3: Running Stat-DSM/MA-Stat-DSM
+## Step 3: Determining the statitically significant discriminative sub-trajectories
 ### 3-calculate-candidate-subtraj-pvalues.py:  
 - Set the delta* value that was printed at the end of running 2-stat-dsm.py   
 
