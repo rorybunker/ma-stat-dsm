@@ -33,7 +33,8 @@ The method is illustrated in the context of sports, specificially NBA basketball
 
 ## Step 3: Determining the statitically significant discriminative sub-trajectories
 ### 3-calculate-candidate-subtraj-pvalues.py:  
-- Set the delta* value that was printed at the end of running 2-stat-dsm.py   
+- Specify run_type as 'statdsm' or 'mastatdsm'
+- Set delta_star as the delta* value that was calculated at Step 2
 
 # References
 Le Vo, D. N., Sakuma, T., Ishiyama, T., Toda, H., Arai, K., Karasuyama, M., ... & Takeuchi, I. (2020). Stat-DSM: Statistically Discriminative Sub-Trajectory Mining With Multiple Testing Correction. IEEE Transactions on Knowledge and Data Engineering. DOI: 10.1109/TKDE.2020.2994344
