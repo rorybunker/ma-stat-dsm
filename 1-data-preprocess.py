@@ -321,18 +321,18 @@ def import_traj_ma_table_into_postgres(filename, path):
 def main():
     # ---- DATA PRE-PROCESSING PARAMETERS ----
     # label variable definition - 'score' for score/did not score or 'effective' for effective/ineffective play
-    label_variable = 'score'    
+    label_variable = 'effective'    
     # specify the agent: 'ball', 'shooter', 'shooterdefender', 'lastpasser' or 'lastpasserdefender'
     agent_name = 'shooter'
     agent_list = ['ball','shooter','lastpasser','shooterdefender','lastpasserdefender']
     # specify the time interval - t1 or t2
     time_interval = 't2'
     # number of points to include, e.g., if num_include = 3, include every third point, etc.
-    num_include = 4
+    num_include = 10
     # 'statdsm' or 'mastatdsm'
     run_type = 'statdsm'
     # run for smaller subset - useful for testing. If initial_num_rows = -1, run on entire dataset
-    initial_num_rows = -1
+    initial_num_rows = 5000
     # team ids are in id_team.csv. Cleveland 1610612739, GSW 1610612744. If team_id = 0, run for all teams
     team_id = 1610612744 
     
@@ -403,7 +403,7 @@ def main():
         # delete the table rows that were in the postgres database tables previously
         delete_table_rows('point_ma')
         delete_table_rows('trajectory_ma')
-        delete_table_rows('candidates_ma') 
+        delete_table_rows('candidates') 
         
         # import the newly created csv files into postgres database
         import_point_ma_table_into_postgres('point_ma', path)
