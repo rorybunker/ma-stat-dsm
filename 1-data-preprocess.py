@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Preprocess dataset_as_a_file_600_games.pkl prior to running Stat-DSM/MA-Stat-DSM
+Import 600-game NBA dataset .pkl file, export point-level and trajectory-level 
+csv files for each agent which are then created in the PostgreSQL database, 
+which then are inputs to the Stat-DSM algorithm.
 
 @author: rorybunker
 """
