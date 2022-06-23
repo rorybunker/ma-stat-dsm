@@ -474,10 +474,15 @@ def stat_dsm(trajectory_table, point_table, candidate_table, original_list_label
                     neighbor_tid = neighbor[0]
                     neighbor_start_idx = neighbor[1]
                     neighbor_end_idx = neighbor[2]
-
-                    if neighbor_end_idx == (len(dict_neighbor_full_trajectory[neighbor_tid]) - 1):
+                    
+                    if len(agent_ids) == 1:
+                        if neighbor_end_idx == (len(dict_neighbor_full_trajectory[neighbor_tid]) - 1):
                         # del dict_neighbor_full_trajectory[neighbor_tid]
-                        continue
+                            continue
+                    elif len(agent_ids) > 1:
+                        if neighbor_end_idx == (len(dict_neighbor_full_trajectory_ma[(neighbor_tid,0)]) - 1):
+                        # del dict_neighbor_full_trajectory[neighbor_tid]
+                            continue
 
                     new_neighbor_start_idx = neighbor_start_idx
                     new_neighbor_end_idx = neighbor_end_idx + 1
@@ -573,7 +578,7 @@ def main():
     alpha = 0.05
     distance_threshold = 1.5
     top_k = 1
-    agent_ids = [0]
+    agent_ids = [0, 1, 2, 3, 4]
     
     candidate_table = 'candidates'
 
@@ -628,6 +633,7 @@ def main():
     cur.close()
     conn.close()
     print("--- %s seconds ---" % (time.time() - start_time))
+
 
 if __name__ == "__main__":
     main()
