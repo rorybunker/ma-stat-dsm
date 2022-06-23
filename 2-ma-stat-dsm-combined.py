@@ -574,10 +574,13 @@ def main():
     positive_label = '1'
     negative_label = '0'
     max_iter = 1000
+    # set min_length, e.g., between 2 and 50
     min_length = 5
     alpha = 0.05
+    # set distance_threshold, e.g., between 1.5 and 25
     distance_threshold = 1.5
     top_k = 1
+    # set agent_ids to a list with a single element if running for statdsm
     agent_ids = [0, 1, 2, 3, 4]
     
     candidate_table = 'candidates'
