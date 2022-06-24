@@ -6,7 +6,6 @@ shapely
 psycopg2
 json
 time
-os
 scipy
 hausdorff
 sqlalchemy
