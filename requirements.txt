@@ -1,11 +1,8 @@
 pickle
 numpy
 pandas
-csv
 shapely
 psycopg2
-json
-time
 scipy
 hausdorff
 sqlalchemy
