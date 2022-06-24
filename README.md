@@ -32,7 +32,7 @@ The method is illustrated in the context of sports, specificially NBA basketball
  (in principle, the other parameters should remain fixed) 
 
 ## Step 3: Determining the statitically significant discriminative sub-trajectories
-### 3-calculate-candidate-subtraj-pvalues.py:  
+### 3-calculate-subtraj-pvalues.py:  
 - Specify run_type as 'statdsm' or 'mastatdsm'
 - Set delta_star as the delta* value that was calculated at Step 2
 
