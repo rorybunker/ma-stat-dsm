@@ -12,7 +12,7 @@ param_dic = {
 # ======================================== #
 working_dir = '/Users/rorybunker/'
 run_type = 'mastatdsm'
-num_iterations = 0 # number of times to append the same dataset to itself
+num_iterations = 1 # number of times to append the same dataset to itself
 # ======================================== #
 
 def connect(params_dic):
