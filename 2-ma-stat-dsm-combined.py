@@ -492,7 +492,7 @@ def stat_dsm(trajectory_table, point_table, candidate_table, original_list_label
                             calculate_point_distance(trajectory[candidate_end_idx],
                                                      dict_neighbor_full_trajectory[neighbor_tid][new_neighbor_end_idx])
                     elif len(agent_ids) > 1:
-                        last_point_distance_h = calculate_hausdorff_distance([trajectory[a][candidate_end_idx] for a in agent_ids],
+                        last_point_distance_h = calculate_hausdorff_distance([trajectory[a-1][candidate_end_idx] for a in agent_ids],
                                                  [dict_neighbor_full_trajectory_ma[(neighbor_tid,a)][new_neighbor_end_idx] for a in agent_ids])
                     
                     if len(agent_ids) == 1:
@@ -580,8 +580,8 @@ def main():
     # set distance_threshold, e.g., between 1.5 and 25
     distance_threshold = 1.5
     top_k = 1
-    # set agent_ids to a list with a single element if running for statdsm
-    agent_ids = [0, 1, 2, 3, 4]
+    # set agent_ids to a list with a single element if running for statdsm or any subset from [0, 1, 2, 3, 4] for mastatdsm
+    agent_ids = [1, 2, 3, 4]
     
     candidate_table = 'candidates'
 
