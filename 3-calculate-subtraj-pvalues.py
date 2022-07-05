@@ -151,7 +151,7 @@ def create_discriminative_point_table(point_table):
 def main():
     # -------------- #
     # Set the delta* value that was calculated from stat-dsm/ma-stat-dsm
-    delta_star = 0.01349955466516803
+    delta_star = 0.0011105447125270506
     run_type = 'mastatdsm'
     # -------------- #
     
