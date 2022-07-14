@@ -14,6 +14,8 @@ import sys
 from scipy.special import comb
 sys.setrecursionlimit(10000)
 from sqlalchemy import create_engine
+from shapely.geometry import LineString, Point
+import geopandas as gpd
 
 engine = create_engine('postgresql://postgres:1234@localhost:5432/postgres')
 os.chdir("/Users/rorybunker")
@@ -148,14 +150,24 @@ def create_discriminative_point_table(point_table):
     
     conn.close()
 
+def create_discriminative_subtraj_table(disc_point_table):
+    sql = """CREATE TABLE discriminative_sub_traj_vis AS aid, tid, label, ST_MakeLine(dp.geom ORDER BY pid) AS geom FROM """ + disc_point_table + """ FROM discriminative_points AS dp
+		GROUP BY aid, tid, label"""
+    cur.execute(sql)
+    conn.commit()
+    
+    conn.close()
+    
 def main():
     # -------------- #
-    # Set the delta* value that was calculated from stat-dsm/ma-stat-dsm
-    delta_star = 0.0011105447125270506
+    # Set the delta* value that was calculated from statdsm/mastat-dsm
+    delta_star = 0.01797574865142535
     run_type = 'mastatdsm'
     # -------------- #
     
     candidate_table = 'candidates'
+    
+    disc_point_table = 'discriminative_points'
     
     positive_label = '1'
     negative_label = '0'
@@ -217,9 +229,11 @@ def main():
             
     change_column_types()
     
-    delete_table('discriminative_points')   
-
+    delete_table(disc_point_table)
     create_discriminative_point_table(point_table)
+    
+    delete_table('discriminative_sub_traj_vis')   
+    create_discriminative_subtraj_table(disc_point_table)
     
 if __name__ == '__main__':
     main()
