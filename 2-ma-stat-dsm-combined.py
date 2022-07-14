@@ -58,7 +58,7 @@ def get_trajectory(trajectory_table, tid, agent_ids):
     if len(agent_ids) == 1:
         return json.loads(rows[0][0])['coordinates']
     elif len(agent_ids) > 1:
-        return [json.loads(rows[a-1][0])['coordinates'] for a in agent_ids]
+        return [json.loads(rows[a][0])['coordinates'] for a in range(len(agent_ids))]
 
 def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_trajectory, point_table, distance_threshold, top_k, agent_ids):
     distance_threshold = distance_threshold * top_k
@@ -410,7 +410,7 @@ def stat_dsm(trajectory_table, point_table, candidate_table, original_list_label
                 if len(agent_ids) == 1:
                     length_k_sub_trajectory.append(trajectory[i + j])
                 elif len(agent_ids) > 1:   
-                    [length_k_sub_trajectory[a-1].append(trajectory[a-1][i + j]) for a in agent_ids]
+                    [length_k_sub_trajectory[a].append(trajectory[a][i + j]) for a in range(len(agent_ids))]
 
             potential_neighbor = find_length_k_potential_neighbor(trajectory_tid, length_k_sub_trajectory, point_table, distance_threshold, top_k, agent_ids)
             
@@ -492,8 +492,8 @@ def stat_dsm(trajectory_table, point_table, candidate_table, original_list_label
                             calculate_point_distance(trajectory[candidate_end_idx],
                                                      dict_neighbor_full_trajectory[neighbor_tid][new_neighbor_end_idx])
                     elif len(agent_ids) > 1:
-                        last_point_distance_h = calculate_hausdorff_distance([trajectory[a-1][candidate_end_idx] for a in agent_ids],
-                                                 [dict_neighbor_full_trajectory_ma[(neighbor_tid,a)][new_neighbor_end_idx] for a in agent_ids])
+                        last_point_distance_h = calculate_hausdorff_distance([trajectory[a][candidate_end_idx] for a in range(len(agent_ids))],
+                                                 [dict_neighbor_full_trajectory_ma[(neighbor_tid,a)][new_neighbor_end_idx] for a in range(len(agent_ids))])
                     
                     if len(agent_ids) == 1:
                         if last_point_distance > local_top_k_max[0]:
@@ -575,13 +575,13 @@ def main():
     negative_label = '0'
     max_iter = 1000
     # set min_length, e.g., between 2 and 50
-    min_length = 5
+    min_length = 10
     alpha = 0.05
     # set distance_threshold, e.g., between 1.5 and 25
-    distance_threshold = 1.5
+    distance_threshold = 25
     top_k = 1
     # set agent_ids to a list with a single element if running for statdsm or any subset from [0, 1, 2, 3, 4] for mastatdsm
-    agent_ids = [1, 2, 3, 4]
+    agent_ids = [1, 3]
     
     candidate_table = 'candidates'
 
