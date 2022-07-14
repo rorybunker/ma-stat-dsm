@@ -325,18 +325,19 @@ def main():
     label_variable = 'effective'    
     # 'statdsm' or 'mastatdsm'
     run_type = 'mastatdsm'
-    # specify the agent: 'ball', 'shooter', 'shooterdefender', 'lastpasser' or 'lastpasserdefender'
+    # if running statdsm, specify the agent from 'ball', 'shooter', 'shooterdefender', 'lastpasser' or 'lastpasserdefender'
     agent_name = 'shooter'
-    agent_list = ['shooter','lastpasser','shooterdefender','lastpasserdefender']
+    # if running mastatdsm, specify the agents as the list, or subset, of ['ball', 'shooter', 'shooterdefender', 'lastpasser' or 'lastpasserdefender']
+    agent_list = ['shooter', 'lastpasser']
     # specify the time interval - t1 or t2
     time_interval = 't2'
     # number of points to include, e.g., if num_include = 3, include every third point, etc.
-    num_include = 4
+    num_include = 5
 
     # run for smaller subset - useful for testing. If initial_num_rows = -1, run on entire dataset
-    initial_num_rows = 400
-    # team ids are in id_team.csv. Cleveland 1610612739, GSW 1610612744. If team_id = 0, run for all teams
-    team_id = 1610612739 
+    initial_num_rows = 100
+    # team ids are in id_team.csv. Cleveland 1610612739, GSW 1610612744. If team_id = [0], run for all teams
+    team_id = [1610612739, 1610612744]
     # ----------------------------------------
     
     f = open(path, 'rb')
@@ -353,9 +354,14 @@ def main():
     indices = array(data[2].astype(int), dtype=object)
     
     label_df = pd.DataFrame(label, index=indices)
-    # subset the data if a team_id is specified above 
-    if team_id > 0:
-        label_df= label_df[(label_df[6]==team_id)]
+    
+    # subset the data if team_id's are specified above 
+    if team_id != [0]:
+        if len(team_id) == 2:
+            label_df= label_df[(label_df[6] == team_id[0]) | (label_df[6] == team_id[1])]
+        elif len(team_id) == 1:
+            label_df= label_df[(label_df[6] == team_id[0])]
+            
     # take the first initial_num_rows from the dataset (useful for testing)
     if initial_num_rows != -1:
         label_df = label_df[0:initial_num_rows]
