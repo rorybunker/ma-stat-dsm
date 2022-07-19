@@ -324,7 +324,7 @@ def main():
     # label variable definition - 'score' for score/did not score or 'effective' for effective/ineffective play
     label_variable = 'effective'    
     # 'statdsm' or 'mastatdsm'
-    run_type = 'ma-statdsm'
+    run_type = 'mastatdsm'
     # if running statdsm, specify the agent from 'ball', 'shooter', 'shooterdefender', 'lastpasser' or 'lastpasserdefender'
     agent_name = 'shooter'
     # if running mastatdsm, specify the agents as the list, or subset, of ['ball', 'shooter', 'shooterdefender', 'lastpasser' or 'lastpasserdefender']
@@ -335,10 +335,11 @@ def main():
     num_include = 4
 
     # run for smaller subset - useful for testing. If initial_num_rows = -1, run on entire dataset
-    initial_num_rows = 100
-    # team ids are in id_team.csv. Cleveland 1610612739, GSW 1610612744. If team_id = [0], run for all teams
+    initial_num_rows = -1
+    # team ids are in id_team.csv. Cleveland [1610612739], GSW [1610612744]. If team_id = [0], run for all teams
     team_id = [0]
-    match_id = 	21500493
+    # run for specific match. If match_id = 0, run for all matches
+    match_id = 21500493
     # ----------------------------------------
     
     f = open(path, 'rb')
