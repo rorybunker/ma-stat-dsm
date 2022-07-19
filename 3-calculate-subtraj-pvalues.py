@@ -161,7 +161,7 @@ def create_discriminative_subtraj_table(disc_point_table):
 def main():
     # -------------- #
     # Set the delta* value that was calculated from statdsm/mastat-dsm
-    delta_star = 0.01797574865142535
+    delta_star = 0.002193062740207225
     run_type = 'mastatdsm'
     # -------------- #
     
