@@ -324,7 +324,7 @@ def main():
     # label variable definition - 'score' for score/did not score or 'effective' for effective/ineffective play
     label_variable = 'effective'    
     # 'statdsm' or 'mastatdsm'
-    run_type = 'mastatdsm'
+    run_type = 'ma-statdsm'
     # if running statdsm, specify the agent from 'ball', 'shooter', 'shooterdefender', 'lastpasser' or 'lastpasserdefender'
     agent_name = 'shooter'
     # if running mastatdsm, specify the agents as the list, or subset, of ['ball', 'shooter', 'shooterdefender', 'lastpasser' or 'lastpasserdefender']
@@ -338,7 +338,7 @@ def main():
     initial_num_rows = 100
     # team ids are in id_team.csv. Cleveland 1610612739, GSW 1610612744. If team_id = [0], run for all teams
     team_id = [0]
-    match_id = 21500492
+    match_id = 	21500493
     # ----------------------------------------
     
     f = open(path, 'rb')
@@ -347,7 +347,7 @@ def main():
     # data = [feature, label, index, game_id, quarter]
     # feature: Position(23:OFxy,DFxy,Ballxyz), player_ID(10), Clock, ShotClock, 
     # Ball_OF, Ball_Hold
-    # label: effective attack (1) or ineffective attack (0), T1, T2, score or not
+    # label data is in the format [label_i,t1,t2,score,shooterID,passerID,team_ID]
     # index: corresponding to the file at root\nba_attack2\nba_datalength.csv
 
     trajectories = array(data[0], dtype=object)
@@ -376,7 +376,6 @@ def main():
     if initial_num_rows != -1:
         combined_df = combined_df[0:initial_num_rows]
 
-    # label data is in the format [label_i,t1,t2,score,shooterID,passerID,team_ID]
     effective = combined_df.iloc[:,0]
     
     # convert 2- and 3-pointer score variable to binary 1/0 = score/didn't score
@@ -388,6 +387,8 @@ def main():
         label = score
     elif label_variable == 'effective':
         label = effective
+    else:
+        sys.exit("ERROR: please specify the label_variable parameter to be either score or effective")
 
     if time_interval == 't1':
         t1 = combined_df.iloc[:,1]
@@ -395,6 +396,8 @@ def main():
     elif time_interval == 't2':
         t2 = combined_df.iloc[:,2]
         t_interval = combined_df.iloc[:,2][t2>0]
+    else:
+        sys.exit("ERROR: please specify the time_interval parameter to be either t1 or t2")
     
     if run_type == 'statdsm':
         # create dataframe for the specified agent
@@ -426,6 +429,8 @@ def main():
         # import the newly created csv files into postgres database
         import_point_ma_table_into_postgres('point_ma', path)
         import_traj_ma_table_into_postgres('trajectory_ma', path)
+    else:
+        sys.exit("ERROR: please specify the run_type parameter to be either statdsm or mastatdsm")
         
 if __name__ == '__main__':
     main()
