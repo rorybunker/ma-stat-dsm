@@ -332,18 +332,19 @@ def main():
     # specify the time interval - t1 or t2
     time_interval = 't2'
     # number of points to include, e.g., if num_include = 3, include every third point, etc.
-    num_include = 5
+    num_include = 4
 
     # run for smaller subset - useful for testing. If initial_num_rows = -1, run on entire dataset
     initial_num_rows = 100
     # team ids are in id_team.csv. Cleveland 1610612739, GSW 1610612744. If team_id = [0], run for all teams
-    team_id = [1610612739, 1610612744]
+    team_id = [0]
+    match_id = 21500492
     # ----------------------------------------
     
     f = open(path, 'rb')
     data = pickle.load(f)
     
-    # data is in the format [feature, label, index]
+    # data = [feature, label, index, game_id, quarter]
     # feature: Position(23:OFxy,DFxy,Ballxyz), player_ID(10), Clock, ShotClock, 
     # Ball_OF, Ball_Hold
     # label: effective attack (1) or ineffective attack (0), T1, T2, score or not
@@ -352,27 +353,36 @@ def main():
     trajectories = array(data[0], dtype=object)
     label = array(data[1], dtype=object)
     indices = array(data[2].astype(int), dtype=object)
+    game_id = array(data[3].astype(int), dtype=object)
+    quarter = array(data[4].astype(int), dtype=object)
     
     label_df = pd.DataFrame(label, index=indices)
+    game_id_df = pd.DataFrame(game_id, index=indices).rename(columns={0:'game_id'})
+    quarter_df = pd.DataFrame(quarter, index=indices).rename(columns={0:'quarter'})
+    
+    combined_df = pd.concat([label_df, game_id_df, quarter_df], axis=1, join='inner')
     
     # subset the data if team_id's are specified above 
     if team_id != [0]:
         if len(team_id) == 2:
-            label_df= label_df[(label_df[6] == team_id[0]) | (label_df[6] == team_id[1])]
+            combined_df= combined_df[(combined_df[6] == team_id[0]) | (combined_df[6] == team_id[1])]
         elif len(team_id) == 1:
-            label_df= label_df[(label_df[6] == team_id[0])]
-            
+            combined_df= combined_df[(combined_df[6] == team_id[0])]
+    
+    if match_id != 0:
+        combined_df= combined_df[(combined_df['game_id'] == match_id)]
+        
     # take the first initial_num_rows from the dataset (useful for testing)
     if initial_num_rows != -1:
-        label_df = label_df[0:initial_num_rows]
+        combined_df = combined_df[0:initial_num_rows]
 
     # label data is in the format [label_i,t1,t2,score,shooterID,passerID,team_ID]
-    effective = label_df.iloc[:,0]
+    effective = combined_df.iloc[:,0]
     
     # convert 2- and 3-pointer score variable to binary 1/0 = score/didn't score
-    label_df.iloc[label_df[3] == 2 , 3] = 1.0
-    label_df.iloc[label_df[3] == 3 , 3] = 1.0
-    score = label_df.iloc[:,3]
+    combined_df.iloc[combined_df[3] == 2 , 3] = 1.0
+    combined_df.iloc[combined_df[3] == 3 , 3] = 1.0
+    score = combined_df.iloc[:,3]
     
     if label_variable == 'score':
         label = score
@@ -380,11 +390,11 @@ def main():
         label = effective
 
     if time_interval == 't1':
-        t1 = label_df.iloc[:,1]
-        t_interval = label_df.iloc[:,2][t1>0]
+        t1 = combined_df.iloc[:,1]
+        t_interval = combined_df.iloc[:,2][t1>0]
     elif time_interval == 't2':
-        t2 = label_df.iloc[:,2]
-        t_interval = label_df.iloc[:,2][t2>0]
+        t2 = combined_df.iloc[:,2]
+        t_interval = combined_df.iloc[:,2][t2>0]
     
     if run_type == 'statdsm':
         # create dataframe for the specified agent
