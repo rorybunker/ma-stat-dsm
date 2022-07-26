@@ -9,7 +9,7 @@ The method is illustrated in the context of sports, specificially NBA basketball
 3. In pgadmin, run the queries in 0-create-postgres-database.sql to create the required database tables.
 
 ## Step 1: Data preprocessing for Stat-DSM/MA-Stat-DSM 
-### 1-data-preprocess.py:    
+### data_preprocess.py:    
 - In the main() function, update the path to where your dataset_as_a_file_600_games.pkl file is located.
 #### Preprocessing parameters: 
 - label_variable: 'score' or 'effective'
@@ -23,7 +23,7 @@ The method is illustrated in the context of sports, specificially NBA basketball
 ![image](https://user-images.githubusercontent.com/29388472/173998123-ad0bade2-e42d-4261-89dd-40a4bc7834d3.png)
 
 ## Step 2: Running Stat-DSM/MA-Stat-DSM
-### 2-ma-stat-dsm-combined.py:  
+### ma_stat_dsm.py:  
 - Set your working directory in os.chdir(" ")
 - Specify: 
   - min_length (e.g., between 2 and 50)
@@ -32,7 +32,7 @@ The method is illustrated in the context of sports, specificially NBA basketball
  (in principle, the other parameters should remain fixed) 
 
 ## Step 3: Determining the statitically significant discriminative sub-trajectories
-### 3-calculate-subtraj-pvalues.py:  
+### calculate_sig_subtraj.py:  
 - Specify run_type as 'statdsm' or 'mastatdsm'
 - Set delta_star as the delta* value that was calculated at Step 2
 
