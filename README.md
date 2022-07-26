@@ -29,10 +29,10 @@ All arguments are optional:\
   -g/--game_id. Specify a particular match id (default is all matches)\
   -t/--team. Specify a particular team id, e.g., Cleveland 1610612739, Golden State Warriors 1610612744 (default is all teams)
 ```
-python data_preprocess.py -p 4 -t 1610612739
+python data_preprocess.py -p 4 -t 1610612739 -a shooter lastpasser
 ```
 ```
-python data_preprocess.py -p 4 -t 1610612744
+python data_preprocess.py -p 4 -t 1610612744 -a shooter lastpasser
 ```
 ![image](https://user-images.githubusercontent.com/29388472/173998123-ad0bade2-e42d-4261-89dd-40a4bc7834d3.png)
 
