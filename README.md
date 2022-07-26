@@ -35,12 +35,12 @@ python data_preprocess.py -h
 
 ## Step 2: Running Stat-DSM/MA-Stat-DSM
 ### ma_stat_dsm.py:  
-#### Optional:\
+#### Optional:
 -p/--pos_label. default='1'\
 -n/--neg_label, default='0'\
 -i/--max_it. default=1000 maximum number of iterations\
 -a/--alph. Statistical significance level (alpha). Default is alpha = 0.05\
-#### Required:\
+#### Required:
 -l/--min_l. Minimum trajectory length, e.g., 5\
 -d/--dist_threshold. Distance threshold, e.g., 1.5\
 ```
@@ -48,7 +48,7 @@ python ma_stat_dsm.py -l 5 -d 1.5
 ```
 ## Step 3: Determining the statitically significant discriminative sub-trajectories
 ### calculate_sig_subtraj.py:  
-Run with the delta* value that was output from running ma_stat_dsm.py.\
+Run with the delta* value that was output from running ma_stat_dsm.py.
 ```
 python calculate_sig_subtraj.py -d 0.0344542453452345
 ```
