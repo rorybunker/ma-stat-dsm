@@ -17,6 +17,7 @@ In terminal, run
 ```
 python data_preprocess.py -h
 ```
+All arguments are optional:
   -y/--label. Set to effective for effective/ineffective or to scored for scored/did not score label (default is effective)\
   -r/--init_rows. Set some number of initial rows, which is useful for testing (the final number of plays in the dataset will be less, and will be printed once the script has finished running).\
   -a/--a_list. List of agents from ball shooter
@@ -35,17 +36,19 @@ python data_preprocess.py -h
 ## Step 2: Running Stat-DSM/MA-Stat-DSM
 ### ma_stat_dsm.py:  
 #### Optional:\
-'-p', '--pos_label', type=str, required=False, default='1'\
-'-n', '--neg_label', type=str, required=False, default='0'\
-'-i', '--max_it', type=int, required=False, default=1000, help='maximum number of iterations (default=1000)'\
-'-a', '--alph', type=float, required=False, default=0.05, help='statistical significance level (alpha). default is alpha = 0.05'\
+-p/--pos_label. default='1'\
+-n/--neg_label, default='0'\
+-i/--max_it. default=1000 maximum number of iterations\
+-a/--alph. Statistical significance level (alpha). Default is alpha = 0.05\
 #### Required:\
-'-l', '--min_l', type=int, required=True, help='minimum trajectory length (required)'\
-'-d', '--dist_threshold', type=float, required=True, help='distance threshold (required)'\
-
+-l/--min_l. Minimum trajectory length, e.g., 5\
+-d/--dist_threshold. Distance threshold, e.g., 1.5\
+```
+python ma_stat_dsm.py -l 5 -d 1.5
+```
 ## Step 3: Determining the statitically significant discriminative sub-trajectories
 ### calculate_sig_subtraj.py:  
-Run with the delta* value that was output from ma_stat_dsm.py.\
+Run with the delta* value that was output from running ma_stat_dsm.py.\
 ```
 python calculate_sig_subtraj.py -d 0.0344542453452345
 ```
