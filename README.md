@@ -42,7 +42,7 @@ python data_preprocess.py -p 4 -t 1610612744 -a shooter lastpasser
 -p/--pos_label. default='1'\
 -n/--neg_label, default='0'\
 -i/--max_it. default=1000 maximum number of iterations\
--a/--alph. Statistical significance level (alpha). Default is alpha = 0.05\
+-a/--alph. Statistical significance level (alpha). Default is alpha = 0.05
 #### Required:
 -l/--min_l. Minimum trajectory length, e.g., 5\
 -d/--dist_threshold. Distance threshold, e.g., 1.5
