@@ -12,11 +12,6 @@ For all steps below, dataset_as_a_file_600_games.pkl must be in the same directo
 
 ## Step 1: Data preprocessing for Stat-DSM/MA-Stat-DSM 
 ### data_preprocess.py:    
-#### Usage:
-In terminal, run 
-```
-python data_preprocess.py -h
-```
 All arguments are optional:\
   -y/--label. Set to effective for effective/ineffective or to scored for scored/did not score label (default is effective)\
   -r/--init_rows. Set some number of initial rows, which is useful for testing (the final number of plays in the dataset will be less, and will be printed once the script has finished running).\
@@ -39,6 +34,7 @@ python data_preprocess.py -p 4 -t 1610612744 -a shooter lastpasser
 ## Step 2: Running Stat-DSM/MA-Stat-DSM
 ### ma_stat_dsm.py:  
 #### Optional:
+These parameters don't need to be changed in principle.\
 -p/--pos_label. default='1'\
 -n/--neg_label, default='0'\
 -i/--max_it. default=1000 maximum number of iterations\
