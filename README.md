@@ -5,36 +5,57 @@ The method is illustrated in the context of sports, specificially NBA basketball
 
 ## Step 0: Setting up PostgreSQL database environment
 1. Install PostgreSQL https://www.postgresql.org/download/, which also includes pgAdmin (on Mac it is recommended to also install https://postgresapp.com/).
-2. Create a PostgreSQL database with the following: dbname dbname = 'postgres', user = 'postgres', host = 'localhost', password = 1234, and port 5432.
+2. Create a PostgreSQL database with: dbname = 'postgres', user = 'postgres', host = 'localhost', password = 1234, and port = 5432.
 3. In pgadmin, run the queries in 0-create-postgres-database.sql to create the required database tables.
+
+For all steps below, dataset_as_a_file_600_games.pkl must be in the same directory as the python scripts data_preprocess.py, ma_stat_dsm.py, and calculate_sig_subtraj.py.
 
 ## Step 1: Data preprocessing for Stat-DSM/MA-Stat-DSM 
 ### data_preprocess.py:    
-- In the main() function, update the path to where your dataset_as_a_file_600_games.pkl file is located.
-#### Preprocessing parameters: 
-- label_variable: 'score' or 'effective'
-- agent_name: specify the agent - 'ball', 'shooter', 'shooterdefender', 'lastpasser' or 'lastpasserdefender'
-- agent_list = ['ball','shooter','lastpasser','shooterdefender','lastpasserdefender']
-- time_inteval: specify the time interval - t1 or t2 (see figure below)
-- num_include: number of points to include, e.g., if num_include = 3, include every third point, if num_include = 1, include every point, etc.
-- run_type: 'statdsm' or 'mastatdsm', specify based on whichever you will run in Step 2.
-- initial_num_rows: run for smaller subset - useful for testing. If initial_num_rows = -1, run on entire dataset.
-- team_id: the team ids are in the csv file id_team.csv. Cleveland team_id=1610612739, Golden State Warriors team_id=1610612744. If team_id = 0, run for all teams
+#### Usage:
+In terminal, run 
+```
+python data_preprocess.py -h
+```
+-h, --help            show this help message and exit
+  -y LABEL, --label LABEL
+                        effective - for effective/ineffective label, or score
+                        - for scored/did not score label (default=effective)
+  -r INIT_ROWS, --init_rows INIT_ROWS
+                        set some number - useful for testing
+  -a [AGT_LIST [AGT_LIST ...]], --a_list [AGT_LIST [AGT_LIST ...]]
+                        list of agents from default=ball shooter
+                        shooterdefender lastpasser lastpasserdefender
+  -ti TIME_INT, --time_int TIME_INT
+                        t1 or t2 (default=t2)
+  -p XTH_POINT, --xth_point XTH_POINT
+                        downsample by considering only every xth point from
+                        the trajectories (default=1, i.e., include every
+                        point)
+  -g GAME_ID, --game_id GAME_ID
+                        specify a particular match id (default = all matches)
+  -t TEAM, --team TEAM  specify a particular team id, e.g., Cleveland 1610612739, Golden State Warriors 1610612744 (default = all teams)
+```
+python data_preprocess.py -h
+```
 ![image](https://user-images.githubusercontent.com/29388472/173998123-ad0bade2-e42d-4261-89dd-40a4bc7834d3.png)
 
 ## Step 2: Running Stat-DSM/MA-Stat-DSM
 ### ma_stat_dsm.py:  
-- Set your working directory in os.chdir(" ")
-- Specify: 
-  - min_length (e.g., between 2 and 50)
-  - distance_threshold (e.g., between 1.5 and 25)
-  - agent_ids: if agent_ids is a list with a single element, e.g., agent_ids = [1], run_type should be 'statdsm'. For run_type = 'mastatdsm', specify multiple agents corresponding to agent_list, e.g., [1, 3] for shooter and last passer, [0, 1, 2, 3, 4] for all agents. 
- (in principle, the other parameters should remain fixed) 
+Optional:
+'-p', '--pos_label', type=str, required=False, default='1'
+'-n', '--neg_label', type=str, required=False, default='0'
+'-i', '--max_it', type=int, required=False, default=1000, help='maximum number of iterations (default=1000)'
+'-a', '--alph', type=float, required=False, default=0.05, help='statistical significance level (alpha). default is alpha = 0.05'
+Required:
+'-l', '--min_l', type=int, required=True, help='minimum trajectory length (required)'
+'-d', '--dist_threshold', type=float, required=True, help='distance threshold (required)'
 
 ## Step 3: Determining the statitically significant discriminative sub-trajectories
 ### calculate_sig_subtraj.py:  
-- Specify run_type as 'statdsm' or 'mastatdsm'
-- Set delta_star as the delta* value that was calculated at Step 2
+```
+python data_preprocess.py -d 0.0344542453452345
+```
 
 # References
 Le Vo, D. N., Sakuma, T., Ishiyama, T., Toda, H., Arai, K., Karasuyama, M., ... & Takeuchi, I. (2020). Stat-DSM: Statistically Discriminative Sub-Trajectory Mining With Multiple Testing Correction. IEEE Transactions on Knowledge and Data Engineering. DOI: 10.1109/TKDE.2020.2994344
