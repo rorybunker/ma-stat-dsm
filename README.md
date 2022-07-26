@@ -8,9 +8,10 @@ The method is illustrated in the context of sports, specificially NBA basketball
 2. Create a PostgreSQL database with: dbname = 'postgres', user = 'postgres', host = 'localhost', password = 1234, and port = 5432.
 3. In pgadmin, run the queries in 0-create-postgres-database.sql to create the required database tables.
 
-For all steps below, dataset_as_a_file_600_games.pkl must be in the same directory as the python scripts data_preprocess.py, ma_stat_dsm.py, and calculate_sig_subtraj.py.
-
 ## Step 1: Data preprocessing for Stat-DSM/MA-Stat-DSM 
+
+For all steps below, dataset_as_a_file_600_games.pkl must be in the same directory as the python scripts data_preprocess.py, ma_stat_dsm.py, and calculate_sig_subtraj.py as well as max_euclidean.py.
+
 ### data_preprocess.py:    
 All arguments are optional:\
   -y/--label. Set to effective for effective/ineffective or to scored for scored/did not score label (default is effective)\
