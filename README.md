@@ -17,24 +17,24 @@ In terminal, run
 ```
 python data_preprocess.py -h
 ```
--h, --help            show this help message and exit
-  -y LABEL, --label LABEL
+-h, --help            show this help message and exit\
+  -y LABEL, --label LABEL\
                         effective - for effective/ineffective label, or score
-                        - for scored/did not score label (default=effective)
-  -r INIT_ROWS, --init_rows INIT_ROWS
-                        set some number - useful for testing
-  -a [AGT_LIST [AGT_LIST ...]], --a_list [AGT_LIST [AGT_LIST ...]]
+                        - for scored/did not score label (default=effective)\
+  -r INIT_ROWS, --init_rows INIT_ROWS\
+                        set some number - useful for testing\
+  -a [AGT_LIST [AGT_LIST ...]], --a_list [AGT_LIST [AGT_LIST ...]]\
                         list of agents from default=ball shooter
-                        shooterdefender lastpasser lastpasserdefender
-  -ti TIME_INT, --time_int TIME_INT
-                        t1 or t2 (default=t2)
-  -p XTH_POINT, --xth_point XTH_POINT
+                        shooterdefender lastpasser lastpasserdefender\
+  -ti TIME_INT, --time_int TIME_INT\
+                        t1 or t2 (default=t2)\
+  -p XTH_POINT, --xth_point XTH_POINT\
                         downsample by considering only every xth point from
                         the trajectories (default=1, i.e., include every
-                        point)
-  -g GAME_ID, --game_id GAME_ID
-                        specify a particular match id (default = all matches)
-  -t TEAM, --team TEAM  specify a particular team id, e.g., Cleveland 1610612739, Golden State Warriors 1610612744 (default = all teams)
+                        point)\
+  -g GAME_ID, --game_id GAME_ID\
+                        specify a particular match id (default = all matches)\
+  -t TEAM, --team TEAM  specify a particular team id, e.g., Cleveland 1610612739, Golden State Warriors 1610612744 (default = all teams)\
 ```
 python data_preprocess.py -h
 ```
@@ -42,19 +42,20 @@ python data_preprocess.py -h
 
 ## Step 2: Running Stat-DSM/MA-Stat-DSM
 ### ma_stat_dsm.py:  
-Optional:
-'-p', '--pos_label', type=str, required=False, default='1'
-'-n', '--neg_label', type=str, required=False, default='0'
-'-i', '--max_it', type=int, required=False, default=1000, help='maximum number of iterations (default=1000)'
-'-a', '--alph', type=float, required=False, default=0.05, help='statistical significance level (alpha). default is alpha = 0.05'
-Required:
-'-l', '--min_l', type=int, required=True, help='minimum trajectory length (required)'
-'-d', '--dist_threshold', type=float, required=True, help='distance threshold (required)'
+#### Optional:\
+'-p', '--pos_label', type=str, required=False, default='1'\
+'-n', '--neg_label', type=str, required=False, default='0'\
+'-i', '--max_it', type=int, required=False, default=1000, help='maximum number of iterations (default=1000)'\
+'-a', '--alph', type=float, required=False, default=0.05, help='statistical significance level (alpha). default is alpha = 0.05'\
+#### Required:\
+'-l', '--min_l', type=int, required=True, help='minimum trajectory length (required)'\
+'-d', '--dist_threshold', type=float, required=True, help='distance threshold (required)'\
 
 ## Step 3: Determining the statitically significant discriminative sub-trajectories
 ### calculate_sig_subtraj.py:  
+Run with the delta* value that was output from ma_stat_dsm.py.\
 ```
-python data_preprocess.py -d 0.0344542453452345
+python calculate_sig_subtraj.py -d 0.0344542453452345
 ```
 
 # References
