@@ -27,7 +27,7 @@ All arguments are optional:
                         the trajectories (the default is 1, i.e., include every
                         point)\
   -g/--game_id. Specify a particular match id (default is all matches)\
-  -t/--team. Specify a particular team id, e.g., Cleveland 1610612739, Golden State Warriors 1610612744 (default is all teams)\
+  -t/--team. Specify a particular team id, e.g., Cleveland 1610612739, Golden State Warriors 1610612744 (default is all teams)
 ```
 python data_preprocess.py -h
 ```
@@ -42,7 +42,7 @@ python data_preprocess.py -h
 -a/--alph. Statistical significance level (alpha). Default is alpha = 0.05\
 #### Required:
 -l/--min_l. Minimum trajectory length, e.g., 5\
--d/--dist_threshold. Distance threshold, e.g., 1.5\
+-d/--dist_threshold. Distance threshold, e.g., 1.5
 ```
 python ma_stat_dsm.py -l 5 -d 1.5
 ```
