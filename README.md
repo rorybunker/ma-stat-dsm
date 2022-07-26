@@ -17,24 +17,16 @@ In terminal, run
 ```
 python data_preprocess.py -h
 ```
--h, --help            show this help message and exit\
-  -y LABEL, --label LABEL\
-                        effective - for effective/ineffective label, or score
-                        - for scored/did not score label (default=effective)\
-  -r INIT_ROWS, --init_rows INIT_ROWS\
-                        set some number - useful for testing\
-  -a [AGT_LIST [AGT_LIST ...]], --a_list [AGT_LIST [AGT_LIST ...]]\
-                        list of agents from default=ball shooter
+  -y/--label. Set to effective for effective/ineffective or to scored for scored/did not score label (default is effective)\
+  -r/--init_rows. Set some number of initial rows, which is useful for testing (the final number of plays in the dataset will be less, and will be printed once the script has finished running).\
+  -a/--a_list. List of agents from ball shooter
                         shooterdefender lastpasser lastpasserdefender\
-  -ti TIME_INT, --time_int TIME_INT\
-                        t1 or t2 (default=t2)\
-  -p XTH_POINT, --xth_point XTH_POINT\
-                        downsample by considering only every xth point from
-                        the trajectories (default=1, i.e., include every
+  -ti/--time_int. The time interval, t1 or t2, as shown in the diagram below (default is t2)\
+  -p/--xth_point. Downsample by considering only every xth point from
+                        the trajectories (the default is 1, i.e., include every
                         point)\
-  -g GAME_ID, --game_id GAME_ID\
-                        specify a particular match id (default = all matches)\
-  -t TEAM, --team TEAM  specify a particular team id, e.g., Cleveland 1610612739, Golden State Warriors 1610612744 (default = all teams)\
+  -g/--game_id. Specify a particular match id (default is all matches)\
+  -t/--team. Specify a particular team id, e.g., Cleveland 1610612739, Golden State Warriors 1610612744 (default is all teams)\
 ```
 python data_preprocess.py -h
 ```
