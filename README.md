@@ -17,7 +17,7 @@ In terminal, run
 ```
 python data_preprocess.py -h
 ```
-All arguments are optional:
+All arguments are optional:\
   -y/--label. Set to effective for effective/ineffective or to scored for scored/did not score label (default is effective)\
   -r/--init_rows. Set some number of initial rows, which is useful for testing (the final number of plays in the dataset will be less, and will be printed once the script has finished running).\
   -a/--a_list. List of agents from ball shooter
@@ -29,7 +29,10 @@ All arguments are optional:
   -g/--game_id. Specify a particular match id (default is all matches)\
   -t/--team. Specify a particular team id, e.g., Cleveland 1610612739, Golden State Warriors 1610612744 (default is all teams)
 ```
-python data_preprocess.py -h
+python data_preprocess.py -p 4 -t 1610612739
+```
+```
+python data_preprocess.py -p 4 -t 1610612744
 ```
 ![image](https://user-images.githubusercontent.com/29388472/173998123-ad0bade2-e42d-4261-89dd-40a4bc7834d3.png)
 
