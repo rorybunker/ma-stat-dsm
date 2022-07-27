@@ -8,7 +8,7 @@ The method is illustrated in the context of sports, specificially NBA basketball
 2. Create a PostgreSQL database with: dbname = 'postgres', user = 'postgres', host = 'localhost', password = 1234, and port = 5432.
 3. In pgadmin, run the queries in 0-create-postgres-database.sql to create the required database tables.
 
-## Step 1: Data preprocessing for Stat-DSM/MA-Stat-DSM 
+## Step 1: Data Preprocessing
 
 For all steps below, dataset_as_a_file_600_games.pkl must be in the same directory as the python scripts data_preprocess.py, ma_stat_dsm.py, and calculate_sig_subtraj.py as well as max_euclidean.py.
 
@@ -33,7 +33,8 @@ python data_preprocess.py -p 4 -t 1610612744 -a shooter lastpasser
 ```
 ![image](https://user-images.githubusercontent.com/29388472/173998123-ad0bade2-e42d-4261-89dd-40a4bc7834d3.png)
 
-## Step 2: Running Stat-DSM/MA-Stat-DSM
+## Step 2: Running (MA-)Stat-DSM
+If only one agent was specified in -a/--a_list in Step 1, Stat-DSM will be run; otherwise, MA-Stat-DSM will be run.
 ### ma_stat_dsm.py:  
 #### Required:
 -l, --min_l. Minimum trajectory length, e.g., 5\
@@ -48,7 +49,7 @@ In principle, these parameters do not need to be changed.\
 ```
 python ma_stat_dsm.py -l 5 -d 1.5
 ```
-## Step 3: Determining the statitically significant discriminative sub-trajectories
+## Step 3: Obtaining statistically significant discriminative sub-trajectories
 ### calculate_sig_subtraj.py:  
 #### Required:
 -d, --delta. The delta* value that was printed upon completion of ma_stat_dsm.py.
