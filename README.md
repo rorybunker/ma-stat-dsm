@@ -13,17 +13,17 @@ The method is illustrated in the context of sports, specificially NBA basketball
 For all steps below, dataset_as_a_file_600_games.pkl must be in the same directory as the python scripts data_preprocess.py, ma_stat_dsm.py, and calculate_sig_subtraj.py as well as max_euclidean.py.
 
 ### data_preprocess.py:    
-All arguments are optional:\
-  -y/--label. Set to effective for effective/ineffective or to scored for scored/did not score label (default is effective)\
-  -r/--init_rows. Set some number of initial rows, which is useful for testing (the final number of plays in the dataset will be less, and will be printed once the script has finished running).\
-  -a/--a_list. List of agents from ball shooter
+All arguments are optional, however, to reduce run time, it is recommended to run for a single team and to downsample by using, e.g., -p 4:\
+  -y, --label. Set to effective for effective/ineffective or to scored for scored/did not score label (default is effective)\
+  -r, --init_rows. Set some number of initial rows, which is useful for testing (the final number of plays in the dataset will be less, and will be printed once the script has finished running).\
+  -a, --a_list. List of agents from ball shooter
                         shooterdefender lastpasser lastpasserdefender\
-  -ti/--time_int. The time interval, t1 or t2, as shown in the diagram below (default is t2)\
-  -p/--xth_point. Downsample by considering only every xth point from
+  -ti, --time_int. The time interval, t1 or t2, as shown in the diagram below (default is t2)\
+  -p, --xth_point. Downsample by considering only every xth point from
                         the trajectories (the default is 1, i.e., include every
                         point)\
-  -g/--game_id. Specify a particular match id (default is all matches)\
-  -t/--team. Specify a particular team id, e.g., Cleveland 1610612739, Golden State Warriors 1610612744 (default is all teams)
+  -g, --game_id. Specify a particular match id (default is all matches)\
+  -t, --team. Specify a particular team id, e.g., Cleveland 1610612739, Golden State Warriors 1610612744 (default is all teams)
 ```
 python data_preprocess.py -p 4 -t 1610612739 -a shooter lastpasser
 ```
@@ -34,15 +34,16 @@ python data_preprocess.py -p 4 -t 1610612744 -a shooter lastpasser
 
 ## Step 2: Running Stat-DSM/MA-Stat-DSM
 ### ma_stat_dsm.py:  
+#### Required:
+-l, --min_l. Minimum trajectory length, e.g., 5\
+-d, --dist_threshold. Distance threshold, e.g., 1.5
+
 #### Optional:
 These parameters don't need to be changed in principle.\
--p/--pos_label. default='1'\
--n/--neg_label, default='0'\
--i/--max_it. default=1000 maximum number of iterations\
--a/--alph. Statistical significance level (alpha). Default is alpha = 0.05
-#### Required:
--l/--min_l. Minimum trajectory length, e.g., 5\
--d/--dist_threshold. Distance threshold, e.g., 1.5
+-p, --pos_label. default='1'\
+-n, --neg_label, default='0'\
+-i, --max_it. default=1000 maximum number of iterations\
+-a, --alph. Statistical significance level (alpha). Default is alpha = 0.05
 ```
 python ma_stat_dsm.py -l 5 -d 1.5
 ```
