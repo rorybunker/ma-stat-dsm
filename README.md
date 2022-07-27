@@ -13,7 +13,8 @@ The method is illustrated in the context of sports, specificially NBA basketball
 For all steps below, dataset_as_a_file_600_games.pkl must be in the same directory as the python scripts data_preprocess.py, ma_stat_dsm.py, and calculate_sig_subtraj.py as well as max_euclidean.py.
 
 ### data_preprocess.py:    
-All arguments are optional, however, to reduce run time, it is recommended to run for a single team and to downsample by using, e.g., -p 4:\
+All arguments are optional, however, to reduce run time, it is recommended to run for a single team and to downsample by using, e.g., -p 4.\
+\
   -y, --label. Set to effective for effective/ineffective or to scored for scored/did not score label (default is effective)\
   -r, --init_rows. Set some number of initial rows, which is useful for testing (the final number of plays in the dataset will be less, and will be printed once the script has finished running).\
   -a, --a_list. List of agents from ball shooter
