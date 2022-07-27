@@ -39,7 +39,7 @@ python data_preprocess.py -p 4 -t 1610612744 -a shooter lastpasser
 -d, --dist_threshold. Distance threshold, e.g., 1.5
 
 #### Optional:
-These parameters don't need to be changed in principle.\
+In principle, these parameters do not need to be changed.\
 -p, --pos_label. default='1'\
 -n, --neg_label, default='0'\
 -i, --max_it. default=1000 maximum number of iterations\
