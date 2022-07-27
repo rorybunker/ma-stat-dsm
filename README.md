@@ -50,7 +50,8 @@ python ma_stat_dsm.py -l 5 -d 1.5
 ```
 ## Step 3: Determining the statitically significant discriminative sub-trajectories
 ### calculate_sig_subtraj.py:  
-Run with the delta* value that was output from running ma_stat_dsm.py.
+#### Required:
+-d, --delta. The delta* value that was printed upon completion of ma_stat_dsm.py.
 ```
 python calculate_sig_subtraj.py -d 0.0344542453452345
 ```
