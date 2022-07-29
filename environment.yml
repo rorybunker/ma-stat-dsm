@@ -1,0 +1,23 @@
+name: geoenv
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - spyder
+  - pandas
+  - matplotlib
+  - scipy
+  - psycopg2
+  - sqlalchemy
+  - sshtunnel
+  - scikit-learn
+  - xlrd
+  - geopandas
+  - r-essentials
+  - xgboost
+  - conda-forge::mamba
+  - shapely
+  - ca-certificates
+  - certifi
+  - openssl
+prefix: /opt/anaconda3/envs/geoenv
