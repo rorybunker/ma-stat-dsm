@@ -1,6 +1,6 @@
 import numpy as np
 import math
-
+from hausdorff import hausdorff_distance
 
 def calculate_point_distance(x, y):
     return math.sqrt((x[0] - y[0])**2 + (x[1] - y[1])**2)
@@ -23,6 +23,7 @@ def calculate_top_k(k, trajectory_1, trajectory_2):
 
     for i in range(len(trajectory_1)):
         dist = calculate_point_distance(trajectory_1[i], trajectory_2[i])
+        
         if dist > max[0]:
             max.append(dist)
             max.sort()
