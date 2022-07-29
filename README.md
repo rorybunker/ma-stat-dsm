@@ -13,10 +13,6 @@ Then, create an environment based on the environment.yml file:
 ```
 mamba env create -n geoenv -f environment.yml
 ```
-And then activate the created environment
-```
-conda activate geoenv
-```
 Install PostgreSQL and create a PostgreSQL database with: dbname = 'postgres', user = 'postgres', host = 'localhost', password = 1234, and port = 5432. Then, to create the required database tables necessary to run steps 1 - 3 below, run
 ```
 python create_postgresql_db.py
