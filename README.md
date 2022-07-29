@@ -4,10 +4,10 @@ This repository contains an extended version of Stat-DSM, the statistically disc
 The method is illustrated in the context of sports, specificially NBA basketball, where the method can be used to determine discriminative sub-trajectories within labelled trajectories of multiple players and the ball.
 
 ## Step 0: Set up PostgreSQL database environment
-1. Install PostgreSQL.
-2. Create a PostgreSQL database with: dbname = 'postgres', user = 'postgres', host = 'localhost', password = 1234, and port = 5432.
-3. To create the required database tables necessary to run steps 1 - 3 below, run
-```python create_postgresql_db.py```
+Install PostgreSQL and create a PostgreSQL database with: dbname = 'postgres', user = 'postgres', host = 'localhost', password = 1234, and port = 5432. Then, to create the required database tables necessary to run steps 1 - 3 below, run
+```
+python create_postgresql_db.py
+```
 
 ## Step 1: Data Preprocessing
 
