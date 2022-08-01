@@ -115,7 +115,7 @@ def create_trajectory_ma_table_idx():
 def create_candidates_table():
     sql = """CREATE TABLE candidates (
              id serial PRIMARY KEY,
-             candidate jsonb
+             candidate json
             )"""
     cur.execute(sql)
     conn.commit()
