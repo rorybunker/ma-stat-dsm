@@ -158,7 +158,7 @@ def create_discriminative_point_table(point_table):
     conn.commit()
 
 def create_discriminative_subtraj_table(disc_point_table):
-    sql = """CREATE TABLE discriminative_sub_traj_vis AS SELECT aid, tid, label, ST_MakeLine(dp.geom ORDER BY pid) AS geom FROM """ + disc_point_table + """ FROM discriminative_points AS dp
+    sql = """CREATE TABLE discriminative_sub_traj_vis AS SELECT aid, tid, label, ST_MakeLine(dp.geom ORDER BY pid) AS geom FROM """ + disc_point_table + """ AS dp
 		GROUP BY aid, tid, label"""
     cur.execute(sql)
     conn.commit()
