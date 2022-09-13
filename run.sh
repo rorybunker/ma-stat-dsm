@@ -5,3 +5,7 @@ source ${HOME}/workspace2/virtualenvs/venv/bin/activate geoenv
 python -u /home/b_rory/workspace2/work/ma_stat_dsm/create_postgresql_db.py
 python -u /home/b_rory/workspace2/work/ma_stat_dsm/data_preprocess.py -p 4 -t 1610612744 -a shooter lastpasser
 python -u /home/b_rory/workspace2/work/ma_stat_dsm/ma_stat_dsm.py -l 5 -d 1.5
+
+# delta=$(python -u /home/b_rory/workspace2/work/ma_stat_dsm/ma_stat_dsm.py -l 5 -d 1.5)
+
+# python -u /home/b_rory/workspace2/work/ma_stat_dsm/calculate_sig_subtraj.py -d delta
