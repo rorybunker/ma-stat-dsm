@@ -1,8 +1,0 @@
-pickle
-numpy
-pandas
-shapely
-psycopg2
-scipy
-hausdorff
-sqlalchemy
