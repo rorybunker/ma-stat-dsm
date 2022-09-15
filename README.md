@@ -59,8 +59,8 @@ In principle, these parameters do not need to be changed.\
 ```
 python ma_stat_dsm.py -l 5 -d 1.5
 ```
-## Step 3: Obtaining statistically significant discriminative sub-trajectories
-### calculate_sig_subtraj.py:  
+## Step 3: Identifying statistically significant discriminative sub-trajectories
+### significant_subtrajectories.py:  
 #### Required:
 -d, --delta. The delta* value that was printed upon completion of ma_stat_dsm.py.
 ```
