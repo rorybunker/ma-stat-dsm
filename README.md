@@ -67,5 +67,12 @@ python ma_stat_dsm.py -l 5 -d 1.5
 python significant_subtrajectories.py -d 0.0344542453452345
 ```
 
+## Running all steps at once
+### main.py:  
+No arguments required.
+```
+python main.py
+```
+
 # References
 Le Vo, D. N., Sakuma, T., Ishiyama, T., Toda, H., Arai, K., Karasuyama, M., ... & Takeuchi, I. (2020). Stat-DSM: Statistically Discriminative Sub-Trajectory Mining With Multiple Testing Correction. IEEE Transactions on Knowledge and Data Engineering. DOI: 10.1109/TKDE.2020.2994344
