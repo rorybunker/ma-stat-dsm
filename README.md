@@ -64,7 +64,7 @@ python ma_stat_dsm.py -l 5 -d 1.5
 #### Required:
 -d, --delta. The delta* value that was printed upon completion of ma_stat_dsm.py.
 ```
-python calculate_sig_subtraj.py -d 0.0344542453452345
+python significant_subtrajectories.py -d 0.0344542453452345
 ```
 
 # References
