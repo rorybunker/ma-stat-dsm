@@ -1,14 +1,21 @@
 import subprocess
 import pandas as pd
+import sys
 
 # p of 2 means every second point from the original trajectory will be taken, p of 1 means every point from the original trajectory is retained, etc.
 p_min = 1
 p_max = 10
 p_list = [i for i in range(1,p_max+1)]
+agent_type = 'attackers'
 # set agent_list = ["shooter", "lastpasser"] to consider attackers, or set to agent_list = ["shooterdefender", "lastpasserdefender"] to consider defenders
-agent_list = ["shooter", "lastpasser"]
+if agent_type == 'attackers':
+    agent_list = ["shooter", "lastpasser"]
+elif agent_type == 'defenders':
+    agent_list = ["shooterdefender", "lastpasserdefender"]
+else:
+    sys.exit("ERROR: agent_type must be attackers or defenders")
 
-# df consisting of all combinations of team_id and game_id from the original dataset, dataset_as_a_file_600games.pkl
+# df consisting of all combinations of team_id and game_id from the original dataset, dataset_as_a_file_600_games.pkl
 team_game_ids_df = pd.read_csv('team_game_ids.csv')
 team_game_ids_df = team_game_ids_df.reset_index()
 
@@ -21,3 +28,4 @@ for p in p_list:
             subprocess.run(["python", "significant_subtrajectories.py", "-d", str(delta)], universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         elif delta.returncode == 1:
             break
+            # append record(s) to discriminative_subtraj postgres table and continue processing
