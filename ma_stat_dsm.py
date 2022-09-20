@@ -80,50 +80,50 @@ def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_trajectory, po
         sql = """select tid, pid, label, ST_AsGeoJSON(geom) from """ + str(point_table) + """
                 where tid != """ + str(trajectory_tid) + """
                 and """
-            
+
         count = 0
         for point in length_k_sub_trajectory:
             count = count + 1
-    
+
             if count == 1:
                 sql = sql + """ (ST_DWithin('POINT(""" + str(point[0]) + " " + str(
                     point[1]) + """)'::geometry, geom, """ + str(
                     distance_threshold) + """) or """
-    
+
                 continue
-    
+
             if count == length:
                 sql = sql + """ ST_DWithin('POINT(""" + str(point[0]) + " " + str(
                     point[1]) + """)'::geometry, geom, """ + str(
                     distance_threshold) + """)) ORDER BY tid ASC, pid ASC;"""
-    
+
                 break
-    
+
             sql = sql + """ ST_DWithin('POINT(""" + str(point[0]) + " " + str(point[1]) + """)'::geometry, geom, """ + str(
                 distance_threshold) + """) or """
 
     elif len(agent_ids) > 1:
-        
+
         sql = """select tid, aid, pid, label, ST_AsGeoJSON(geom) from """ + str(point_table) + """
                 where aid in (""" + ', '.join(map(str, agent_ids)) + ")"" and tid != """ + str(trajectory_tid) + """
                 and """
-        
+
         count = 0
         for agent_traj in length_k_sub_trajectory:
             count = count + 1
-    
+
             if count == 1:
                 sql = sql + """ (ST_DWithin('""" + LineString(agent_traj).wkt + """'::geometry, geom, """ + str(
                     distance_threshold) + """) or """
-    
+
                 continue
-    
+
             if count == length:
                 sql = sql + """ ST_DWithin('""" + LineString(agent_traj).wkt + """'::geometry, geom, """ + str(
                     distance_threshold) + """)) ORDER BY tid ASC, aid ASC, pid ASC;"""
-    
+
                 break
-    
+
             sql = sql + """ ST_DWithin('""" + LineString(agent_traj).wkt + """'::geometry, geom, """ + str(
                 distance_threshold) + """) or """
 
@@ -134,10 +134,10 @@ def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_trajectory, po
     e = 0
 
     potential_neighbor = []
-    
+
     if len(agent_ids) > 1:
         length = len(length_k_sub_trajectory[0])
-    
+
     while s < (len(nearest_points) - length):
         s = s + 1
         current_point = list(nearest_points[s])
@@ -147,7 +147,7 @@ def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_trajectory, po
                 potential_neighbor.append(json.loads(current_point[4])['coordinates'])
             elif len(agent_ids) == 1:
                 potential_neighbor.append(json.loads(current_point[3])['coordinates'])
-                
+
         while (e - s + 1) < length:
             e = e + 1
 
@@ -186,7 +186,7 @@ def confirm_neighbor_hausdorff(length_k_sub_trajectory, list_potential_neighbor,
             if max_distance <= distance_threshold:
                 list_neighbor.append(potential_neighbor[0])
                 #list_top_k_max.append(top_k_max)
-            
+
     return list_neighbor
 
 def confirm_neighbor_euclidean(top_k, length_k_sub_trajectory, list_potential_neighbor, distance_threshold):
@@ -390,7 +390,7 @@ def stat_dsm(trajectory_table, point_table, candidate_table, original_list_label
     alpha = parameter["alpha"]
     positive_label = parameter["positive_label"]
     agent_ids = parameter["agent_ids"]
-    
+
     dict_lower_bound = {}
 
     for trajectory_tid in list_phase_tid:
@@ -399,12 +399,12 @@ def stat_dsm(trajectory_table, point_table, candidate_table, original_list_label
         list_tree = []
 
         trajectory = get_trajectory(trajectory_table, trajectory_tid, agent_ids)
-        
+
         if len(agent_ids) == 1:
             trajectory_length = len(trajectory)
         elif len(agent_ids) > 1:
             trajectory_length = len(trajectory[0])
-        
+
         trajectory_label = original_list_label[trajectory_tid]
 
         if trajectory_length < min_length:
@@ -415,22 +415,22 @@ def stat_dsm(trajectory_table, point_table, candidate_table, original_list_label
                 length_k_sub_trajectory = []
             elif len(agent_ids) > 1:
                 length_k_sub_trajectory = [[] for a in range(len(agent_ids))]
-      
+
             for j in range(min_length):
                 if len(agent_ids) == 1:
                     length_k_sub_trajectory.append(trajectory[i + j])
-                elif len(agent_ids) > 1:   
+                elif len(agent_ids) > 1:
                     [length_k_sub_trajectory[a].append(trajectory[a][i + j]) for a in range(len(agent_ids))]
 
             potential_neighbor = find_length_k_potential_neighbor(trajectory_tid, length_k_sub_trajectory, point_table, distance_threshold, top_k, agent_ids)
-            
+
             if len(agent_ids) == 1:
                 list_top_k_max, list_neighbor = confirm_neighbor_euclidean(top_k, length_k_sub_trajectory, potential_neighbor,
                                                                  distance_threshold)
             elif len(agent_ids) > 1:
                 list_neighbor = confirm_neighbor_hausdorff(length_k_sub_trajectory, potential_neighbor,
                                                                  distance_threshold)
-                
+
             if len(list_neighbor) == 0:
                 continue
 
@@ -461,7 +461,7 @@ def stat_dsm(trajectory_table, point_table, candidate_table, original_list_label
                 dict_neighbor_full_trajectory = get_neighbor_trajectories(trajectory_table, current_list_neighbor_tid)
             if len(agent_ids) > 1:
                 dict_neighbor_full_trajectory_ma = get_neighbor_ma_trajectories(trajectory_table, current_list_neighbor_tid)
-            
+
             root = []
             root.append([[trajectory_tid, candidate_start_idx, candidate_end_idx], current_list_neighbor_tid])
 
@@ -484,7 +484,7 @@ def stat_dsm(trajectory_table, point_table, candidate_table, original_list_label
                     neighbor_tid = neighbor[0]
                     neighbor_start_idx = neighbor[1]
                     neighbor_end_idx = neighbor[2]
-                    
+
                     if len(agent_ids) == 1:
                         if neighbor_end_idx == (len(dict_neighbor_full_trajectory[neighbor_tid]) - 1):
                         # del dict_neighbor_full_trajectory[neighbor_tid]
@@ -504,7 +504,7 @@ def stat_dsm(trajectory_table, point_table, candidate_table, original_list_label
                     elif len(agent_ids) > 1:
                         last_point_distance_h = calculate_hausdorff_distance([trajectory[a][candidate_end_idx] for a in range(len(agent_ids))],
                                                  [dict_neighbor_full_trajectory_ma[(neighbor_tid,a)][new_neighbor_end_idx] for a in range(len(agent_ids))])
-                    
+
                     if len(agent_ids) == 1:
                         if last_point_distance > local_top_k_max[0]:
                             local_top_k_max.append(last_point_distance)
@@ -525,7 +525,7 @@ def stat_dsm(trajectory_table, point_table, candidate_table, original_list_label
                     if dist <= distance_threshold:
                         list_new_candidate_neighbor.append(
                             [neighbor_tid, new_neighbor_start_idx, new_neighbor_end_idx])
-                        
+
                         if len(agent_ids) == 1:
                             temp_list_top_k_max.append(local_top_k_max)
 
@@ -579,7 +579,7 @@ def stat_dsm(trajectory_table, point_table, candidate_table, original_list_label
 
 def main():
     start_time = time.time()
-    
+
     positive_label = args.pos_label
     negative_label = args.neg_label
     max_iter = args.max_it
@@ -588,7 +588,7 @@ def main():
     distance_threshold = args.dist_threshold
     agent_ids = agent_list_prep
     top_k = 1
-    
+
     candidate_table = 'candidates'
 
     if len(agent_ids) == 1:
@@ -600,7 +600,7 @@ def main():
 
     positive_number = count_label_number(trajectory_table, positive_label)
     negative_number = count_label_number(trajectory_table, negative_label)
-    
+
     original_list_label = get_list_label(trajectory_table)
     original_list_label = np.array(original_list_label)
     original_list_label = original_list_label[:, 0].tolist()
@@ -614,7 +614,7 @@ def main():
         permutation_list_label = original_list_label[list_idx]
         list_permuted_dataset.append(permutation_list_label)
         list_min_p.append(alpha)
-        
+
     list_phase_tid = get_list_phase_tid(trajectory_table)
     list_phase_tid = np.array(list_phase_tid)
     list_phase_tid = list_phase_tid[:, 0].tolist()
@@ -635,14 +635,16 @@ def main():
     delta = stat_dsm(trajectory_table, point_table, candidate_table, original_list_label, list_permuted_dataset, list_min_p, list_phase_tid, parameter)
 
     print(delta)
-    
+
     candidates_df = pd.read_sql("SELECT * FROM candidates", conn)
     candidates_df.to_csv('candidates.csv')
-    
+
     cur.close()
     conn.close()
-    
+
     print("--- %s seconds ---" % (time.time() - start_time))
-    
+
+    return delta
+
 if __name__ == "__main__":
     main()
