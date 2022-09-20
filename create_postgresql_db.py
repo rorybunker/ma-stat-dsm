@@ -16,9 +16,9 @@ engine = create_engine('postgresql://postgres:1234@localhost:5432/postgres')
 
 try:
     conn = psycopg2.connect("dbname='postgres' user='postgres' host='localhost' password='1234'")
-except:
-    print("I am unable to connect to the database")
-    
+except Exception as e:
+    print(e)
+
 cur = conn.cursor()
 
 def delete_table(table_name):
@@ -30,7 +30,7 @@ def create_postgis_extension():
     sql = """CREATE EXTENSION IF NOT EXISTS postgis;"""
     cur.execute(sql)
     conn.commit()
-    
+
 def create_point_table():
     sql = """CREATE TABLE point (
             id serial NOT NULL,
@@ -49,7 +49,7 @@ def create_point_table_idx():
                   USING GIST (geom)"""
     cur.execute(sql)
     conn.commit()
-    
+
 def create_point_ma_table():
     sql = """CREATE TABLE point_ma
                 (
@@ -90,7 +90,7 @@ def create_trajectory_table_idx():
               USING GIST (geom)"""
     cur.execute(sql)
     conn.commit()
-    
+
 def create_trajectory_ma_table():
     sql = """CREATE TABLE trajectory_ma
                 (
@@ -103,15 +103,15 @@ def create_trajectory_ma_table():
                 )
                 """
     cur.execute(sql)
-    conn.commit()    
-    
+    conn.commit()
+
 def create_trajectory_ma_table_idx():
     sql = """CREATE INDEX trajectory_ma_idx
               ON trajectory_ma
               USING GIST (geom)"""
     cur.execute(sql)
     conn.commit()
-    
+
 def create_candidates_table():
     sql = """CREATE TABLE candidates (
              id serial PRIMARY KEY,
@@ -119,30 +119,47 @@ def create_candidates_table():
             )"""
     cur.execute(sql)
     conn.commit()
-    
+
+    conn.close()
+
+def create_discriminative_subtraj_table():
+    sql = """create table discriminative_subtraj (
+    	index bigint,
+    	subtraj_se text,
+    	neigh_tids text,
+    	pvalue double precision,
+    	tid integer,
+    	start_idx integer,
+    	end_idx integer)"""
+    cur.execute(sql)
+    conn.commit()
+
     conn.close()
 
 def main():
     create_postgis_extension()
-        
+
     delete_table('point')
     create_point_table()
     create_point_table_idx()
-    
+
     delete_table('point_ma')
     create_point_ma_table()
     create_point_ma_table_idx()
-    
+
     delete_table('trajectory')
     create_trajectory_table()
     create_trajectory_table_idx()
-    
+
     delete_table('trajectory_ma')
     create_trajectory_ma_table()
     create_trajectory_ma_table_idx()
-    
+
     delete_table('candidates')
     create_candidates_table()
-    
+
+    delete_table('discriminative_subtraj')
+    create_discriminative_subtraj_table()
+
 if __name__ == '__main__':
     main()
