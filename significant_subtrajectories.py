@@ -152,18 +152,24 @@ def change_column_types():
     cur.execute(sql)
     conn.commit()
 
+def delete_rows_discriminative_subtraj_table(disc_subtraj_table):
+    sql = """DELETE FROM """ + disc_subtraj_table + """;"""
+    cur.execute(sql)
+    conn.commit()
+
 def create_discriminative_point_table(point_table):
     sql = """CREATE TABLE discriminative_points AS SELECT p.* FROM """ + point_table + """ p INNER JOIN discriminative_subtraj d ON p.tid=d.tid WHERE p.pid BETWEEN d.start_idx AND d.end_idx;"""
     cur.execute(sql)
     conn.commit()
 
-def create_discriminative_subtraj_table(disc_point_table):
+def create_discriminative_subtraj_vis_table(disc_point_table):
     sql = """CREATE TABLE discriminative_sub_traj_vis AS SELECT aid, tid, label, ST_MakeLine(dp.geom ORDER BY pid) AS geom FROM """ + disc_point_table + """ AS dp
 		GROUP BY aid, tid, label"""
     cur.execute(sql)
     conn.commit()
 
 def main():
+    disc_subtraj_table = 'discriminative_subtraj'
     disc_point_table = 'discriminative_points'
     candidate_table = 'candidates'
     positive_label = '1'
@@ -223,8 +229,9 @@ def main():
 
     # result_df.to_csv('sig_subtraj.csv',index=False)
 
-    delete_table('discriminative_subtraj')
-    result_df.to_sql('discriminative_subtraj', engine)
+    # delete_table('discriminative_subtraj')
+    delete_rows_discriminative_subtraj_table('discriminative_subtraj')
+    result_df.to_sql('discriminative_subtraj', engine, if_exists='append')
 
     change_column_types()
 
@@ -232,7 +239,7 @@ def main():
     create_discriminative_point_table(point_table)
 
     delete_table('discriminative_sub_traj_vis')
-    create_discriminative_subtraj_table(disc_point_table)
+    create_discriminative_subtraj_vis_table(disc_point_table)
 
     conn.close()
 
