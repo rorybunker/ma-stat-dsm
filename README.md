@@ -69,10 +69,14 @@ python significant_subtrajectories.py -d 0.0344542453452345
 
 ## Running all steps at once
 ### main.py:  
-No arguments required.
+No arguments required. Run on the command line:
 ```
 python main.py
 ```
-
+Or as a batch process, where million2 is the name of the server where postgres is installed:
+```
+chmod 777 run.sh
+sbatch -w million2 ./run.sh
+```
 # References
 Le Vo, D. N., Sakuma, T., Ishiyama, T., Toda, H., Arai, K., Karasuyama, M., ... & Takeuchi, I. (2020). Stat-DSM: Statistically Discriminative Sub-Trajectory Mining With Multiple Testing Correction. IEEE Transactions on Knowledge and Data Engineering. DOI: 10.1109/TKDE.2020.2994344
