@@ -1,7 +1,7 @@
 # Discriminative sub-trajectory mining of NBA basketball tracking data
 This repository contains an extended version of Stat-DSM, the statistically discriminative sub-trajectory mining method of method of Le Vo et al. (2020), which enables Stat-DSM to be run with the trajectories of multiple agents rather than only one (the original Stat-DSM can still be run for a single agent).
 
-The method is illustrated in the context of sports, specificially NBA basketball, where the method can be used to determine discriminative sub-trajectories within labelled trajectories of multiple players and the ball.
+The method, which we call Multi-agent Stat-DSM (MA-Stat-DSM) (Bunker et al., 2022), is illustrated in the context of sports, specificially NBA basketball, where the method can be used to determine discriminative sub-trajectories within labelled trajectories of multiple players and the ball.
 
 ## Step 0: Set up PostgreSQL database environment
 
