@@ -75,6 +75,7 @@ To run as a batch process, where million2 is the name of the server where postgr
 ```
 chmod 777 run.sh
 ```
+```
 sbatch -w million2 ./run.sh
 ```
 # References
