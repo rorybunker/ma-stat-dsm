@@ -69,7 +69,6 @@ python significant_subtrajectories.py -d 0.0344542453452345
 
 ## Running all steps at once
 ### main.py:  
-No arguments required. 
 In main.py, we iterate over all possible teams and/or matches and trial different parameters until a significant result is obtained -- at which point the process stops.
 To run as a batch process, where million2 is the name of the server where postgres is installed:
 ```
