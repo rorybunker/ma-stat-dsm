@@ -26,10 +26,10 @@ team_game_ids_df = team_game_ids_df.reset_index()
 # iterate over all agents and all p parameter options, and all team_id/game_id combinations
 for p in p_list:
     for index, row in team_game_ids_df.iterrows():
-        # subprocess.run(["python", "data_preprocess.py", "-a", agent_list[0], agent_list[1], "-p", str(p), "-t", str(row['team_id'])])
-        subprocess.run(["python", "data_preprocess.py", "-a", agent_list[0], agent_list[1], "-p", str(p), "-g", str(row['game_id']), "-t", str(row['team_id'])])
+        subprocess.run(["python", "data_preprocess.py", "-a", agent_list[0], "-p", str(p), "-t", str(row['team_id'])])
+        # subprocess.run(["python", "data_preprocess.py", "-a", agent_list[0], "-p", str(p), "-g", str(row['game_id']), "-t", str(row['team_id'])])
         delta = subprocess.run(["python", "ma_stat_dsm.py", "-d", str(dist_threshold), "-l", str(min_length)], universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        if delta.returncode != 0:
+        if delta.returncode == 0:
             subprocess.run(["python", "significant_subtrajectories.py", "-d", str(delta)], universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             sys.exit("FINISHED. Significant subtrajectories found with delta: " + str(delta))
         #elif delta.returncode == 1:
