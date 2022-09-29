@@ -78,4 +78,8 @@ chmod 777 run.sh
 sbatch -w million2 ./run.sh
 ```
 # References
+
+Bunker, R. P., Le Vo, D. N., & Fujii, K. (2022). Multi-agent Statistically Discriminative Trajectory Mining and an Application to NBA Basketball. Working Paper.
+
+
 Le Vo, D. N., Sakuma, T., Ishiyama, T., Toda, H., Arai, K., Karasuyama, M., ... & Takeuchi, I. (2020). Stat-DSM: Statistically Discriminative Sub-Trajectory Mining With Multiple Testing Correction. IEEE Transactions on Knowledge and Data Engineering. DOI: 10.1109/TKDE.2020.2994344
