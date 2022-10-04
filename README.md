@@ -3,7 +3,7 @@ This repository contains a Multi-agent extension of Stat-DSM (Bunker et al., 202
 
 Standard Stat-DSM can still be run by simply specifying only one agent.
 
-The Multi-agent Stat-DSM (MA-Stat-DSM) method is demonstrated on player and ball tracking data from NBA basketball to determine sub-matrices, comprised of player (and/or ball) sub-trajectories, which discriminate between effective and ineffective plays.
+The Multi-agent Stat-DSM (MA-Stat-DSM) method is demonstrated on tracking data from NBA basketball to determine sub-matrices, comprised of player (and/or ball) sub-trajectories, which discriminate between effective and ineffective plays.
 
 ## Dataset
 The input dataset, dataset_as_a_file_600_games.pkl, which is already included in this repository, was generated based on "for Stat-DSM preprocessing" in https://github.com/keisuke198619/team_representation, which was, in turn, sourced from data from https://github.com/rajshah4/BasketballData
