@@ -69,7 +69,7 @@ python significant_subtrajectories.py -d 0.0344542453452345
 
 ## Running all steps at once
 ### main.py:  
-Instead of running steps 0 to 3 individually, you can run all steps at once. In main.py, we iterate over all possible teams and/or matches and trial different parameters until a significant result is obtained -- at which point the process stops. You can update the parameters at the top of this script and run it on the command line:
+Instead of running steps 0 to 3 individually, you can run all steps at once. In main.py, we iterate over all possible teams and/or matches and trial different parameters until a significant result is obtained — at which point the process stops. You can update the parameters at the top of this script and run it on the command line:
 ```
 python main.py
 ```
