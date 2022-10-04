@@ -3,7 +3,8 @@ This repository contains an extended version of Stat-DSM, the statistically disc
 
 The method, which we call Multi-agent Stat-DSM (MA-Stat-DSM) (Bunker et al., 2022), is illustrated in the context of sports, specificially NBA basketball, where the method can be used to determine discriminative sub-trajectories within labelled trajectories of multiple players and the ball.
 
-The input dataset, dataset_as_a_file_600_games.pkl, is generated based on "for Stat-DSM preprocessing" in https://github.com/keisuke198619/team_representation, which is, in turn, sourced from data from https://github.com/rajshah4/BasketballData
+## Dataset
+The input dataset, dataset_as_a_file_600_games.pkl, which is already included in this repository, was generated based on "for Stat-DSM preprocessing" in https://github.com/keisuke198619/team_representation, which was, in turn, sourced from data from https://github.com/rajshah4/BasketballData
 
 ## Step 0: Set up PostgreSQL database environment
 
