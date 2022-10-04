@@ -21,6 +21,7 @@ parser.add_argument('-d', '--delta', type=float, required=True, dest='delta_s')
 args, _ = parser.parse_known_args()
 delta_star = args.delta_s
 
+# engine = create_engine('postgresql://postgres:1234@localhost:5432/postgres')
 engine = create_engine('postgresql://postgres:1234@localhost:5432/postgres')
 
 try:
@@ -223,23 +224,24 @@ def main():
     if result_df.empty == True:
         sys.exit("The lowest p-value for any sub-trajectory is " + str(min(eps_neighb_labels_df['pvalue'])) + ". There are no significant sub-trajectories that have p-values below delta *")
 
-    # extract the subtrajectory tid and its start and end index as columns
-    result_df = pd.concat([result_df, result_df['subtraj_se'].str.split(', ', expand=True)], axis=1)
-    result_df = result_df.rename(columns={0: 'tid', 1: 'start_idx', 2: 'end_idx'})
+    elif result_df.empty == False:
+        # extract the subtrajectory tid and its start and end index as columns
+        result_df = pd.concat([result_df, result_df['subtraj_se'].str.split(', ', expand=True)], axis=1)
+        result_df = result_df.rename(columns={0: 'tid', 1: 'start_idx', 2: 'end_idx'})
 
-    # result_df.to_csv('sig_subtraj.csv',index=False)
+        # result_df.to_csv('sig_subtraj.csv',index=False)
 
-    # delete_table('discriminative_subtraj')
-    delete_rows_discriminative_subtraj_table('discriminative_subtraj')
-    result_df.to_sql('discriminative_subtraj', engine, if_exists='append')
+        # delete_table('discriminative_subtraj')
+        delete_rows_discriminative_subtraj_table(disc_subtraj_table)
+        result_df.to_sql(disc_subtraj_table, engine, if_exists='append')
 
-    change_column_types()
+        change_column_types()
 
-    delete_table(disc_point_table)
-    create_discriminative_point_table(point_table)
+        delete_table(disc_point_table)
+        create_discriminative_point_table(point_table)
 
-    delete_table('discriminative_sub_traj_vis')
-    create_discriminative_subtraj_vis_table(disc_point_table)
+        delete_table('discriminative_sub_traj_vis')
+        create_discriminative_subtraj_vis_table(disc_point_table)
 
     conn.close()
 
