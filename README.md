@@ -6,7 +6,7 @@ The method, which we call Multi-agent Stat-DSM (MA-Stat-DSM) (Bunker et al., 202
 ## Dataset
 The input dataset, dataset_as_a_file_600_games.pkl, which is already included in this repository, was generated based on "for Stat-DSM preprocessing" in https://github.com/keisuke198619/team_representation, which was, in turn, sourced from data from https://github.com/rajshah4/BasketballData
 
-## Step 0: Set up PostgreSQL database environment
+## Environment and PostgreSQL database setup
 
 Anaconda is required. Then, it is recommended to install mamba
 ```
@@ -72,7 +72,7 @@ python significant_subtrajectories.py -d 0.0344542453452345
 
 ## Running all steps at once
 ### main.py:  
-Instead of running steps 0 to 3 individually, you can run all steps at once. In main.py, we iterate over all possible teams and/or matches and trial different parameters until a significant result is obtained — at which point the process stops. You can update the parameters at the top of this script and run it on the command line:
+Instead of running steps 1 to 3 individually, you can run all steps at once. In main.py, we iterate over all possible teams and/or matches and trial different parameters until a significant result is obtained — at which point the process stops. You can update the parameters at the top of this script and run it on the command line:
 ```
 python main.py
 ```
