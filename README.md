@@ -69,8 +69,11 @@ python significant_subtrajectories.py -d 0.0344542453452345
 
 ## Running all steps at once
 ### main.py:  
-In main.py, we iterate over all possible teams and/or matches and trial different parameters until a significant result is obtained -- at which point the process stops.
-To run as a batch process, where million2 is the name of the server where postgres is installed:
+In main.py, we iterate over all possible teams and/or matches and trial different parameters until a significant result is obtained -- at which point the process stops. You can update the parameters at the top of this script and run it on the command line:
+```
+python main.py
+```
+Or to run as a batch process, where million2 is the name of the server where postgres is installed:
 ```
 chmod 777 run.sh
 ```
@@ -80,6 +83,5 @@ sbatch -w million2 ./run.sh
 # References
 
 Bunker, R. P., Le Vo, D. N., & Fujii, K. (2022). Multi-agent Statistically Discriminative Trajectory Mining and an Application to NBA Basketball. Working Paper.
-
 
 Le Vo, D. N., Sakuma, T., Ishiyama, T., Toda, H., Arai, K., Karasuyama, M., ... & Takeuchi, I. (2020). Stat-DSM: Statistically Discriminative Sub-Trajectory Mining With Multiple Testing Correction. IEEE Transactions on Knowledge and Data Engineering. DOI: 10.1109/TKDE.2020.2994344
