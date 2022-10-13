@@ -45,7 +45,9 @@ team_game_ids_df = team_game_ids_df.reset_index()
 
 # iterate over all agents and all p parameter options, and all team_id/game_id combinations
 for p in p_list:
+    print(p)
     for index, row in team_game_ids_df.iterrows():
+        print(index, row)
         if file_to_iterate_over == 'team_game_ids.csv':
             if run == 'mastatdsm':
                 subprocess.run(["python", "data_preprocess.py", "-a", agent_list[0], agent_list[1], "-p", str(p), "-g", str(row['game_id']), "-t", str(row['team_id'])])
