@@ -17,14 +17,14 @@ import io
 
 # p of 2 means every second point from the original trajectory will be taken, p of 1 means every point from the original trajectory is retained, etc.
 file_to_iterate_over = 'team_game_ids.csv' # 'team_game_ids.csv' or 'id_team.csv'
-p_min = 4
-p_max = 4
+p_min = 8
+p_max = 8
 agent_type = 'attackers'
 dist_threshold =  1.5 # 21.21320344
 min_length = 5
-run = 'mastatdsm'
+run = 'statdsm'
 
-p_list = [i for i in range(1,p_max+1)]
+p_list = [i for i in range(p_min,p_max+1)]
 # set agent_list = ["shooter", "lastpasser"] to consider attackers, or set to agent_list = ["shooterdefender", "lastpasserdefender"] to consider defenders
 if agent_type == 'attackers':
     if run == 'mastatdsm':
