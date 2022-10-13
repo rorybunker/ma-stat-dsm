@@ -17,12 +17,12 @@ import io
 
 # p of 2 means every second point from the original trajectory will be taken, p of 1 means every point from the original trajectory is retained, etc.
 file_to_iterate_over = 'team_game_ids.csv' # 'team_game_ids.csv' or 'id_team.csv'
-p_min = 8
-p_max = 8
+p_min = 5
+p_max = 5
 agent_type = 'attackers'
 dist_threshold =  1.5 # 21.21320344
 min_length = 5
-run = 'statdsm'
+run = 'mastatdsm'
 
 p_list = [i for i in range(p_min,p_max+1)]
 # set agent_list = ["shooter", "lastpasser"] to consider attackers, or set to agent_list = ["shooterdefender", "lastpasserdefender"] to consider defenders
@@ -47,7 +47,8 @@ team_game_ids_df = team_game_ids_df.reset_index()
 for p in p_list:
     print(p)
     for index, row in team_game_ids_df.iterrows():
-        print(index, row)
+        print(row)
+        print('---Running data_preprocess.py---')
         if file_to_iterate_over == 'team_game_ids.csv':
             if run == 'mastatdsm':
                 subprocess.run(["python", "data_preprocess.py", "-a", agent_list[0], agent_list[1], "-p", str(p), "-g", str(row['game_id']), "-t", str(row['team_id'])])
@@ -62,10 +63,13 @@ for p in p_list:
             sys.exit("ERROR: file_to_iterate_over must be team_game_ids.csv or id_team.csv.")
 
         proc = subprocess.run(["python", "ma_stat_dsm.py", "-d", str(dist_threshold), "-l", str(min_length)], capture_output=True, text=True)
+        print('---Running ma_stat_dsm.py---')
         result = proc.stdout.strip("\n")
         delta = '\n'.join(result.splitlines()[-2:-1])
+        print(result)
 
-        if proc.returncode == 0:
+        if delta != 'FAIL':
+            print('---Running significant_subtrajectories.py---')
             subprocess.run(["python", "significant_subtrajectories.py", "-d", delta], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            # sys.exit("FINISHED. Significant subtrajectories found with delta: " + str(delta))
+            sys.exit("FINISHED. Significant subtrajectories found with delta: " + str(delta))
         #elif delta.returncode == 1:
