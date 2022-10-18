@@ -31,10 +31,6 @@ CREATE INDEX hurricane_point_idx
     ON hurricane_point_ma
     USING GIST (geom);
 
-
-INSERT INTO hurricane_point_ma(id,aid,tid,pid,label,geom) (
-  SELECT id+7316, 1, tid, pid, label, geom FROM hurricane_point);
-
 -------------------------------------
 
 CREATE TABLE public.hurricane_trajectory
@@ -63,9 +59,6 @@ CREATE INDEX hurricane_trajectory_idx
   CREATE INDEX hurricane_trajectory_ma_idx
     ON hurricane_trajectory_ma
     USING GIST (geom);
-
-INSERT INTO hurricane_trajectory_ma(id,aid,tid,label,geom) (
-  SELECT id+210, 1, tid, label, geom FROM hurricane_trajectory);
 
 -----------------------------------------------------
 
