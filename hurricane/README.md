@@ -23,8 +23,8 @@ Multi-agent Stat-DSM (MA-Stat-DSM) can be run by specifying two agents, i.e., -a
 python ma_stat_dsm_hurricane.py -l 5 -d 1.5 -agents 0 1
 ```
 # Identifying statistically significantly discriminative sub-trajectories (Stat-DSM) or sub-matrices (MA-Stat-DSM):
-Run significant_subtrajectories.py using the delta value that was output in stat_dsm_hurricane.py, e.g.,
+Run significant_subtrajectories.py using the delta value that was output in stat_dsm_hurricane.py or ma_stat_dsm_hurricane.py, e.g.,
 ```
-python significant_subtrajectories.py -d 0.001670525211584076
+python significant_subtrajectories.py -d 0.0014759957474104154
 ```
 Trajectories, points, and statistically significantly discriminative sub-trajectories/sub-matrices can be visualized using QGIS (https://www.qgis.org/)
