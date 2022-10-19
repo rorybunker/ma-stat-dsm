@@ -1,9 +1,10 @@
 # Installing PostgreSQL
 First, download and install PostgreSQL (https://www.postgresql.org/download/) and pgAdmin (https://www.pgadmin.org/download/).
 
-Then, create a database called 'hurricane' with user = 'postgres', host = 'localhost' and password = 1234.
 
 # Creating the database
+Create a database called 'hurricane' with user = 'postgres', host = 'localhost' and password = 1234.
+
 In pgAdmin, run each of the queries in data_structure_for_hurricane_data.sql, then insert the data with hurricane_point_insert.sql and hurricane_trajectory_insert.sql. 
 
 Then, insert the same data into the multi-agent tables but with agent 1 by running the queries in second_inserts.sql. This just inserts the same trajectories and points as agent 0 for agent 1.
