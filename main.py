@@ -2,74 +2,50 @@ import subprocess
 import pandas as pd
 import sys
 import io
-# import argparse
+import itertools
 
-# parser = argparse.ArgumentParser()
-# parser.add_argument('-f', '--file', type=str, required=True, dest='file_iterate')
-# parser.add_argument('-r', '--run_type', type=str, required=True, , dest='run', help='mastatdsm or statdsm')
-# parser.add_argument('-a', '--agents', type=str, required=True, , dest='agent_type', help='attackers or defenders')
-# parser.add_argument('-p_min', '--p_minimum', type=int, required=True)
-# parser.add_argument('-p_max', '--p_maximum', type=int, required=True)
-# parser.add_argument('-d', '--dist_thresh', type=int, required=True, dest='distance_threshold')
-# parser.add_argument('-l', '--min_l', type=int, required=True, dest='min_length')
-# args, _ = parser.parse_known_args()
-# file_to_iterate_over = args.file_iterate
+p = 5 # 1, 2, 3, 4, 5
+agent_type = 'defenders' # 'defenders'
+dist_threshold_list = [1.5, 4, 20] # 21.21320344
+min_length_list = [5, 8, 10] #[5, 8, 10]
+run = 'mastatdsm' # 'mastatdsm' or 'statdsm'
+team_id = 1610612744 # Cleveland 1610612739, Golden State Warriors 1610612744
+max_iterations_list = [250, 500, 750, 1000]
 
-# p of 2 means every second point from the original trajectory will be taken, p of 1 means every point from the original trajectory is retained, etc.
-file_to_iterate_over = 'team_game_ids.csv' # 'team_game_ids.csv' or 'id_team.csv'
-p_min = 5
-p_max = 5
-agent_type = 'attackers'
-dist_threshold =  1.5 # 21.21320344
-min_length = 5
-run = 'mastatdsm'
-
-p_list = [i for i in range(p_min,p_max+1)]
-# set agent_list = ["shooter", "lastpasser"] to consider attackers, or set to agent_list = ["shooterdefender", "lastpasserdefender"] to consider defenders
 if agent_type == 'attackers':
     if run == 'mastatdsm':
         agent_list = ["shooter", "lastpasser"]
+        agent_list_ints = [1, 2]
     elif run == 'statdsm':
         agent_list = ["shooter"]
+        agent_list_ints = [1]
 elif agent_type == 'defenders':
     if run == 'mastatdsm':
         agent_list = ["shooterdefender", "lastpasserdefender"]
+        agent_list_ints = [3, 4]
     elif run == 'statdsm':
         agent_list = ["shooterdefender"]
+        agent_list_ints = [3]
 else:
     sys.exit("ERROR: agent_type must be attackers or defenders")
 
-# df consisting of all combinations of team_id and game_id from the original dataset, dataset_as_a_file_600_games.pkl
-team_game_ids_df = pd.read_csv(file_to_iterate_over)
-team_game_ids_df = team_game_ids_df.reset_index()
+print('Running data_preprocess.py...')
+if run == 'mastatdsm':
+    subprocess.run(["python", "data_preprocess.py", "-a", agent_list[0], agent_list[1], "-p", str(p), "-t", str(team_id)])
+elif run == 'statdsm':
+    subprocess.run(["python", "data_preprocess.py", "-a", agent_list[0], "-p", str(p), "-t", str(team_id)])
+print('Finished data_preprocess.py.')
 
-# iterate over all agents and all p parameter options, and all team_id/game_id combinations
-for p in p_list:
-    print(p)
-    for index, row in team_game_ids_df.iterrows():
-        print(row)
-        print('---Running data_preprocess.py---')
-        if file_to_iterate_over == 'team_game_ids.csv':
-            if run == 'mastatdsm':
-                subprocess.run(["python", "data_preprocess.py", "-a", agent_list[0], agent_list[1], "-p", str(p), "-g", str(row['game_id']), "-t", str(row['team_id'])])
-            elif run == 'statdsm':
-                subprocess.run(["python", "data_preprocess.py", "-a", agent_list[0], "-p", str(p), "-g", str(row['game_id']), "-t", str(row['team_id'])])
-        elif file_to_iterate_over == 'id_team.csv':
-            if run == 'mastatdsm':
-                subprocess.run(["python", "data_preprocess.py", "-a", agent_list[0], agent_list[1], "-p", str(p), "-t", str(row['team_id'])])
-            elif run == 'statdsm':
-                subprocess.run(["python", "data_preprocess.py", "-a", agent_list[0], "-p", str(p), "-t", str(row['team_id'])])
-        else:
-            sys.exit("ERROR: file_to_iterate_over must be team_game_ids.csv or id_team.csv.")
-
-        proc = subprocess.run(["python", "ma_stat_dsm.py", "-d", str(dist_threshold), "-l", str(min_length)], capture_output=True, text=True)
-        print('---Running ma_stat_dsm.py---')
-        result = proc.stdout.strip("\n")
-        delta = '\n'.join(result.splitlines()[-2:-1])
-        print(result)
-
-        if delta != 'FAIL':
-            print('---Running significant_subtrajectories.py---')
-            subprocess.run(["python", "significant_subtrajectories.py", "-d", delta], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            sys.exit("FINISHED. Significant subtrajectories found with delta: " + str(delta))
-        #elif delta.returncode == 1:
+for dist_threshold, min_length, max_iteration in itertools.product(dist_threshold_list, min_length_list, max_iterations_list):
+    print('Running ma_stat_dsm.py...')
+    proc = subprocess.run(["python", "ma_stat_dsm.py", "-d", str(dist_threshold), "-l", str(min_length), "-agents", ' '.join(str(agent_list_ints)), "-i", str(max_iteration)], capture_output=True, text=True)
+    result = proc.stdout.strip("\n")
+    delta = '\n'.join(result.splitlines()[-2:-1])
+    print(result)
+    print('Finished ma_stat_dsm.py.')
+    if delta != 'FAIL':
+        print('Running significant_subtrajectories.py...')
+        subprocess.run(["python", "significant_subtrajectories.py", "-d", delta], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        sys.exit("Finished significant_subtrajectories.py. Significant subtrajectories were found with delta: " + str(delta))
+    else:
+        print("Finished significant_subtrajectories.py. No significant subtrajectories were found.")
