@@ -5,8 +5,8 @@ import io
 import itertools
 
 p = 5 # 1, 2, 3, 4, 5
-agent_type = 'defenders' # 'defenders'
-dist_threshold_list = [1.5, 4, 20] # 21.21320344
+agent_type = 'attackers' # 'attackers' or 'defenders'
+dist_threshold_list = [1.5, 4, 20] # max is 21.21320344
 min_length_list = [5, 8, 10] #[5, 8, 10]
 run = 'mastatdsm' # 'mastatdsm' or 'statdsm'
 team_id = 1610612744 # Cleveland 1610612739, Golden State Warriors 1610612744
