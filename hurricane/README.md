@@ -3,7 +3,7 @@ First, download and install PostgreSQL (https://www.postgresql.org/download/) an
 
 
 # Creating the database
-Create a database called 'hurricane' with user = 'postgres', host = 'localhost' and password = 1234.
+Create a postgres database called 'hurricane' with user = 'postgres', host = 'localhost' and password = 1234.
 
 In pgAdmin, run each of the queries in data_structure_for_hurricane_data.sql, then insert the data with hurricane_point_insert.sql and hurricane_trajectory_insert.sql. 
 
