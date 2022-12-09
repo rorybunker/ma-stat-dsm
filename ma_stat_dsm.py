@@ -6,22 +6,26 @@ import pandas as pd
 import sys
 sys.setrecursionlimit(10000)
 import max_euclidean
-import data_preprocess as prep
+# import data_preprocess as prep
 from scipy.special import comb
 from shapely.geometry import LineString
 from hausdorff import hausdorff_distance
 import argparse
+import warnings
+warnings.filterwarnings("ignore")
 
-agent_name_id_dict = {'ball': 0, 'shooter': 1, 'shooterdefender': 2, 'lastpasser': 3, 'lastpasserdefender': 4}
-agent_list_prep = [agent_name_id_dict[a] for a in list(prep.agent_list)]
-
+#agent_name_id_dict = {'ball': 0, 'shooter': 1, 'shooterdefender': 2, 'lastpasser': 3, 'lastpasserdefender': 4}
+#agent_list_prep = [agent_name_id_dict[a] for a in list(prep.agent_list)]
 parser = argparse.ArgumentParser()
+parser.add_argument('-agents', '--a_list', action='store', dest='agt_list',
+                    type=str, nargs='*', default=[0, 1, 2, 3, 4], help='list of agents from default=0 1 2 3 4')
 parser.add_argument('-p', '--pos_label', type=str, required=False, default='1')
 parser.add_argument('-n', '--neg_label', type=str, required=False, default='0')
 parser.add_argument('-i', '--max_it', type=int, required=False, default=1000, help='maximum number of iterations (default=1000)')
-parser.add_argument('-a', '--alph', type=float, required=False, default=0.05, help='statistical significance level (alpha). default is alpha = 0.05')
+parser.add_argument('-alpha', '--alph', type=float, required=False, default=0.05, help='statistical significance level (alpha). default is alpha = 0.05')
 parser.add_argument('-l', '--min_l', type=int, required=True, help='minimum trajectory length (required)')
 parser.add_argument('-d', '--dist_threshold', type=float, required=True, help='distance threshold (required)')
+parser.add_argument('-s', '--seed', type=int, action='store', dest='rseed', required=False, default=None, help='random seed for labels (default = None)')
 args, _ = parser.parse_known_args()
 
 try:
@@ -57,10 +61,10 @@ def get_list_phase_tid(table_name):
     return rows
 
 def get_trajectory(trajectory_table, tid, agent_ids):
-    if len(agent_ids) == 1:
-        sql = """select ST_AsGeoJSON(geom) from """ + str(trajectory_table) + """ where tid = """ + str(tid) + ""
-    elif len(agent_ids) > 1:
-        sql = """select ST_AsGeoJSON(geom) from """ + str(trajectory_table) + """ where tid = """ + str(tid) + """ and aid in (""" + ', '.join(map(str, agent_ids)) + ")"
+    #if len(agent_ids) == 1:
+    sql = """select ST_AsGeoJSON(geom) from """ + str(trajectory_table) + """ where tid = """ + str(tid) + ""
+    #elif len(agent_ids) > 1:
+        #sql = """select ST_AsGeoJSON(geom) from """ + str(trajectory_table) + """ where tid = """ + str(tid) + """ and aid in (""" + ', '.join(map(str, agent_ids)) + ")"
 
     cur.execute(sql)
     rows = cur.fetchall()
@@ -68,7 +72,8 @@ def get_trajectory(trajectory_table, tid, agent_ids):
     if len(agent_ids) == 1:
         return json.loads(rows[0][0])['coordinates']
     elif len(agent_ids) > 1:
-        return [json.loads(rows[a][0])['coordinates'] for a in range(len(agent_ids))]
+        # return [json.loads(rows[a][0])['coordinates'] for a in range(len(agent_ids))]
+        return [json.loads(rows[int(a)-1][0])['coordinates'] for a in agent_ids]
 
 def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_trajectory, point_table, distance_threshold, top_k, agent_ids):
     distance_threshold = distance_threshold * top_k
@@ -390,11 +395,10 @@ def stat_dsm(trajectory_table, point_table, candidate_table, original_list_label
     alpha = parameter["alpha"]
     positive_label = parameter["positive_label"]
     agent_ids = parameter["agent_ids"]
-
     dict_lower_bound = {}
 
     for trajectory_tid in list_phase_tid:
-        print(trajectory_tid)
+       #print(trajectory_tid)
 
         list_tree = []
 
@@ -586,7 +590,8 @@ def main():
     min_length = args.min_l
     alpha = args.alph
     distance_threshold = args.dist_threshold
-    agent_ids = agent_list_prep
+    agent_ids = args.agt_list
+    rand_seed = args.rseed
     top_k = 1
 
     candidate_table = 'candidates'
@@ -610,7 +615,8 @@ def main():
     list_min_p = []
 
     for i in range(max_iter):
-        list_idx = np.random.permutation(len(original_list_label))
+        # list_idx = np.random.permutation(len(original_list_label))
+        list_idx = np.random.RandomState(seed=rand_seed).permutation(len(original_list_label))
         permutation_list_label = original_list_label[list_idx]
         list_permuted_dataset.append(permutation_list_label)
         list_min_p.append(alpha)
@@ -642,9 +648,9 @@ def main():
     cur.close()
     conn.close()
 
-    print("--- %s seconds ---" % (time.time() - start_time))
+    # print("--- %s seconds ---" % (time.time() - start_time))
 
-    return delta
+    # return(delta)
 
 if __name__ == "__main__":
     main()
