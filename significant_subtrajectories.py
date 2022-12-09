@@ -15,6 +15,8 @@ sys.setrecursionlimit(10000)
 from sqlalchemy import create_engine
 import data_preprocess as prep
 import argparse
+import time
+import subprocess
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-d', '--delta', type=float, required=True, dest='delta_s')
@@ -222,8 +224,10 @@ def main():
     result_df = final_df.loc[final_df['pvalue'] < delta_star]
 
     if result_df.empty == True:
-        sys.exit("The lowest p-value for any sub-trajectory is " + str(min(eps_neighb_labels_df['pvalue'])) + ". There are no significant sub-trajectories that have p-values below delta *")
-
+        print("The lowest p-value for any sub-trajectory is " + str(min(eps_neighb_labels_df['pvalue'])) + ". There are no significant sub-trajectories that have p-values below delta *")
+        conn.close()
+        sys.exit(1)
+        
     elif result_df.empty == False:
         # extract the subtrajectory tid and its start and end index as columns
         result_df = pd.concat([result_df, result_df['subtraj_se'].str.split(', ', expand=True)], axis=1)
@@ -231,19 +235,31 @@ def main():
 
         # result_df.to_csv('sig_subtraj.csv',index=False)
 
+        # drop all database tables from previous runs that start with discriminative
+        #bash_command = "echo "select 'drop table '||tablename||';' from pg_tables where tablename like 'discriminative%'" | \
+        #psql -U postgres -d postgres -t | \
+        #psql -U postgres -d postgres"
+        #process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
+        #output, error = process.communicate()
+
         # delete_table('discriminative_subtraj')
         delete_rows_discriminative_subtraj_table(disc_subtraj_table)
         result_df.to_sql(disc_subtraj_table, engine, if_exists='append')
 
         change_column_types()
 
+        # get current timestamp to append to database table names
+        # ts = time.gmtime()
+        # ts_value = time.strftime("%s", ts)
+
         delete_table(disc_point_table)
         create_discriminative_point_table(point_table)
-
+        # create table to visualize the discriminative subtrajectories
         delete_table('discriminative_sub_traj_vis')
         create_discriminative_subtraj_vis_table(disc_point_table)
-
-    conn.close()
+        
+        conn.close()
+        sys.exit(0)
 
 if __name__ == '__main__':
     main()
