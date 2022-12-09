@@ -27,6 +27,7 @@ parser.add_argument('-ti', '--time_int', type=str, required=False, default='t2',
 parser.add_argument('-p', '--xth_point', type=int, required=False, default=1, help='downsample by considering only every xth point from the trajectories (default=1, i.e., include every point)')
 parser.add_argument('-g', '--game_id', type=int, required=False, default=0, help='specify a particular match id (default = all matches)')
 parser.add_argument('-t', '--team', type=int, required=False, default=0, help='specify a particular team id (default = all teams)')
+parser.add_argument('-i', '--import_only', type=str, required=False, default='N', help='if set to Y, do not create new csv files from the pkl file - just import to postgres.')
 args, _ = parser.parse_known_args()
 
 agent_list = args.agt_list
@@ -122,32 +123,37 @@ def create_agent_ma_df(agent_list, trajectories, t_interval, num_include):
             for point_num in range(0,len(trajectories[play_num])):
                 if point_num % num_include == 0:
                     #ball
-                    ball_xy.append([t_interval.index[play_num][0],
-                                    int(point_num/num_include),
-                                    (trajectories[play_num][point_num][0]),
-                                    (trajectories[play_num][point_num][1])])
+                    if 'ball' in agent_list:
+                        ball_xy.append([t_interval.index[play_num][0],
+                                        int(point_num/num_include),
+                                        (trajectories[play_num][point_num][0]),
+                                        (trajectories[play_num][point_num][1])])
                     #shooter
-                    shooter_xy.append([t_interval.index[play_num][0],
-                                               int(point_num/num_include),
-                                    (trajectories[play_num][point_num][2]),
-                                    (trajectories[play_num][point_num][3])])
-                    #last passer
-                    lastpasser_xy.append([t_interval.index[play_num][0],
+                    if 'shooter' in agent_list:
+                        shooter_xy.append([t_interval.index[play_num][0],
                                                    int(point_num/num_include),
-                                    (trajectories[play_num][point_num][4]),
-                                    (trajectories[play_num][point_num][5])])
+                                        (trajectories[play_num][point_num][2]),
+                                        (trajectories[play_num][point_num][3])])
+                    #last passer
+                    if 'lastpasser' in agent_list:
+                        lastpasser_xy.append([t_interval.index[play_num][0],
+                                                       int(point_num/num_include),
+                                        (trajectories[play_num][point_num][4]),
+                                        (trajectories[play_num][point_num][5])])
 
                     #defender of shooter
-                    shooterdefender_xy.append([t_interval.index[play_num][0],
-                                               int(point_num/num_include),
-                                    (trajectories[play_num][point_num][12]),
-                                    (trajectories[play_num][point_num][13])])
+                    if 'shooterdefender' in agent_list:
+                        shooterdefender_xy.append([t_interval.index[play_num][0],
+                                                   int(point_num/num_include),
+                                        (trajectories[play_num][point_num][12]),
+                                        (trajectories[play_num][point_num][13])])
 
                     #defender of last passer
-                    lastpasserdefender_xy.append([t_interval.index[play_num][0],
-                                                   int(point_num/num_include),
-                                    (trajectories[play_num][point_num][14]),
-                                    (trajectories[play_num][point_num][15])])
+                    if 'lastpasserdefender' in agent_list:
+                        lastpasserdefender_xy.append([t_interval.index[play_num][0],
+                                                       int(point_num/num_include),
+                                        (trajectories[play_num][point_num][14]),
+                                        (trajectories[play_num][point_num][15])])
 
 
     ball_df = pd.DataFrame([ball_xy[i][1:4]
@@ -178,8 +184,9 @@ def create_agent_ma_df(agent_list, trajectories, t_interval, num_include):
                                   for i in range(0,len(lastpasserdefender_xy))])
 
     agent_df_list = [ball_df, shooter_df, lastpasser_df, shooterdefender_df, lastpasserdefender_df]
+    agent_df_list = [df for df in agent_df_list if not df.empty]
 
-    return [['ball','shooter','lastpasser','shooterdefender','lastpasserdefender'],agent_df_list]
+    return [agent_list, agent_df_list]
 
 def create_point_csv(df, name, label):
     with open(name + '_point.csv', 'w') as csvfile:
@@ -416,11 +423,14 @@ def main():
         sys.exit("ERROR: please specify the time interval as either t1 or t2")
 
     if run_type == 'statdsm':
-        # create dataframe for the specified agent
-        agent_df = create_agent_df(agent_list[0], t_interval, trajectories, num_include)
-        # create point and trajectory csv files
-        create_point_csv(agent_df, agent_list[0], label)
-        create_trajectory_csv(agent_df, agent_list[0], label)
+
+        if args.import_only != 'Y':
+            # create dataframe for the specified agent
+            agent_df = create_agent_df(agent_list[0], t_interval, trajectories, num_include)
+            
+            # create point and trajectory csv files
+            create_point_csv(agent_df, agent_list[0], label)
+            create_trajectory_csv(agent_df, agent_list[0], label)
 
         # delete the existing table rows in the postgres database tables
         delete_table_rows('point')
@@ -432,10 +442,12 @@ def main():
         import_traj_table_into_postgres(os, agent_list[0] + '_trajectory', path)
 
     elif run_type == 'mastatdsm':
-        agent_df_list = create_agent_ma_df(agent_list, trajectories, t_interval, num_include)
+        
+        if args.import_only != 'Y':
+            agent_df_list = create_agent_ma_df(agent_list, trajectories, t_interval, num_include)
 
-        create_point_ma_csv(agent_df_list[1], effective)
-        create_trajectory_ma_csv(agent_df_list[1], effective)
+            create_point_ma_csv(agent_df_list[1], effective)
+            create_trajectory_ma_csv(agent_df_list[1], effective)
 
         # delete the table rows that were in the postgres database tables previously
         delete_table_rows('point_ma')
@@ -448,7 +460,13 @@ def main():
     else:
         sys.exit("ERROR: please specify the run_type parameter to be either statdsm or mastatdsm")
 
-    print('Final # of plays in dataset: ' + str(len(t_interval)))
+    if args.import_only != 'Y':
+        print('Final # of plays in dataset: ' + str(len(t_interval)))
+        sys.exit(0)
+	
+    else:
+        print('Final # of plays in dataset: ' + str(len(pd.read_csv(agent_list[0] + '_trajectory.csv'))))
+        sys.exit(0)
 
 if __name__ == '__main__':
     main()
