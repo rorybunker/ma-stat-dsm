@@ -45,19 +45,19 @@ source ${HOME}/workspace2/virtualenvs/venv/bin/activate geoenv
 # A = 0.05
 iter=0
 teamID=1610612744
-pointInt=2
-sigLevel=0.05
-sigLevelArray=(0.05 0.1 0.2)
-# gameArray=(21500504 21500520 21500524 21500548 21500556 21500568 21500583 21500592 21500622 21500003 21500035 21500051 21500069 21500083 21500092 21500104 21500120 21500125 21500144 21500164 21500177 21500187 21500200 21500214 21500236 21500245 21500259 21500268 21500300 21500314 21500336 21500351 21500381 21500397 21500434 21500438 21500468 21500480 21500485 21500290)
-# for G in ${gameArray[@]}; do
-for A in ${sigLevelArray[@]}; do
-    for D in 1.5 4 20; do
-        for L in 10 8 5; do
-            for B in 250 500 750 1000; do
+pointIntArray=(5 4 3 2 1)
+A=0.05
+B=1000
+# sigLevelArray=(0.05 0.1 0.2)
+gameArray=(21500504 21500520 21500524 21500548 21500556 21500568 21500583 21500592 21500622 21500003 21500035 21500051 21500069 21500083 21500092 21500104 21500120 21500125 21500144 21500164 21500177 21500187 21500200 21500214 21500236 21500245 21500259 21500268 21500300 21500314 21500336 21500351 21500381 21500397 21500434 21500438 21500468 21500480 21500485 21500290)
+for G in ${gameArray[@]}; do
+    for pointInt in ${pointIntArray[@]}; do
+        for D in 1.5 4; do
+            for L in 5 8 10; do
                 echo --------------------------
-                echo Iteration $iter. Parameters: alpha $A, distance threshold $D, min length $L, max iterations $B...
-                    
-                if python data_preprocess.py -p $pointInt -t $teamID -a shooter lastpasser 2>&1 >/dev/null; then
+                echo Iteration $iter. Parameters: game $G, downsampling $pointInt, alpha $A, distance threshold $D, min length $L, max iterations $B...
+                            
+                if python -u data_preprocess.py -g $G -p $pointInt -t $teamID -a shooter lastpasser 2>&1 >/dev/null; then
                     echo 'Successfully completed data preprocessing'
                 fi
 
@@ -66,14 +66,14 @@ for A in ${sigLevelArray[@]}; do
                 echo Finished running MA stat dsm and the output delta was $outputDelta
 
                 echo Checking significant subtrajectories...
-                if python significant_subtrajectories.py -d $outputDelta 2>&1 >/dev/null; then
-                    echo 'Significant subtrajectories found. Finishing processing.'
+                if python -u significant_subtrajectories.py -d $outputDelta 2>&1 >/dev/null; then
+                    echo 'Some significant subtrajectories were found.'
                     dt=$(date '+%d/%m/%Y %H:%M:%S');
                     echo "$dt"
-                    exit
+                    # exit
                 fi
-                echo No significant subtrajectories found. Continuing to the next iteration.
-                
+                echo Continuing to the next iteration.
+                        
                 dt=$(date '+%d/%m/%Y %H:%M:%S');
                 echo "$dt"
 
