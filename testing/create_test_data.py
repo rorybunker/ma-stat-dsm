@@ -1,6 +1,7 @@
 import pandas as pd
 import psycopg2
 import sys
+import os
 
 param_dic = {
     "host"      : "localhost",
@@ -8,12 +9,10 @@ param_dic = {
     "user"      : "postgres",
     "password"  : "1234"
 }
+os.chdir('/Users/rorybunker/Google Drive/Research/MAStatDSM/ma_stat_dsm/testing/')
 
-# ======================================== #
-working_dir = '/Users/rorybunker/'
-run_type = 'mastatdsm'
-num_iterations = 1 # number of times to append the same dataset to itself
-# ======================================== #
+run_type = 'statdsm'
+num_iterations = 10 # number of times to append the same dataset to itself
 
 def connect(params_dic):
     """ Connect to the PostgreSQL database server """
@@ -48,47 +47,34 @@ def append_data_to_itself(trajectory, point, num_iterations):
 def delete_table_rows(table_name):
     conn = connect(param_dic)
     cur = conn.cursor()
-    sql = """DELETE FROM """ + table_name +""";"""
+    sql = """DELETE FROM """ + table_name + """;"""
     cur.execute(sql)
     conn.commit()
     cur.close()
     conn.close()
 
-def import_point_ma_table_into_postgres(filename, path):
+def import_point_ma_table_into_postgres(os, filename, path):
     conn = connect(param_dic)
     cur = conn.cursor()
     copy_sql = """
                COPY point_ma(id, aid, tid, pid, label, geom)
-               FROM '/Users/rorybunker/""" + filename + """.csv' 
-               DELIMITER ',' 
+               FROM '""" + os.getcwd() + '/' + filename + """.csv'
+               DELIMITER ','
                CSV HEADER;
                """
-    with open(path, 'r') as f:
-        cur.copy_expert(sql=copy_sql, file=f)
-        conn.commit()
-        cur.close()
 
-def import_traj_ma_table_into_postgres(filename, path):
-    conn = connect(param_dic)
-    cur = conn.cursor()
-    copy_sql = """
-               COPY trajectory_ma(id, aid, tid, label, geom)
-               FROM '/Users/rorybunker/""" + filename + """.csv' 
-               DELIMITER ',' 
-               CSV HEADER;
-               """
     with open(path, 'r') as f:
         cur.copy_expert(sql=copy_sql, file=f)
         conn.commit()
         cur.close()
         
-def import_point_table_into_postgres(filename, path):
+def import_point_table_into_postgres(os, filename, path):
     conn = connect(param_dic)
     cur = conn.cursor()
     copy_sql = """
                COPY point(id, tid, pid, label, geom)
-               FROM '/Users/rorybunker/""" + filename + """.csv' 
-               DELIMITER ',' 
+               FROM '""" + os.getcwd() + '/' + filename + """.csv'
+               DELIMITER ','
                CSV HEADER;
                """
     with open(path, 'r') as f:
@@ -96,48 +82,62 @@ def import_point_table_into_postgres(filename, path):
         conn.commit()
         cur.close()
 
-def import_traj_table_into_postgres(filename, path):
+def import_traj_table_into_postgres(os, filename, path):
     conn = connect(param_dic)
     cur = conn.cursor()
     copy_sql = """
                COPY trajectory(id, tid, label, geom)
-               FROM '/Users/rorybunker/""" + filename + """.csv' 
-               DELIMITER ',' 
+               FROM '""" + os.getcwd() + '/' + filename + """.csv'
+               DELIMITER ','
                CSV HEADER;
                """
     with open(path, 'r') as f:
         cur.copy_expert(sql=copy_sql, file=f)
         conn.commit()
         cur.close()
-        
+
+def import_traj_ma_table_into_postgres(os, filename, path):
+    conn = connect(param_dic)
+    cur = conn.cursor()
+    copy_sql = """
+               COPY trajectory_ma(id, aid, tid, label, geom)
+               FROM '""" + os.getcwd() + '/' + filename + """.csv'
+               DELIMITER ','
+               CSV HEADER;
+               """
+    with open(path, 'r') as f:
+        cur.copy_expert(sql=copy_sql, file=f)
+        conn.commit()
+        cur.close()
+
 def main():
     
     if run_type == 'statdsm':
-        path = working_dir + 'point_test_statdsm.csv'
-        point = pd.read_csv(working_dir + 'point_test_statdsm.csv')
-        trajectory = pd.read_csv(working_dir + 'trajectory_test_statdsm.csv')
+        point = pd.read_csv('point_test_statdsm.csv')
+        trajectory = pd.read_csv('trajectory_test_statdsm.csv')
     elif run_type == 'mastatdsm':
-        path = working_dir + 'point_test_mastatdsm.csv'
-        point = pd.read_csv(working_dir + 'point_test_mastatdsm.csv')
-        trajectory = pd.read_csv(working_dir + 'trajectory_test_mastatdsm.csv')
+        point = pd.read_csv('point_test_mastatdsm.csv')
+        trajectory = pd.read_csv('trajectory_test_mastatdsm.csv')
 
     trajectory, point = append_data_to_itself(trajectory, point, num_iterations)
     
-    point.to_csv(working_dir + 'point_test_final.csv', index=False)
-    trajectory.to_csv(working_dir + 'trajectory_test_final.csv', index=False)
+    point.to_csv('point_test_final.csv', index=False)
+    trajectory.to_csv('trajectory_test_final.csv', index=False)
     
+    file_path = os.getcwd() + '/create_test_data.py'
+
     if run_type == 'statdsm':
         delete_table_rows('point')
         delete_table_rows('trajectory')
         delete_table_rows('candidates')
-        import_point_table_into_postgres('point_test_final', path)
-        import_traj_table_into_postgres('trajectory_test_final', path) 
+        import_point_table_into_postgres(os, 'point_test_final', file_path)
+        import_traj_table_into_postgres(os, 'trajectory_test_final', file_path) 
     elif run_type == 'mastatdsm':
         delete_table_rows('point_ma')
         delete_table_rows('trajectory_ma')
         delete_table_rows('candidates')
-        import_point_ma_table_into_postgres('point_test_final', path)
-        import_traj_ma_table_into_postgres('trajectory_test_final', path) 
+        import_point_ma_table_into_postgres(os, 'point_test_final', file_path)
+        import_traj_ma_table_into_postgres(os, 'trajectory_test_final', file_path) 
         
 if __name__ == '__main__':
     main()
