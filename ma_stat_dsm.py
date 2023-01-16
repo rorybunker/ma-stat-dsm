@@ -53,8 +53,11 @@ def get_list_label(trajectory_table):
     rows = cur.fetchall()
     return rows
 
-def get_list_phase_tid(table_name):
-    sql = """select distinct tid from """ + str(table_name) + """ order by tid asc"""
+def get_list_phase_tid(table_name, agent_ids):
+    if len(agent_ids) == 1:
+        sql = """select tid from """ + str(table_name) + """ order by tid asc"""
+    elif len(agent_ids) > 1:
+        sql = """select distinct tid from """ + str(table_name) + """ order by tid asc"""
 
     cur.execute(sql)
     rows = cur.fetchall()
@@ -112,7 +115,7 @@ def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_trajectory, po
         sql = """select tid, aid, pid, label, ST_AsGeoJSON(geom) from """ + str(point_table) + """
                 where aid in (""" + ', '.join(map(str, agent_ids)) + ")"" and tid != """ + str(trajectory_tid) + """
                 and """
-
+        
         count = 0
         for agent_traj in length_k_sub_trajectory:
             count = count + 1
@@ -134,7 +137,7 @@ def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_trajectory, po
 
     cur.execute(sql)
     nearest_points = cur.fetchall()
-
+    
     s = -1
     e = 0
 
@@ -165,7 +168,7 @@ def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_trajectory, po
                     potential_neighbor.append(json.loads(end_point[4])['coordinates'])
             else:
                 break
-
+              
         if len(potential_neighbor) == length:
             if len(agent_ids) == 1:
                 total_length_k_potential_neighbor.append([[current_point[0], current_point[1], list(nearest_points[e])[1]],
@@ -177,20 +180,18 @@ def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_trajectory, po
         else:
             s = e - 1
             potential_neighbor = []
-
+    
     return total_length_k_potential_neighbor
 
 
 def confirm_neighbor_hausdorff(length_k_sub_trajectory, list_potential_neighbor, distance_threshold):
     list_neighbor = []
-    # Each potential neighbor: [[2, 0, 1], [[5.5, 14], [7, 14]]]
 
     for potential_neighbor in list_potential_neighbor:
-            max_distance = calculate_hausdorff_distance(np.array(length_k_sub_trajectory).reshape(np.array(length_k_sub_trajectory).shape[0]*np.array(length_k_sub_trajectory).shape[1], np.array(length_k_sub_trajectory).shape[2]),
-                                                                potential_neighbor[1])
-            if max_distance <= distance_threshold:
-                list_neighbor.append(potential_neighbor[0])
-                #list_top_k_max.append(top_k_max)
+        max_distance = calculate_hausdorff_distance(np.array(length_k_sub_trajectory).reshape(np.array(length_k_sub_trajectory).shape[0]*np.array(length_k_sub_trajectory).shape[1], np.array(length_k_sub_trajectory).shape[2]),potential_neighbor[1])
+        
+        if max_distance <= distance_threshold:
+            list_neighbor.append(potential_neighbor[0])
 
     return list_neighbor
 
@@ -201,11 +202,11 @@ def confirm_neighbor_euclidean(top_k, length_k_sub_trajectory, list_potential_ne
     # Each potential neighbor: [[2, 0, 1], [[5.5, 14], [7, 14]]]
 
     for potential_neighbor in list_potential_neighbor:
-            top_k_max, max_distance = max_euclidean.calculate_top_k(top_k, length_k_sub_trajectory,
-                                                                    potential_neighbor[1])
-            if max_distance <= distance_threshold:
-                list_neighbor.append(potential_neighbor[0])
-                list_top_k_max.append(top_k_max)
+        top_k_max, max_distance = max_euclidean.calculate_top_k(top_k, length_k_sub_trajectory,potential_neighbor[1])
+        
+        if max_distance <= distance_threshold:
+            list_neighbor.append(potential_neighbor[0])
+            list_top_k_max.append(top_k_max)
 
     return list_top_k_max, list_neighbor
 
@@ -376,7 +377,7 @@ def get_neighbor_ma_trajectories(trajectory_table, list_tid):
     list_trajectory = {}
     for row in rows:
         list_trajectory.update({(row[0],row[1]) : json.loads(row[2])['coordinates']})
-
+    
     return list_trajectory
 
 def insert_list_tree(candidate_table, list_tree):
@@ -419,15 +420,15 @@ def stat_dsm(trajectory_table, point_table, candidate_table, original_list_label
                 length_k_sub_trajectory = []
             elif len(agent_ids) > 1:
                 length_k_sub_trajectory = [[] for a in range(len(agent_ids))]
-
+            
             for j in range(min_length):
                 if len(agent_ids) == 1:
                     length_k_sub_trajectory.append(trajectory[i + j])
                 elif len(agent_ids) > 1:
                     [length_k_sub_trajectory[a].append(trajectory[a][i + j]) for a in range(len(agent_ids))]
-
+            
             potential_neighbor = find_length_k_potential_neighbor(trajectory_tid, length_k_sub_trajectory, point_table, distance_threshold, top_k, agent_ids)
-
+            
             if len(agent_ids) == 1:
                 list_top_k_max, list_neighbor = confirm_neighbor_euclidean(top_k, length_k_sub_trajectory, potential_neighbor,
                                                                  distance_threshold)
@@ -623,7 +624,7 @@ def main():
         list_permuted_dataset.append(permutation_list_label)
         list_min_p.append(alpha)
 
-    list_phase_tid = get_list_phase_tid(trajectory_table)
+    list_phase_tid = get_list_phase_tid(trajectory_table, agent_ids)
     list_phase_tid = np.array(list_phase_tid)
     list_phase_tid = list_phase_tid[:, 0].tolist()
 
