@@ -189,8 +189,9 @@ def create_agent_ma_df(agent_list, trajectories, t_interval, downsampling_factor
 
     return [agent_list, agent_df_list]
 
-def create_point_csv(df, name, label):
-    with open(name + '_point.csv', 'w') as csvfile:
+def create_point_csv(df, label):
+    # with open(name + '_point.csv', 'w') as csvfile:
+    with open('point.csv', 'w') as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(['id', 'tid', 'pid', 'label', 'geom'])
         row_num = 0
@@ -210,8 +211,9 @@ def create_point_csv(df, name, label):
                                                df_sub.iloc[p]['y'])])
                 row_num += 1
 
-def create_trajectory_csv(df, name, label):
-    with open(name + '_trajectory.csv', 'w') as csvfile:
+def create_trajectory_csv(df, label):
+    # with open(name + '_trajectory.csv', 'w') as csvfile:
+    with open('trajectory.csv', 'w') as csvfile:
         writer= csv.writer(csvfile)
         writer.writerow(['id', 'tid', 'label','geom'])
         df_index_unique = df.index.drop_duplicates()
@@ -285,6 +287,34 @@ def delete_table_rows(table_name):
     conn.commit()
     cur.close()
     conn.close()
+
+# def import_point_table_into_postgres(os, filename, path):
+#     conn = connect(param_dic)
+#     cur = conn.cursor()
+#     copy_sql = """
+#                COPY point(id, tid, pid, label, geom)
+#                FROM '""" + os.getcwd() + '/' + filename + """.csv'
+#                DELIMITER ','
+#                CSV HEADER;
+#                """
+#     with open(path, 'r') as f:
+#         cur.copy_expert(sql=copy_sql, file=f)
+#         conn.commit()
+#         cur.close()
+
+# def import_traj_table_into_postgres(os, filename, path):
+#     conn = connect(param_dic)
+#     cur = conn.cursor()
+#     copy_sql = """
+#                COPY trajectory(id, tid, label, geom)
+#                FROM '""" + os.getcwd() + '/' + filename + """.csv'
+#                DELIMITER ','
+#                CSV HEADER;
+#                """
+#     with open(path, 'r') as f:
+#         cur.copy_expert(sql=copy_sql, file=f)
+#         conn.commit()
+#         cur.close()
 
 def import_point_table_into_postgres(os, filename, path):
     conn = connect(param_dic)
@@ -401,10 +431,12 @@ def main():
     if run_type == 'statdsm':
         # create dataframe for the specified agent
         agent_df = create_agent_df(agent_list[0], t_interval, trajectories, downsampling_factor)
-            
+  
         # create point and trajectory csv files
-        create_point_csv(agent_df, agent_list[0], label)
-        create_trajectory_csv(agent_df, agent_list[0], label)
+        # create_point_csv(agent_df, agent_list[0], label)
+        # create_trajectory_csv(agent_df, agent_list[0], label)
+        create_point_csv(agent_df, label)
+        create_trajectory_csv(agent_df, label)
 
         # delete the existing table rows in the postgres database tables
         delete_table_rows('point')
@@ -412,16 +444,19 @@ def main():
         delete_table_rows('candidates')
 
         # import the newly created csv files into postgres database
-        import_point_table_into_postgres(os, agent_list[0] + '_point', path)
-        import_traj_table_into_postgres(os, agent_list[0] + '_trajectory', path)
-
-        print('Final # of plays in dataset: ' + str(len(pd.read_csv(agent_list[0] + '_trajectory.csv'))))
+        # import_point_table_into_postgres(os, agent_list[0] + '_point', path)
+        # import_traj_table_into_postgres(os, agent_list[0] + '_trajectory', path)
+        import_point_table_into_postgres(os, 'point', path)
+        import_traj_table_into_postgres(os, 'trajectory', path)
+        
+        # print('Final # of plays in dataset: ' + str(len(pd.read_csv(agent_list[0] + '_trajectory.csv'))))
+        print('Final # of plays in dataset: ' + str(len(pd.read_csv('trajectory.csv'))))
         sys.exit(0)
 
     elif run_type == 'mastatdsm':
         # create dataframe for the specified agents
         agent_df_list = create_agent_ma_df(agent_list, trajectories, t_interval, downsampling_factor)
-
+        
         # create ma point and trajectory csv files
         create_point_ma_csv(agent_df_list[1], label)
         create_trajectory_ma_csv(agent_df_list[1], label)
@@ -436,7 +471,7 @@ def main():
         import_traj_ma_table_into_postgres(os, 'trajectory_ma', path)
 
         print('Final # of rows in dataset: ' + str(len(pd.read_csv('trajectory_ma.csv'))))
-        print('Final # of plays (distinct tids) in dataset: ' + str(len(t_interval)) + ' ' + str(len(pd.unique(pd.read_csv('trajectory_ma.csv')['tid']))))
+        print('Final # of plays (distinct tids) in dataset: ' + str(len(pd.unique(pd.read_csv('trajectory_ma.csv')['tid']))))
         sys.exit(0)
 
 if __name__ == '__main__':
