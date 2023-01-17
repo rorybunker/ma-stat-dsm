@@ -13,17 +13,23 @@ import sys
 from scipy.special import comb
 sys.setrecursionlimit(10000)
 from sqlalchemy import create_engine
-import data_preprocess as prep
+# import data_preprocess as prep
 import argparse
 import time
-import subprocess
+import os
+import warnings
+from shapely.errors import ShapelyDeprecationWarning
+warnings.filterwarnings("ignore", category=ShapelyDeprecationWarning)
+
+sys.path.append('court_class.py')
+
+import court_class
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-d', '--delta', type=float, required=True, dest='delta_s')
 args, _ = parser.parse_known_args()
 delta_star = args.delta_s
 
-# engine = create_engine('postgresql://postgres:1234@localhost:5432/postgres')
 engine = create_engine('postgresql://postgres:1234@localhost:5432/postgres')
 
 try:
@@ -160,16 +166,31 @@ def delete_rows_discriminative_subtraj_table(disc_subtraj_table):
     cur.execute(sql)
     conn.commit()
 
-def create_discriminative_point_table(point_table):
-    sql = """CREATE TABLE discriminative_points AS SELECT p.* FROM """ + point_table + """ p INNER JOIN discriminative_subtraj d ON p.tid=d.tid WHERE p.pid BETWEEN d.start_idx AND d.end_idx;"""
+def create_discriminative_point_table(point_table, ts):
+    sql = """CREATE TABLE discriminative_points_""" + ts + """  AS SELECT p.* FROM """ + point_table + """ p INNER JOIN discriminative_subtraj d ON p.tid=d.tid WHERE p.pid BETWEEN d.start_idx AND d.end_idx;"""
     cur.execute(sql)
     conn.commit()
 
-def create_discriminative_subtraj_vis_table(disc_point_table):
-    sql = """CREATE TABLE discriminative_sub_traj_vis AS SELECT aid, tid, label, ST_MakeLine(dp.geom ORDER BY pid) AS geom FROM """ + disc_point_table + """ AS dp
+def create_discriminative_subtraj_vis_table(disc_point_table, ts):
+    sql = """CREATE TABLE discriminative_sub_traj_vis_""" + ts + """  AS SELECT aid, tid, label, ST_MakeLine(dp.geom ORDER BY pid) AS geom FROM """ + disc_point_table + """_""" + ts + """  AS dp
 		GROUP BY aid, tid, label"""
     cur.execute(sql)
     conn.commit()
+
+def drop_all_discriminative_tables(engine):
+    # from db import connections
+    from sqlalchemy.sql import text
+    sql =   '''SELECT tablename FROM pg_catalog.pg_tables 
+        WHERE schemaname='public'
+        AND tablename LIKE 'discriminative_%%';'''
+    temp_tables = pd.read_sql(sql, engine)['tablename']
+    
+    with engine.connect() as con:
+
+        for table in temp_tables:
+            sql = text(f"DROP table {table}")
+            con.execute(sql)
+            print(f"Dropped table {table}.")
 
 def main():
     disc_subtraj_table = 'discriminative_subtraj'
@@ -178,12 +199,20 @@ def main():
     positive_label = '1'
     negative_label = '0'
 
-    if len(prep.agent_list) == 1:
+    if os.path.getmtime('trajectory_ma.csv') > os.path.getmtime('trajectory.csv'):
+        num_agents = len(pd.unique(pd.read_csv('trajectory_ma.csv')['aid']))
+    elif os.path.getmtime('trajectory.csv') > os.path.getmtime('trajectory_ma.csv'):
+        num_agents = 1
+    
+    if num_agents == 1:
         trajectory_table = 'trajectory'
         point_table = 'point'
-    elif len(prep.agent_list) > 1:
+    elif num_agents > 1:
         trajectory_table = 'trajectory_ma'
         point_table = 'point_ma'
+
+    # drop all database tables from previous runs that start with discriminative
+    # drop_all_discriminative_tables(engine)
 
     positive_number = count_label_number(trajectory_table, positive_label)
     negative_number = count_label_number(trajectory_table, negative_label)
@@ -233,31 +262,31 @@ def main():
         result_df = pd.concat([result_df, result_df['subtraj_se'].str.split(', ', expand=True)], axis=1)
         result_df = result_df.rename(columns={0: 'tid', 1: 'start_idx', 2: 'end_idx'})
 
-        # result_df.to_csv('sig_subtraj.csv',index=False)
-
-        # drop all database tables from previous runs that start with discriminative
-        #bash_command = "echo "select 'drop table '||tablename||';' from pg_tables where tablename like 'discriminative%'" | \
-        #psql -U postgres -d postgres -t | \
-        #psql -U postgres -d postgres"
-        #process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
-        #output, error = process.communicate()
-
-        # delete_table('discriminative_subtraj')
-        delete_rows_discriminative_subtraj_table(disc_subtraj_table)
-        result_df.to_sql(disc_subtraj_table, engine, if_exists='append')
+        result_df.to_sql(disc_subtraj_table, engine, if_exists='replace')
 
         change_column_types()
 
         # get current timestamp to append to database table names
-        # ts = time.gmtime()
-        # ts_value = time.strftime("%s", ts)
+        ts = time.gmtime()
+        ts_value = time.strftime("%s", ts)
 
-        delete_table(disc_point_table)
-        create_discriminative_point_table(point_table)
-        # create table to visualize the discriminative subtrajectories
-        delete_table('discriminative_sub_traj_vis')
-        create_discriminative_subtraj_vis_table(disc_point_table)
+        # delete_table(disc_point_table)
+        create_discriminative_point_table(point_table, ts_value)
         
+        # create table to visualize the discriminative subtrajectories
+        # delete_table('discriminative_sub_traj_vis')
+        # create_discriminative_subtraj_vis_table(disc_point_table, ts_value)
+        
+        # plot the discriminative subtrajectories
+        court_path = 'nba_court_T.png'
+        table_name = 'discriminative_points_' + str(ts_value)
+        court = court_class.Court(table_name, court_path, engine)
+        
+        if num_agents == 1:
+            court.plot_single_agent_trajectories()
+        elif num_agents > 1:
+            court.plot_multi_agent_trajectories()
+
         conn.close()
         sys.exit(0)
 
