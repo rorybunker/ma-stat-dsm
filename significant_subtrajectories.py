@@ -17,9 +17,9 @@ from sqlalchemy import create_engine
 import argparse
 import time
 import os
-import warnings
-from shapely.errors import ShapelyDeprecationWarning
-warnings.filterwarnings("ignore", category=ShapelyDeprecationWarning)
+# import warnings
+# from shapely.errors import ShapelyDeprecationWarning
+# warnings.filterwarnings("ignore", category=ShapelyDeprecationWarning)
 
 sys.path.append('court_class.py')
 
@@ -177,6 +177,11 @@ def create_discriminative_subtraj_vis_table(disc_point_table, ts):
     cur.execute(sql)
     conn.commit()
 
+def create_full_traj_table(point_table_name, subtraj_table_name, ts):
+    sql = """CREATE TABLE points_""" + ts + """  AS (SELECT p.* FROM """ + point_table_name + """ p INNER JOIN  """ + subtraj_table_name + """ d on ((p.aid = d.aid)) and ((p.tid = d.tid)));"""
+    cur.execute(sql)
+    conn.commit()
+
 def drop_all_discriminative_tables(engine):
     # from db import connections
     from sqlalchemy.sql import text
@@ -280,6 +285,10 @@ def main():
         # plot the discriminative subtrajectories
         court_path = 'nba_court_T.png'
         table_name = 'discriminative_points_' + str(ts_value)
+
+        # create the full trajectory table to underlay the full trajectories under the discriminative subtrajectories
+        create_full_traj_table(point_table, table_name, ts_value)
+
         court = court_class.Court(table_name, court_path, engine)
         
         if num_agents == 1:
