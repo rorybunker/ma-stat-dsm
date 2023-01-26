@@ -21,7 +21,7 @@ import os
 # from shapely.errors import ShapelyDeprecationWarning
 # warnings.filterwarnings("ignore", category=ShapelyDeprecationWarning)
 
-sys.path.append('court_class.py')
+# sys.path.append('court_class.py')
 
 import court_class
 
@@ -178,7 +178,8 @@ def create_discriminative_subtraj_vis_table(disc_point_table, ts):
     conn.commit()
 
 def create_full_traj_table(point_table_name, subtraj_table_name, ts):
-    sql = """CREATE TABLE points_""" + ts + """  AS (SELECT p.* FROM """ + point_table_name + """ p INNER JOIN  """ + subtraj_table_name + """ d on ((p.aid = d.aid)) and ((p.tid = d.tid)));"""
+    table_name = "points_" + str(ts)
+    sql = """CREATE TABLE """ + table_name + """ AS SELECT p.* FROM """ + point_table_name + """ p INNER JOIN  """ + subtraj_table_name + """ d on ((p.aid = d.aid)) and ((p.tid = d.tid));"""
     cur.execute(sql)
     conn.commit()
 
