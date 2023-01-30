@@ -23,35 +23,35 @@ class Court:
     
     def plot_multi_agent_trajectories(self):
         feet_m = self.feet_m
-        img = mpimg.imread(self.court_path)
-        plt.imshow(img, extent=[0,94*feet_m,0,50*feet_m], zorder=0) 
-        plt.xlim(0,47*feet_m)  
-        plt.ylim(0,50*feet_m)
-
-        agt_sql = f"SELECT DISTINCT aid FROM {self.table_name};"
-        agt_df = pd.read_sql(agt_sql, self.engine)
-        agent_ids = sorted(list(agt_df.aid))
-        
         traj_sql = f"SELECT DISTINCT tid FROM {self.table_name};"
         traj_df = pd.read_sql(traj_sql, self.engine)
         traj_ids = list(traj_df.tid)
+        
+        for traj_id in traj_ids:
+            plt.figure()
+            img = mpimg.imread(self.court_path)
+            plt.imshow(img, extent=[0,94*feet_m,0,50*feet_m], zorder=0) 
+            plt.xlim(0,47*feet_m)  
+            plt.ylim(0,50*feet_m)
+            
+            agt_sql = f"SELECT DISTINCT aid FROM {self.table_name};"
+            agt_df = pd.read_sql(agt_sql, self.engine)
+            agent_ids = sorted(list(agt_df.aid))
 
-        colors = ['blue', 'red', 'green', 'purple', 'orange']
-        color_map = ['Blues', 'Reds', 'Greens', 'Purples', 'Oranges']
-        # Create a dictionary that maps agent IDs to labels
-        agent_labels = {0: 'ball', 1: 'shooter', 2: 'last passer', 3: 'shooter defender', 4: 'last passer defender'}
-        # Create handles and labels for each agent
-        handles = []
-        labels = []
-        for i, agent_id in enumerate(agent_ids):
-            if agent_id not in agent_labels:
-                continue
-            handle, = plt.plot([], color=colors[i], marker='+', label=agent_labels[agent_id])
-            handles.append(handle)
-            labels.append(agent_labels[agent_id])
+            colors = ['blue', 'red', 'green', 'purple', 'orange']
+            color_map = ['Blues', 'Reds', 'Greens', 'Purples', 'Oranges']
+            # Create a dictionary that maps agent IDs to labels
+            agent_labels = {0: 'ball', 1: 'shooter', 2: 'last passer', 3: 'shooter defender', 4: 'last passer defender'}
+            # Create handles and labels for each agent
+            handles = []
+            labels = []
+            for i, agent_id in enumerate(agent_ids):
+                if agent_id not in agent_labels:
+                    continue
+                handle, = plt.plot([], color=colors[i], marker='+', label=agent_labels[agent_id])
+                handles.append(handle)
+                labels.append(agent_labels[agent_id])
 
-            for traj_id in traj_ids:
-                # Sub-trajectory
                 traj_sql = f"SELECT * FROM {self.table_name} WHERE aid = {agent_id} and tid = {traj_id};"
                 trajs = pd.read_sql(traj_sql, self.engine)
                 trajs["geom"] = trajs["geom"].apply(lambda x: shapely.wkb.loads(x, hex=True))
@@ -60,8 +60,7 @@ class Court:
                 points = [Point(coord) for coord in pt_array]
                 x = [p.x for p in points]
                 y = [p.y for p in points]
-                
-                # Full trajectory
+
                 full_traj_table = f"points_{Court.ts_value}"
                 full_traj_sql = f"SELECT * FROM {full_traj_table} WHERE aid = {agent_id} and tid = {traj_id};"
                 full_trajs = pd.read_sql(full_traj_sql, self.engine)
@@ -82,11 +81,11 @@ class Court:
                 # Add the legend to the plot
                 plt.legend(handles, labels, bbox_to_anchor=(1.04,1), loc="upper left", fontsize=6, framealpha=0.5)
 
-        if not os.path.exists("figs"):
-            os.makedirs("figs")
-        plt.savefig(f"figs/{self.table_name}.jpg", format='jpg', dpi=300)
-        plt.show()
-        plt.clf()
+            if not os.path.exists("figs"):
+                os.makedirs("figs")
+            plt.savefig(f"figs/{self.table_name}_{traj_id}.jpg", format='jpg', dpi=300)
+            plt.show()
+            plt.clf()
 
     def plot_single_agent_trajectories(self):
         plt.imshow(self.img, extent=[0,94*self.feet_m,0,50*self.feet_m], zorder=0)
