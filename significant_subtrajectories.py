@@ -292,10 +292,10 @@ def main():
 
         court = court_class.Court(table_name, court_path, engine)
         
-        if num_agents == 1:
-            court.plot_single_agent_trajectories()
-        elif num_agents > 1:
-            court.plot_multi_agent_trajectories()
+        # if num_agents == 1:
+        #     court.plot_single_agent_trajectories()
+        # elif num_agents > 1:
+        court.plot_multi_agent_trajectories()
 
         conn.close()
         sys.exit(0)
