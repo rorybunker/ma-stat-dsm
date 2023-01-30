@@ -87,31 +87,5 @@ class Court:
             plt.show()
             plt.clf()
 
-    def plot_single_agent_trajectories(self):
-        plt.imshow(self.img, extent=[0,94*self.feet_m,0,50*self.feet_m], zorder=0)
-        traj_sql = f"SELECT DISTINCT tid FROM {self.table_name};"
-        traj_df = pd.read_sql(traj_sql, self.engine)
-        traj_ids = list(traj_df.tid)
-
-        for traj_id in traj_ids:
-            traj_sql = f"SELECT * FROM {self.table_name} WHERE tid = {traj_id};"
-            trajs = pd.read_sql(traj_sql, self.engine)
-
-            trajs["geom"] = trajs["geom"].apply(lambda x: shapely.wkb.loads(x, hex=True))
-            gdf = gpd.GeoDataFrame(geometry=trajs["geom"])
-            pt_array = gdf.geometry.apply(lambda g: g.coords[0])
-
-            points = [Point(coord) for coord in pt_array]
-            x = [p.x for p in points]
-            y = [p.y for p in points]
-
-            plt.plot(x, y, color='black', linewidth=0.5)
-            plt.scatter(x, y)
-
-        plt.xlim(0, 47*self.feet_m) 
-
-        if not os.path.exists("figs"):
-            os.makedirs("figs")
-        plt.savefig(f"figs/{self.table_name}.jpg", format='jpg', dpi=300)
-        plt.show()
-        plt.clf()
+    # def plot_single_agent_trajectories(self):
+        
