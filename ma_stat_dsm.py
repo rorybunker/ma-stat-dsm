@@ -6,8 +6,6 @@ import pandas as pd
 import sys
 sys.setrecursionlimit(10000)
 import max_euclidean
-# import data_preprocess as prep
-# from data_preprocess import agt_list
 from scipy.special import comb
 from shapely.geometry import LineString
 from hausdorff import hausdorff_distance
@@ -17,18 +15,20 @@ import os
 warnings.filterwarnings("ignore")
 
 parser = argparse.ArgumentParser()
-# parser.add_argument('-agents', '--a_list', action='store', dest='agt_list',
-#                     type=str, nargs='*', default=[0, 1, 2, 3, 4], help='list of agents from default=0 1 2 3 4')
-# parser.add_argument('-agents', '--a_list', action='store', dest='agt_list',
-#                     type=str, nargs='*', help='space-separated list of agents from 0 1 2 3 4')
 parser.add_argument('-p', '--pos_label', type=str, required=False, default='1')
 parser.add_argument('-n', '--neg_label', type=str, required=False, default='0')
 parser.add_argument('-i', '--max_it', type=int, required=False, default=1000, help='maximum number of iterations (default=1000)')
-parser.add_argument('-alpha', '--alph', type=float, required=False, default=0.05, help='statistical significance level (alpha). default is alpha = 0.05')
+parser.add_argument('-a', '--alph', type=float, required=False, default=0.05, help='statistical significance level (alpha). default is alpha = 0.05')
 parser.add_argument('-l', '--min_l', type=int, required=True, help='minimum trajectory length (required)')
 parser.add_argument('-d', '--dist_threshold', type=float, required=True, help='distance threshold (required)')
-parser.add_argument('-s', '--seed', type=int, action='store', dest='rseed', required=False, default=None, help='random seed for labels (default = None)')
+parser.add_argument('-b', '--hausdorff_base_dist', type=str, required=False, default='euclidean', help='options for base_distance are euclidean, manhattan, chebyshev, or cosine (default is euclidean)')
+parser.add_argument('-s', '--seed', type=int, action='store', dest='rseed', required=False, default=0, help='random seed for labels (default = 0 for reproducability)')
 args, _ = parser.parse_known_args()
+
+# Write the arguments to a file to use in the next script
+with open('args_msdsm.txt', 'w') as f:
+    f.write(str(args.min_l) + '\n')
+    f.write(str(args.dist_threshold) + '\n')
 
 try:
     conn = psycopg2.connect("dbname='postgres' user='postgres' host='localhost' password='1234'")
@@ -37,8 +37,8 @@ except:
 
 cur = conn.cursor()
 
-def calculate_hausdorff_distance(X, Y, base_dist = 'euclidean'):
-    h_dist = hausdorff_distance(np.array(X), np.array(Y), base_dist)
+def calculate_hausdorff_distance(X, Y, base_distance):
+    h_dist = hausdorff_distance(np.array(X), np.array(Y), base_distance)
     return h_dist
 
 def count_label_number(trajectory_table, label):
@@ -194,7 +194,7 @@ def confirm_neighbor_hausdorff(length_k_sub_trajectory, list_potential_neighbor,
     list_neighbor = []
 
     for potential_neighbor in list_potential_neighbor:
-        max_distance = calculate_hausdorff_distance(np.array(length_k_sub_trajectory).reshape(np.array(length_k_sub_trajectory).shape[0]*np.array(length_k_sub_trajectory).shape[1], np.array(length_k_sub_trajectory).shape[2]),potential_neighbor[1])
+        max_distance = calculate_hausdorff_distance(np.array(length_k_sub_trajectory).reshape(np.array(length_k_sub_trajectory).shape[0]*np.array(length_k_sub_trajectory).shape[1], np.array(length_k_sub_trajectory).shape[2]),potential_neighbor[1], args.hausdorff_base_dist)
         
         if max_distance <= distance_threshold:
             list_neighbor.append(potential_neighbor[0])
@@ -267,7 +267,7 @@ def calculate_lower_bound(support, positive_number, negative_number):
 
 
 def calculate_upper_p_value(positive_support, negative_support, positive_number, negative_number, current_min_p):
-
+    
     p_value = 0
     support = positive_support + negative_support
 
@@ -287,7 +287,8 @@ def calculate_upper_p_value(positive_support, negative_support, positive_number,
     return p_value
 
 
-def calculate_lower_p_value(positive_support, negative_support, positive_number, negative_number, current_min_p):
+
+def calculate_lower_p_value(positive_support, negative_support, positive_number, negative_number, current_min_p=None):
 
     p_value = 0
     support = positive_support + negative_support
@@ -308,7 +309,7 @@ def calculate_lower_p_value(positive_support, negative_support, positive_number,
     return p_value
 
 
-def calculate_p_value(positive_support, negative_support, positive_number, negative_number, current_min_p):
+def calculate_p_value(positive_support, negative_support, positive_number, negative_number, current_min_p=None):
 
     upper_p = calculate_upper_p_value(positive_support, negative_support, positive_number, negative_number, current_min_p)
     lower_p = calculate_lower_p_value(positive_support, negative_support, positive_number, negative_number, current_min_p)
@@ -403,11 +404,6 @@ def stat_dsm(trajectory_table, point_table, candidate_table, original_list_label
     positive_label = parameter["positive_label"]
     num_agents = parameter["num_agents"]
     dict_lower_bound = {}
-
-    # if num_agents == 1:
-    #     print('Running Stat-DSM')
-    # elif num_agents > 1:
-    #     print('Running MA-Stat-DSM with ' + str(num_agents) + ' agents')
 
     for trajectory_tid in list_phase_tid:
         # print(trajectory_tid)
@@ -519,7 +515,7 @@ def stat_dsm(trajectory_table, point_table, candidate_table, original_list_label
                                                      dict_neighbor_full_trajectory[neighbor_tid][new_neighbor_end_idx])
                     elif num_agents > 1:
                         last_point_distance_h = calculate_hausdorff_distance([trajectory[a][candidate_end_idx] for a in range(num_agents)],
-                                                 [dict_neighbor_full_trajectory_ma[(neighbor_tid,a)][new_neighbor_end_idx] for a in range(num_agents)])
+                                                 [dict_neighbor_full_trajectory_ma[(neighbor_tid,a)][new_neighbor_end_idx] for a in range(num_agents)], args.hausdorff_base_dist)
 
                     if num_agents == 1:
                         if last_point_distance > local_top_k_max[0]:
@@ -607,7 +603,6 @@ def main():
     min_length = args.min_l
     alpha = args.alph
     distance_threshold = args.dist_threshold
-    # agent_ids = args.agt_list
     rand_seed = args.rseed
     top_k = 1
 
@@ -631,9 +626,10 @@ def main():
     list_permuted_dataset = []
     list_min_p = []
 
+    np.random.seed(rand_seed)
     for i in range(max_iter):
-        # list_idx = np.random.permutation(len(original_list_label))
-        list_idx = np.random.RandomState(seed=rand_seed).permutation(len(original_list_label))
+        list_idx = np.random.permutation(len(original_list_label))
+        # list_idx = np.random.RandomState(seed=rand_seed).permutation(len(original_list_label))
         permutation_list_label = original_list_label[list_idx]
         list_permuted_dataset.append(permutation_list_label)
         list_min_p.append(alpha)
