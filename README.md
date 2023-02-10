@@ -49,7 +49,7 @@ python -u nba_data_preprocess.py -t 1610612739 -g 21500405
 ```
 ![image](https://user-images.githubusercontent.com/29388472/173998123-ad0bade2-e42d-4261-89dd-40a4bc7834d3.png)
 
-## Step 2: Running (MA-)Stat-DSM
+## Running (MA-)Stat-DSM
 The agent list should match the agents that were specified in Step 1 above (data_preprocess.py).
 
 If only one agent is specified, Stat-DSM will be run. If more than one agent is specified, MA-Stat-DSM will be run.
@@ -69,14 +69,14 @@ For example, running MA-Stat-DSM with minimum length 5 and distance threshold 1.
 ```
 python -u ma_stat_dsm.py -l 5 -d 1.5
 ```
-## Step 3: Identifying statistically significant discriminative sub-trajectories
+## Identifying statistically significant discriminative sub-trajectories
 ### significant_subtrajectories.py:
 -d, --delta. The delta* value that was printed upon completion of ma_stat_dsm.py.
 ```
 python -u significant_subtrajectories.py -d 0.0344542453452345
 ```
 
-## Finding discriminative subtrajectories
+## Running all steps at once
 ### run.sh:  
 In run.sh, we iterate over different parameters searching for statistically significant discriminative sub-trajectories.
 
