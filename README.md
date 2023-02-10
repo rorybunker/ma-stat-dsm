@@ -89,9 +89,7 @@ python significant_subtrajectories.py -d 0.0344542453452345
 
 ## Finding discriminative subtrajectories
 ### run.sh:  
-Running steps 1 to 3 on for an ad-hoc team or match will be unlikely to discover statistically significant subtrajectories.
-
-In run.sh, we iterate over different parameters until a statistically singificant subtrajectories are found — at which point the process stops (TO DO: continue the process to discover additional statistically singificant subtrajectories). 
+In run.sh, we iterate over different parameters searching for statistically significant discriminative sub-trajectories.
 
 To run as a batch process, where million2 is the name of the server where postgres is installed, first create the permissions on the shell scipt:
 ```
