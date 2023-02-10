@@ -50,9 +50,6 @@ python -u nba_data_preprocess.py -t 1610612739 -g 21500405
 ![image](https://user-images.githubusercontent.com/29388472/173998123-ad0bade2-e42d-4261-89dd-40a4bc7834d3.png)
 
 ## Running (MA-)Stat-DSM
-The agent list should match the agents that were specified in Step 1 above (data_preprocess.py).
-
-If only one agent is specified, Stat-DSM will be run. If more than one agent is specified, MA-Stat-DSM will be run.
 
 ### ma_stat_dsm.py:
 '-p', '--pos_label'. default='1'\
