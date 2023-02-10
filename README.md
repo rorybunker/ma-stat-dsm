@@ -5,9 +5,6 @@ Standard Stat-DSM can still be run by running the method with just a single agen
 
 The Multi-agent Stat-DSM (MA-Stat-DSM) method is demonstrated on tracking data from NBA basketball to determine sub-matrices, comprised of player (and/or ball) sub-trajectories each of the same length from a matrix representing one play, which discriminate between effective and ineffective plays.
 
-## Dataset
-The input NBA dataset, dataset_as_a_file_600_games.pkl was generated based on "for Stat-DSM preprocessing" in https://github.com/keisuke198619/team_representation, which was, in turn, sourced from data from https://github.com/rajshah4/BasketballData
-
 ## Environment
 Create the environment using the environment.yml file.
 
@@ -28,11 +25,13 @@ Then, to create the required database tables necessary to run steps 1 - 3 below,
 python create_postgresql_db.py
 ```
 ## Data for (MA-)Stat-DSM
+The input NBA dataset, dataset_as_a_file_600_games.pkl was generated based on "for Stat-DSM preprocessing" in https://github.com/keisuke198619/team_representation, which was, in turn, sourced from data from https://github.com/rajshah4/BasketballData
+
 You can run nba_data_preprocess.py to generate the point_ma.csv and trajectory_ma.csv files from the NBA data, on which MA-Stat-DSM will be run. 
 
 If nba_data_preprocess.py is run with only one agent, point.csv and trajectory.csv files will be generated and Stat-DSM will be run in the next step.
 
-Alternatively, you can provide your own point and trajectory files with the same structure.
+Alternatively, you can provide your own point and trajectory csv files with the same structure.
 
 ## NBA Data Preprocessing
 
