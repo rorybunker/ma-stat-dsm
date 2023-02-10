@@ -36,7 +36,7 @@ Alternatively, you can provide your own point and trajectory csv files with the 
 ## NBA Data Preprocessing
 
 ### nba_data_preprocess.py:    
-To reduce run time, we run for a single team and downsample by using, e.g., -d 2, which considers every second point.\
+To reduce run time, you can run for a single team and downsample by using, e.g., -d 2, which considers every second point in the trajectories.\
 \
 '-y', '--label'. Effective - for effective/ineffective label, score - for scored/did not score label, attempt - for attempted shot/did not attempt shot label (default=effective).\
 '-a', '--a_list'. List of agents from ball shooter lastpasser shooterdefender lastpasserdefender (default is all agents).
