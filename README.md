@@ -54,8 +54,7 @@ The agent list should match the agents that were specified in Step 1 above (data
 
 If only one agent is specified, Stat-DSM will be run. If more than one agent is specified, MA-Stat-DSM will be run.
 
-### ma_stat_dsm.py:  
-#### Required:
+### ma_stat_dsm.py:
 '-p', '--pos_label'. default='1'\
 '-n', '--neg_label'. default='0'\
 '-i', '--max_it'. Maximum number of iterations (default=1000)\
