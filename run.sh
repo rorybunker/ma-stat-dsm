@@ -15,7 +15,7 @@ source ${HOME}/workspace2/virtualenvs/venv/bin/activate geoenv
 T=1610612744
 A=0.05
 gameArray=(21500504 21500520 21500524 21500548 21500556 21500568 21500583 21500592 21500622 21500003 21500035 21500051 21500069 21500083 21500092 21500104 21500120 21500125 21500144 21500164 21500177 21500187 21500200 21500214 21500236 21500245 21500259 21500268 21500300 21500314 21500336 21500351 21500381 21500397 21500434 21500438 21500468 21500480 21500485 21500290)
-downsamplingFactor=2
+downsamplingFactor=1
 iter=0
 
 # Get the start time
@@ -30,7 +30,7 @@ for G in ${gameArray[@]}; do
             # Get the start time for the current iteration
             iter_start_time=$(date +%s)
             
-            if python -u nba_data_preprocess.py -d $downsamplingFactor -g $G -t $T 2>&1 >/dev/null; then
+            if python -u nba_data_preprocess.py -d $downsamplingFactor -g $G -t $T; then # 2>&1 >/dev/null; then
                 echo 'Successfully completed data preprocessing'
             fi
 
@@ -38,9 +38,13 @@ for G in ${gameArray[@]}; do
             outputDelta="$(python -u ma_stat_dsm.py -a $A -d $D -l $L)"
             echo Finished running MA stat dsm and the output delta was $outputDelta
 
-            echo Checking significant subtrajectories...
-            if python -u significant_subtrajectories.py -d $outputDelta 2>&1 >/dev/null; then
-                echo 'Some significant subtrajectories were found.'
+            if [ "$outputDelta" == "FAIL" ]; then
+                echo "Since the output delta was $outputDelta significant_subtrajectories.py will not be run."
+            else
+                echo Checking significant subtrajectories...
+                if python -u significant_subtrajectories.py -d $outputDelta 2>&1 >/dev/null; then
+                    echo 'Some significant subtrajectories were found.'
+                fi
             fi
                         
             # Get the end time for the current iteration
