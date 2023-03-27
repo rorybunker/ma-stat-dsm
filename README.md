@@ -79,7 +79,7 @@ E.g.,
 python significant_subtrajectories.py -d 0.0344542453452345
 ```
 
-## Obtaining discriminative subtrajectories
+## Obtaining discriminative trajectory sub-matrices
 ### run.sh:  
 In run.sh, we iterate over different downsampling factors and MA-Stat-DSM parameters and apply to Golden State and Cleveland match trajectory data.
 
