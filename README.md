@@ -2,10 +2,6 @@
 This repository contains the code for MA-Stat-DSM, a multi-agent statistical discriminative sub-trajectory mining method for analyzing the trajectories of multiple agents. 
 The Multi-agent Stat-DSM (MA-Stat-DSM) method is demonstrated on tracking data from NBA basketball to determine sub-matrices, comprised of player (and/or ball) sub-trajectories each of the same length from a matrix representing one play, which discriminate between effective and ineffective plays.
 
-## Dataset
-In the paper, trajectories for five agents (ball, shooter, shooter defender, last passer, last passer defender) from 600 NBA games in the 2015/2016 season were used.
-(Source: this dataset_as_a_file_600_games.pkl file was generated based  ![this code](https://github.com/keisuke198619/team_representation#for-stat-dsm-preprocessing), which uses the basketball movement data from https://github.com/rajshah4/BasketballData)
-
 ## Environment
 The required environment can be created using the environment.yml file. If you are running on your local machine, you can use Anaconda, in which case it is recommended to install mamba:
 ```
@@ -24,11 +20,16 @@ Then, to create the required database tables, run
 python create_postgresql_db.py
 ```
 
-## Data Preprocessing
+## Data
+
+### NBA Dataset
+In the paper, trajectories for five agents (ball, shooter, shooter defender, last passer, last passer defender) from 600 NBA games in the 2015/2016 season were used.
+(Source: this dataset_as_a_file_600_games.pkl file was generated based  ![this code](https://github.com/keisuke198619/team_representation#for-stat-dsm-preprocessing), which uses the basketball movement data from https://github.com/rajshah4/BasketballData)
 
 To use the NBA data, you can use nba_data_preprocess.py to create trajectory_ma.csv and point_ma.csv files, which are then used as input to MA-Stat-DSM.
 
-However, if you have some other multi-agent trajectory dataset, you can create trajectory_ma.csv and point_ma.csv files with the same structure and use them instead as input to MA-Stat-DSM.
+### Other Dataset
+If you have some other multi-agent trajectory dataset, you can create trajectory_ma.csv and point_ma.csv files that have the same structure and use them instead as input to MA-Stat-DSM.
 
 ![Alt text](https://drive.google.com/uc?id=1JbXWIkkOEkrzA8rhQ3GO2jVro8zJdkoj)
 
@@ -50,7 +51,7 @@ To create trajectory_ma.csv and point_ma.csv files that contain all Golden State
 ```
 python data_preprocess.py -d 4 -t 1610612744
 ```
-
+## MA-Stat-DSM
 ### ma_stat_dsm.py:  
 | Argument | Type | Required | Default | Description |
 | --- | --- | --- | --- | --- |
@@ -86,8 +87,3 @@ To run as a batch process, where million2 is the name of the server where postgr
 ```
 sbatch -w million2 ./run.sh
 ```
-# References
-
-Rory Bunker, Le Vo Duy, Yasuo Tabei, Ichiro Takeuchi, and Keisuke Fujii (2022). Multi-agent statistical discriminative sub-trajectory mining and an application to NBA basketball. Working Paper.
-
-Le Vo, D. N., Sakuma, T., Ishiyama, T., Toda, H., Arai, K., Karasuyama, M., ... & Takeuchi, I. (2020). Stat-DSM: Statistically Discriminative Sub-Trajectory Mining With Multiple Testing Correction. IEEE Transactions on Knowledge and Data Engineering. DOI: 10.1109/TKDE.2020.2994344
