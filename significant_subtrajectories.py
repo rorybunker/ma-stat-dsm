@@ -27,6 +27,7 @@ args, _ = parser.parse_known_args()
 with open('args.txt', 'r') as f:
     team = f.readline().strip()
     game_id = f.readline().strip()
+    downsample = f.readline().strip()
 
 with open('args_msdsm.txt', 'r') as f:
     min_l = int(f.readline().strip())
@@ -151,21 +152,30 @@ def calculate_p_value(positive_support, negative_support, positive_number, negat
 
     return p_value
 
-def create_discriminative_point_table(point_table, disc_subtraj_table, team, game_id, min_l, dist_threshold):
+# def create_discriminative_point_table(point_table, disc_subtraj_table, team, game_id, min_l, dist_threshold):
+#     dist_threshold_str = str(dist_threshold).replace(".", "_")
+#     drop_table_sql = "DROP TABLE IF EXISTS disc_pts_""" + str(team) + """_""" + str(game_id) + """_""" + str(min_l) + """_""" + dist_threshold_str
+#     cur.execute(drop_table_sql)
+#     conn.commit()
+#     sql = """CREATE TABLE disc_pts_""" + str(team) + """_""" + str(game_id) + """_""" + str(min_l) + """_""" + dist_threshold_str + """  AS SELECT p.* FROM """ + point_table + """ p INNER JOIN """ + disc_subtraj_table + """ d ON p.tid=d.tid WHERE p.pid BETWEEN d.start_idx AND d.end_idx;"""
+#     cur.execute(sql)
+#     conn.commit()
+
+def create_discriminative_point_table(point_table, disc_subtraj_table, team, game_id, min_l, dist_threshold, downsample):
     dist_threshold_str = str(dist_threshold).replace(".", "_")
-    drop_table_sql = "DROP TABLE IF EXISTS disc_pts_""" + str(team) + """_""" + str(game_id) + """_""" + str(min_l) + """_""" + dist_threshold_str
+    drop_table_sql = "DROP TABLE IF EXISTS disc_pts_" + str(team) + "_" + str(game_id) + "_" + str(min_l) + "_" + dist_threshold_str + "_" + downsample
     cur.execute(drop_table_sql)
     conn.commit()
-    sql = """CREATE TABLE disc_pts_""" + str(team) + """_""" + str(game_id) + """_""" + str(min_l) + """_""" + dist_threshold_str + """  AS SELECT p.* FROM """ + point_table + """ p INNER JOIN """ + disc_subtraj_table + """ d ON p.tid=d.tid WHERE p.pid BETWEEN d.start_idx AND d.end_idx;"""
+    sql = "CREATE TABLE disc_pts_" + str(team) + "_" + str(game_id) + "_" + str(min_l) + "_" + dist_threshold_str + "_" + downsample + " AS SELECT DISTINCT p.* FROM " + point_table + " p INNER JOIN " + disc_subtraj_table + " d ON p.tid=d.tid WHERE p.pid BETWEEN d.start_idx AND d.end_idx;"
     cur.execute(sql)
     conn.commit()
 
-def create_full_traj_table(point_table_name, subtraj_table_name, team, game_id, min_l, dist_threshold):
+def create_full_traj_table(point_table_name, subtraj_table_name, team, game_id, min_l, dist_threshold, downsample):
     dist_threshold_str = str(dist_threshold).replace(".", "_")
-    drop_table_sql = "DROP TABLE IF EXISTS points_""" + str(team) + '_' + str(game_id) + '_' + str(min_l) + '_' + dist_threshold_str
+    drop_table_sql = "DROP TABLE IF EXISTS points_""" + str(team) + '_' + str(game_id) + '_' + str(min_l) + '_' + dist_threshold_str + '_' + downsample
     cur.execute(drop_table_sql)
     conn.commit()
-    table_name = "points_" + str(team) + '_' + str(game_id) + '_' + str(min_l) + '_' + dist_threshold_str
+    table_name = "points_" + str(team) + '_' + str(game_id) + '_' + str(min_l) + '_' + dist_threshold_str + '_' + downsample
     sql = """CREATE TABLE """ + table_name + """ AS SELECT p.* FROM """ + point_table_name + """ p INNER JOIN  """ + subtraj_table_name + """ d on ((p.aid = d.aid)) and ((p.tid = d.tid));"""
     cur.execute(sql)
     conn.commit()
@@ -260,15 +270,15 @@ def main():
         conn.commit()
         
         # delete_table(disc_point_table)
-        create_discriminative_point_table(point_table, disc_subtraj_table, team, game_id, min_l, dist_threshold)
+        create_discriminative_point_table(point_table, disc_subtraj_table, team, game_id, min_l, dist_threshold, downsample)
         
         # plot the discriminative subtrajectories
-        court_path = 'nba_court_T.png'
+        court_path = 'meta_data/nba_court_T.png'
 
-        table_name = 'disc_pts_' + str(team) + '_' + str(game_id) + '_' + str(min_l) + '_' + str(dist_threshold).replace(".", "_")
+        table_name = 'disc_pts_' + str(team) + '_' + str(game_id) + '_' + str(min_l) + '_' + str(dist_threshold).replace(".", "_") + '_' + downsample
 
         # create the full trajectory table to underlay the full trajectories under the discriminative subtrajectories
-        create_full_traj_table(point_table, table_name, team, game_id, min_l, dist_threshold)
+        create_full_traj_table(point_table, table_name, team, game_id, min_l, dist_threshold, downsample)
 
         # create the final plot(s) in the figs/ folder
         court = court_class.Court(table_name, court_path, engine)

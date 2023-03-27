@@ -1,0 +1,7 @@
+distance threshold,min length,downsampling factor,running time
+1.5,10,2,149.875
+1.5,5,2,159.05
+1.5,8,2,153.55
+4,10,2,588.55
+4,5,2,563.125
+4,8,2,517.825

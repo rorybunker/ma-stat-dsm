@@ -1,0 +1,7 @@
+distance threshold,min length,downsampling factor,running time,agent traj ids count,distinct traj ids count
+1.5,10,4,29.85,125.25,25.05
+1.5,5,4,38.275,125.25,25.05
+1.5,8,4,34.4,125.25,25.05
+4,10,4,85.325,125.25,25.05
+4,5,4,134.4,125.25,25.05
+4,8,4,354.05,125.25,25.05

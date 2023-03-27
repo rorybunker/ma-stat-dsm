@@ -9,9 +9,9 @@ param_dic = {
     "user"      : "postgres",
     "password"  : "1234"
 }
-os.chdir('/Users/rorybunker/Google Drive/Research/MAStatDSM/ma_stat_dsm/testing/')
+os.chdir('/home/b_rory/workspace2/work/ma_stat_dsm/testing/')
 
-run_type = 'statdsm'
+run_type = 'mastatdsm'
 num_iterations = 10 # number of times to append the same dataset to itself
 
 def connect(params_dic):

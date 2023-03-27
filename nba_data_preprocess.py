@@ -31,6 +31,7 @@ args, _ = parser.parse_known_args()
 with open('args.txt', 'w') as f:
     f.write(str(args.team) + '\n')
     f.write(str(args.game_id) + '\n')
+    f.write(str(args.downsampling) + '\n')
 
 agent_list = args.agt_list
 downsampling_factor = args.downsampling

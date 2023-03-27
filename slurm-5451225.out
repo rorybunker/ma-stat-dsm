@@ -1,0 +1,1946 @@
+--------------------------
+Iteration 0. Team 1610612739 Game 21500499, Distance Threshold 1.5, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 115
+Final # of plays (distinct tids) in dataset: 23
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 0 running time: 36 seconds
+--------------------------
+Iteration 1. Team 1610612739 Game 21500499, Distance Threshold 1.5, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 115
+Final # of plays (distinct tids) in dataset: 23
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 1 running time: 24 seconds
+--------------------------
+Iteration 2. Team 1610612739 Game 21500499, Distance Threshold 1.5, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 115
+Final # of plays (distinct tids) in dataset: 23
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 2 running time: 22 seconds
+--------------------------
+Iteration 3. Team 1610612739 Game 21500499, Distance Threshold 4, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 115
+Final # of plays (distinct tids) in dataset: 23
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.0025159280134661715
+Checking significant subtrajectories...
+Iteration 3 running time: 107 seconds
+--------------------------
+Iteration 4. Team 1610612739 Game 21500499, Distance Threshold 4, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 115
+Final # of plays (distinct tids) in dataset: 23
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.0035180275741885196
+Checking significant subtrajectories...
+Iteration 4 running time: 86 seconds
+--------------------------
+Iteration 5. Team 1610612739 Game 21500499, Distance Threshold 4, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 115
+Final # of plays (distinct tids) in dataset: 23
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.004559496404315076
+Checking significant subtrajectories...
+Iteration 5 running time: 68 seconds
+--------------------------
+Iteration 6. Team 1610612739 Game 21500511, Distance Threshold 1.5, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 70
+Final # of plays (distinct tids) in dataset: 14
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 6 running time: 15 seconds
+--------------------------
+Iteration 7. Team 1610612739 Game 21500511, Distance Threshold 1.5, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 70
+Final # of plays (distinct tids) in dataset: 14
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 7 running time: 13 seconds
+--------------------------
+Iteration 8. Team 1610612739 Game 21500511, Distance Threshold 1.5, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 70
+Final # of plays (distinct tids) in dataset: 14
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 8 running time: 11 seconds
+--------------------------
+Iteration 9. Team 1610612739 Game 21500511, Distance Threshold 4, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 70
+Final # of plays (distinct tids) in dataset: 14
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.008409166350176587
+Checking significant subtrajectories...
+Iteration 9 running time: 40 seconds
+--------------------------
+Iteration 10. Team 1610612739 Game 21500511, Distance Threshold 4, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 70
+Final # of plays (distinct tids) in dataset: 14
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.009057248054079753
+Checking significant subtrajectories...
+Iteration 10 running time: 35 seconds
+--------------------------
+Iteration 11. Team 1610612739 Game 21500511, Distance Threshold 4, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 70
+Final # of plays (distinct tids) in dataset: 14
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.016292759803467137
+Checking significant subtrajectories...
+Iteration 11 running time: 29 seconds
+--------------------------
+Iteration 12. Team 1610612739 Game 21500527, Distance Threshold 1.5, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 120
+Final # of plays (distinct tids) in dataset: 24
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 12 running time: 32 seconds
+--------------------------
+Iteration 13. Team 1610612739 Game 21500527, Distance Threshold 1.5, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 120
+Final # of plays (distinct tids) in dataset: 24
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 13 running time: 25 seconds
+--------------------------
+Iteration 14. Team 1610612739 Game 21500527, Distance Threshold 1.5, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 120
+Final # of plays (distinct tids) in dataset: 24
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 14 running time: 22 seconds
+--------------------------
+Iteration 15. Team 1610612739 Game 21500527, Distance Threshold 4, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 120
+Final # of plays (distinct tids) in dataset: 24
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.0017675730505716972
+Checking significant subtrajectories...
+Iteration 15 running time: 123 seconds
+--------------------------
+Iteration 16. Team 1610612739 Game 21500527, Distance Threshold 4, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 120
+Final # of plays (distinct tids) in dataset: 24
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.00421833145968388
+Checking significant subtrajectories...
+Iteration 16 running time: 93 seconds
+--------------------------
+Iteration 17. Team 1610612739 Game 21500527, Distance Threshold 4, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 120
+Final # of plays (distinct tids) in dataset: 24
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.004505890256417307
+Checking significant subtrajectories...
+Iteration 17 running time: 75 seconds
+--------------------------
+Iteration 18. Team 1610612739 Game 21500543, Distance Threshold 1.5, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 125
+Final # of plays (distinct tids) in dataset: 25
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 18 running time: 35 seconds
+--------------------------
+Iteration 19. Team 1610612739 Game 21500543, Distance Threshold 1.5, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 125
+Final # of plays (distinct tids) in dataset: 25
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 19 running time: 30 seconds
+--------------------------
+Iteration 20. Team 1610612739 Game 21500543, Distance Threshold 1.5, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 125
+Final # of plays (distinct tids) in dataset: 25
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 20 running time: 27 seconds
+--------------------------
+Iteration 21. Team 1610612739 Game 21500543, Distance Threshold 4, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 125
+Final # of plays (distinct tids) in dataset: 25
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.0023338745900077884
+Checking significant subtrajectories...
+Iteration 21 running time: 137 seconds
+--------------------------
+Iteration 22. Team 1610612739 Game 21500543, Distance Threshold 4, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 125
+Final # of plays (distinct tids) in dataset: 25
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.004194382811836969
+Checking significant subtrajectories...
+Iteration 22 running time: 110 seconds
+--------------------------
+Iteration 23. Team 1610612739 Game 21500543, Distance Threshold 4, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 125
+Final # of plays (distinct tids) in dataset: 25
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.004473259630848261
+Checking significant subtrajectories...
+Iteration 23 running time: 90 seconds
+--------------------------
+Iteration 24. Team 1610612739 Game 21500559, Distance Threshold 1.5, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 100
+Final # of plays (distinct tids) in dataset: 20
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 24 running time: 27 seconds
+--------------------------
+Iteration 25. Team 1610612739 Game 21500559, Distance Threshold 1.5, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 100
+Final # of plays (distinct tids) in dataset: 20
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 25 running time: 19 seconds
+--------------------------
+Iteration 26. Team 1610612739 Game 21500559, Distance Threshold 1.5, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 100
+Final # of plays (distinct tids) in dataset: 20
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 26 running time: 18 seconds
+--------------------------
+Iteration 27. Team 1610612739 Game 21500559, Distance Threshold 4, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 100
+Final # of plays (distinct tids) in dataset: 20
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.004725117525054829
+Checking significant subtrajectories...
+Some significant subtrajectories were found.
+Iteration 27 running time: 91 seconds
+--------------------------
+Iteration 28. Team 1610612739 Game 21500559, Distance Threshold 4, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 100
+Final # of plays (distinct tids) in dataset: 20
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.005138932025441363
+Checking significant subtrajectories...
+Iteration 28 running time: 62 seconds
+--------------------------
+Iteration 29. Team 1610612739 Game 21500559, Distance Threshold 4, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 100
+Final # of plays (distinct tids) in dataset: 20
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.007585384334486876
+Checking significant subtrajectories...
+Iteration 29 running time: 51 seconds
+--------------------------
+Iteration 30. Team 1610612739 Game 21500575, Distance Threshold 1.5, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 95
+Final # of plays (distinct tids) in dataset: 19
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 30 running time: 22 seconds
+--------------------------
+Iteration 31. Team 1610612739 Game 21500575, Distance Threshold 1.5, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 95
+Final # of plays (distinct tids) in dataset: 19
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 31 running time: 21 seconds
+--------------------------
+Iteration 32. Team 1610612739 Game 21500575, Distance Threshold 1.5, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 95
+Final # of plays (distinct tids) in dataset: 19
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 32 running time: 16 seconds
+--------------------------
+Iteration 33. Team 1610612739 Game 21500575, Distance Threshold 4, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 95
+Final # of plays (distinct tids) in dataset: 19
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.0033743741364147075
+Checking significant subtrajectories...
+Iteration 33 running time: 76 seconds
+--------------------------
+Iteration 34. Team 1610612739 Game 21500575, Distance Threshold 4, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 95
+Final # of plays (distinct tids) in dataset: 19
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.00509165685717673
+Checking significant subtrajectories...
+Iteration 34 running time: 65 seconds
+--------------------------
+Iteration 35. Team 1610612739 Game 21500575, Distance Threshold 4, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 95
+Final # of plays (distinct tids) in dataset: 19
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.007665065387459271
+Checking significant subtrajectories...
+Iteration 35 running time: 46 seconds
+--------------------------
+Iteration 36. Team 1610612739 Game 21500601, Distance Threshold 1.5, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 70
+Final # of plays (distinct tids) in dataset: 14
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 36 running time: 15 seconds
+--------------------------
+Iteration 37. Team 1610612739 Game 21500601, Distance Threshold 1.5, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 70
+Final # of plays (distinct tids) in dataset: 14
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 37 running time: 15 seconds
+--------------------------
+Iteration 38. Team 1610612739 Game 21500601, Distance Threshold 1.5, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 70
+Final # of plays (distinct tids) in dataset: 14
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 38 running time: 11 seconds
+--------------------------
+Iteration 39. Team 1610612739 Game 21500601, Distance Threshold 4, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 70
+Final # of plays (distinct tids) in dataset: 14
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.008409166350176587
+Checking significant subtrajectories...
+Iteration 39 running time: 38 seconds
+--------------------------
+Iteration 40. Team 1610612739 Game 21500601, Distance Threshold 4, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 70
+Final # of plays (distinct tids) in dataset: 14
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.009057248054079753
+Checking significant subtrajectories...
+Iteration 40 running time: 32 seconds
+--------------------------
+Iteration 41. Team 1610612739 Game 21500601, Distance Threshold 4, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 70
+Final # of plays (distinct tids) in dataset: 14
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.009057248054079753
+Checking significant subtrajectories...
+Iteration 41 running time: 27 seconds
+--------------------------
+Iteration 42. Team 1610612739 Game 21500622, Distance Threshold 1.5, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 55
+Final # of plays (distinct tids) in dataset: 11
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 42 running time: 12 seconds
+--------------------------
+Iteration 43. Team 1610612739 Game 21500622, Distance Threshold 1.5, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 55
+Final # of plays (distinct tids) in dataset: 11
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 43 running time: 10 seconds
+--------------------------
+Iteration 44. Team 1610612739 Game 21500622, Distance Threshold 1.5, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 55
+Final # of plays (distinct tids) in dataset: 11
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 44 running time: 10 seconds
+--------------------------
+Iteration 45. Team 1610612739 Game 21500622, Distance Threshold 4, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 55
+Final # of plays (distinct tids) in dataset: 11
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.010848708442398668
+Checking significant subtrajectories...
+Iteration 45 running time: 26 seconds
+--------------------------
+Iteration 46. Team 1610612739 Game 21500622, Distance Threshold 4, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 55
+Final # of plays (distinct tids) in dataset: 11
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.012218143183736969
+Checking significant subtrajectories...
+Iteration 46 running time: 23 seconds
+--------------------------
+Iteration 47. Team 1610612739 Game 21500622, Distance Threshold 4, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 55
+Final # of plays (distinct tids) in dataset: 11
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.02006428643498566
+Checking significant subtrajectories...
+Iteration 47 running time: 21 seconds
+--------------------------
+Iteration 48. Team 1610612739 Game 21500011, Distance Threshold 1.5, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 130
+Final # of plays (distinct tids) in dataset: 26
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 48 running time: 34 seconds
+--------------------------
+Iteration 49. Team 1610612739 Game 21500011, Distance Threshold 1.5, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 130
+Final # of plays (distinct tids) in dataset: 26
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 49 running time: 30 seconds
+--------------------------
+Iteration 50. Team 1610612739 Game 21500011, Distance Threshold 1.5, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 130
+Final # of plays (distinct tids) in dataset: 26
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 50 running time: 27 seconds
+--------------------------
+Iteration 51. Team 1610612739 Game 21500011, Distance Threshold 4, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 130
+Final # of plays (distinct tids) in dataset: 26
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.002782200953803582
+Checking significant subtrajectories...
+Iteration 51 running time: 129 seconds
+--------------------------
+Iteration 52. Team 1610612739 Game 21500011, Distance Threshold 4, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 130
+Final # of plays (distinct tids) in dataset: 26
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.0029782480974748986
+Checking significant subtrajectories...
+Iteration 52 running time: 101 seconds
+--------------------------
+Iteration 53. Team 1610612739 Game 21500011, Distance Threshold 4, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 130
+Final # of plays (distinct tids) in dataset: 26
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.0029782480974748986
+Checking significant subtrajectories...
+Iteration 53 running time: 81 seconds
+--------------------------
+Iteration 54. Team 1610612739 Game 21500021, Distance Threshold 1.5, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 80
+Final # of plays (distinct tids) in dataset: 16
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 54 running time: 17 seconds
+--------------------------
+Iteration 55. Team 1610612739 Game 21500021, Distance Threshold 1.5, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 80
+Final # of plays (distinct tids) in dataset: 16
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 55 running time: 15 seconds
+--------------------------
+Iteration 56. Team 1610612739 Game 21500021, Distance Threshold 1.5, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 80
+Final # of plays (distinct tids) in dataset: 16
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 56 running time: 12 seconds
+--------------------------
+Iteration 57. Team 1610612739 Game 21500021, Distance Threshold 4, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 80
+Final # of plays (distinct tids) in dataset: 16
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.007426841710835031
+Checking significant subtrajectories...
+Iteration 57 running time: 50 seconds
+--------------------------
+Iteration 58. Team 1610612739 Game 21500021, Distance Threshold 4, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 80
+Final # of plays (distinct tids) in dataset: 16
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.010624430674450708
+Checking significant subtrajectories...
+Iteration 58 running time: 42 seconds
+--------------------------
+Iteration 59. Team 1610612739 Game 21500021, Distance Threshold 4, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 80
+Final # of plays (distinct tids) in dataset: 16
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.009614665738572071
+Checking significant subtrajectories...
+Iteration 59 running time: 34 seconds
+--------------------------
+Iteration 60. Team 1610612739 Game 21500046, Distance Threshold 1.5, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 80
+Final # of plays (distinct tids) in dataset: 16
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 60 running time: 17 seconds
+--------------------------
+Iteration 61. Team 1610612739 Game 21500046, Distance Threshold 1.5, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 80
+Final # of plays (distinct tids) in dataset: 16
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 61 running time: 17 seconds
+--------------------------
+Iteration 62. Team 1610612739 Game 21500046, Distance Threshold 1.5, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 80
+Final # of plays (distinct tids) in dataset: 16
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 62 running time: 12 seconds
+--------------------------
+Iteration 63. Team 1610612739 Game 21500046, Distance Threshold 4, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 80
+Final # of plays (distinct tids) in dataset: 16
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.006851682997768731
+Checking significant subtrajectories...
+Iteration 63 running time: 51 seconds
+--------------------------
+Iteration 64. Team 1610612739 Game 21500046, Distance Threshold 4, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 80
+Final # of plays (distinct tids) in dataset: 16
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.00764262181376799
+Checking significant subtrajectories...
+Iteration 64 running time: 41 seconds
+--------------------------
+Iteration 65. Team 1610612739 Game 21500046, Distance Threshold 4, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 80
+Final # of plays (distinct tids) in dataset: 16
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.009743147151085239
+Checking significant subtrajectories...
+Iteration 65 running time: 34 seconds
+--------------------------
+Iteration 66. Team 1610612739 Game 21500063, Distance Threshold 1.5, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 85
+Final # of plays (distinct tids) in dataset: 17
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 66 running time: 22 seconds
+--------------------------
+Iteration 67. Team 1610612739 Game 21500063, Distance Threshold 1.5, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 85
+Final # of plays (distinct tids) in dataset: 17
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 67 running time: 15 seconds
+--------------------------
+Iteration 68. Team 1610612739 Game 21500063, Distance Threshold 1.5, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 85
+Final # of plays (distinct tids) in dataset: 17
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 68 running time: 16 seconds
+--------------------------
+Iteration 69. Team 1610612739 Game 21500063, Distance Threshold 4, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 85
+Final # of plays (distinct tids) in dataset: 17
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.0038273037208101514
+Checking significant subtrajectories...
+Iteration 69 running time: 61 seconds
+--------------------------
+Iteration 70. Team 1610612739 Game 21500063, Distance Threshold 4, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 85
+Final # of plays (distinct tids) in dataset: 17
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.011817723106369693
+Checking significant subtrajectories...
+Iteration 70 running time: 51 seconds
+--------------------------
+Iteration 71. Team 1610612739 Game 21500063, Distance Threshold 4, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 85
+Final # of plays (distinct tids) in dataset: 17
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.011817723106369693
+Checking significant subtrajectories...
+Iteration 71 running time: 40 seconds
+--------------------------
+Iteration 72. Team 1610612739 Game 21500078, Distance Threshold 1.5, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 95
+Final # of plays (distinct tids) in dataset: 19
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 72 running time: 24 seconds
+--------------------------
+Iteration 73. Team 1610612739 Game 21500078, Distance Threshold 1.5, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 95
+Final # of plays (distinct tids) in dataset: 19
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 73 running time: 18 seconds
+--------------------------
+Iteration 74. Team 1610612739 Game 21500078, Distance Threshold 1.5, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 95
+Final # of plays (distinct tids) in dataset: 19
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 74 running time: 16 seconds
+--------------------------
+Iteration 75. Team 1610612739 Game 21500078, Distance Threshold 4, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 95
+Final # of plays (distinct tids) in dataset: 19
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.0042539291841852366
+Checking significant subtrajectories...
+Iteration 75 running time: 83 seconds
+--------------------------
+Iteration 76. Team 1610612739 Game 21500078, Distance Threshold 4, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 95
+Final # of plays (distinct tids) in dataset: 19
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.005120369782599377
+Checking significant subtrajectories...
+Iteration 76 running time: 64 seconds
+--------------------------
+Iteration 77. Team 1610612739 Game 21500078, Distance Threshold 4, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 95
+Final # of plays (distinct tids) in dataset: 19
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.0070259769171841634
+Checking significant subtrajectories...
+Iteration 77 running time: 49 seconds
+--------------------------
+Iteration 78. Team 1610612739 Game 21500094, Distance Threshold 1.5, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 115
+Final # of plays (distinct tids) in dataset: 23
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 78 running time: 29 seconds
+--------------------------
+Iteration 79. Team 1610612739 Game 21500094, Distance Threshold 1.5, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 115
+Final # of plays (distinct tids) in dataset: 23
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 79 running time: 26 seconds
+--------------------------
+Iteration 80. Team 1610612739 Game 21500094, Distance Threshold 1.5, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 115
+Final # of plays (distinct tids) in dataset: 23
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 80 running time: 21 seconds
+--------------------------
+Iteration 81. Team 1610612739 Game 21500094, Distance Threshold 4, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 115
+Final # of plays (distinct tids) in dataset: 23
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.003599189341382122
+Checking significant subtrajectories...
+Iteration 81 running time: 130 seconds
+--------------------------
+Iteration 82. Team 1610612739 Game 21500094, Distance Threshold 4, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 115
+Final # of plays (distinct tids) in dataset: 23
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.003599189341382122
+Checking significant subtrajectories...
+Iteration 82 running time: 98 seconds
+--------------------------
+Iteration 83. Team 1610612739 Game 21500094, Distance Threshold 4, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 115
+Final # of plays (distinct tids) in dataset: 23
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.003599189341382122
+Checking significant subtrajectories...
+Iteration 83 running time: 75 seconds
+--------------------------
+Iteration 84. Team 1610612739 Game 21500106, Distance Threshold 1.5, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 110
+Final # of plays (distinct tids) in dataset: 22
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 84 running time: 29 seconds
+--------------------------
+Iteration 85. Team 1610612739 Game 21500106, Distance Threshold 1.5, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 110
+Final # of plays (distinct tids) in dataset: 22
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 85 running time: 22 seconds
+--------------------------
+Iteration 86. Team 1610612739 Game 21500106, Distance Threshold 1.5, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 110
+Final # of plays (distinct tids) in dataset: 22
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 86 running time: 21 seconds
+--------------------------
+Iteration 87. Team 1610612739 Game 21500106, Distance Threshold 4, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 110
+Final # of plays (distinct tids) in dataset: 22
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.0030013103191174196
+Checking significant subtrajectories...
+Iteration 87 running time: 99 seconds
+--------------------------
+Iteration 88. Team 1610612739 Game 21500106, Distance Threshold 4, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 110
+Final # of plays (distinct tids) in dataset: 22
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.005563220418146226
+Checking significant subtrajectories...
+Iteration 88 running time: 80 seconds
+--------------------------
+Iteration 89. Team 1610612739 Game 21500106, Distance Threshold 4, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 110
+Final # of plays (distinct tids) in dataset: 22
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.0056673002138042175
+Checking significant subtrajectories...
+Iteration 89 running time: 64 seconds
+--------------------------
+Iteration 90. Team 1610612739 Game 21500130, Distance Threshold 1.5, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 135
+Final # of plays (distinct tids) in dataset: 27
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 90 running time: 37 seconds
+--------------------------
+Iteration 91. Team 1610612739 Game 21500130, Distance Threshold 1.5, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 135
+Final # of plays (distinct tids) in dataset: 27
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 91 running time: 31 seconds
+--------------------------
+Iteration 92. Team 1610612739 Game 21500130, Distance Threshold 1.5, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 135
+Final # of plays (distinct tids) in dataset: 27
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 92 running time: 28 seconds
+--------------------------
+Iteration 93. Team 1610612739 Game 21500130, Distance Threshold 4, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 135
+Final # of plays (distinct tids) in dataset: 27
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.00189542890103306
+Checking significant subtrajectories...
+Iteration 93 running time: 154 seconds
+--------------------------
+Iteration 94. Team 1610612739 Game 21500130, Distance Threshold 4, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 135
+Final # of plays (distinct tids) in dataset: 27
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.0026655910417338405
+Checking significant subtrajectories...
+Iteration 94 running time: 110 seconds
+--------------------------
+Iteration 95. Team 1610612739 Game 21500130, Distance Threshold 4, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 135
+Final # of plays (distinct tids) in dataset: 27
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.0027318612881490813
+Checking significant subtrajectories...
+Iteration 95 running time: 93 seconds
+--------------------------
+Iteration 96. Team 1610612739 Game 21500141, Distance Threshold 1.5, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 80
+Final # of plays (distinct tids) in dataset: 16
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 96 running time: 20 seconds
+--------------------------
+Iteration 97. Team 1610612739 Game 21500141, Distance Threshold 1.5, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 80
+Final # of plays (distinct tids) in dataset: 16
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 97 running time: 14 seconds
+--------------------------
+Iteration 98. Team 1610612739 Game 21500141, Distance Threshold 1.5, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 80
+Final # of plays (distinct tids) in dataset: 16
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 98 running time: 13 seconds
+--------------------------
+Iteration 99. Team 1610612739 Game 21500141, Distance Threshold 4, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 80
+Final # of plays (distinct tids) in dataset: 16
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.0071301565357300015
+Checking significant subtrajectories...
+Iteration 99 running time: 51 seconds
+--------------------------
+Iteration 100. Team 1610612739 Game 21500141, Distance Threshold 4, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 80
+Final # of plays (distinct tids) in dataset: 16
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.007426841710835031
+Checking significant subtrajectories...
+Iteration 100 running time: 42 seconds
+--------------------------
+Iteration 101. Team 1610612739 Game 21500141, Distance Threshold 4, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 80
+Final # of plays (distinct tids) in dataset: 16
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.009614665738572073
+Checking significant subtrajectories...
+Iteration 101 running time: 36 seconds
+--------------------------
+Iteration 102. Team 1610612739 Game 21500160, Distance Threshold 1.5, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 130
+Final # of plays (distinct tids) in dataset: 26
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 102 running time: 37 seconds
+--------------------------
+Iteration 103. Team 1610612739 Game 21500160, Distance Threshold 1.5, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 130
+Final # of plays (distinct tids) in dataset: 26
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 103 running time: 29 seconds
+--------------------------
+Iteration 104. Team 1610612739 Game 21500160, Distance Threshold 1.5, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 130
+Final # of plays (distinct tids) in dataset: 26
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 104 running time: 29 seconds
+--------------------------
+Iteration 105. Team 1610612739 Game 21500160, Distance Threshold 4, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 130
+Final # of plays (distinct tids) in dataset: 26
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.002782200953803582
+Checking significant subtrajectories...
+Iteration 105 running time: 150 seconds
+--------------------------
+Iteration 106. Team 1610612739 Game 21500160, Distance Threshold 4, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 130
+Final # of plays (distinct tids) in dataset: 26
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.002782200953803582
+Checking significant subtrajectories...
+Iteration 106 running time: 109 seconds
+--------------------------
+Iteration 107. Team 1610612739 Game 21500160, Distance Threshold 4, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 130
+Final # of plays (distinct tids) in dataset: 26
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.0029782480974748986
+Checking significant subtrajectories...
+Iteration 107 running time: 84 seconds
+--------------------------
+Iteration 108. Team 1610612739 Game 21500176, Distance Threshold 1.5, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 80
+Final # of plays (distinct tids) in dataset: 16
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 108 running time: 21 seconds
+--------------------------
+Iteration 109. Team 1610612739 Game 21500176, Distance Threshold 1.5, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 80
+Final # of plays (distinct tids) in dataset: 16
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 109 running time: 13 seconds
+--------------------------
+Iteration 110. Team 1610612739 Game 21500176, Distance Threshold 1.5, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 80
+Final # of plays (distinct tids) in dataset: 16
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 110 running time: 13 seconds
+--------------------------
+Iteration 111. Team 1610612739 Game 21500176, Distance Threshold 4, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 80
+Final # of plays (distinct tids) in dataset: 16
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.004190219816924886
+Checking significant subtrajectories...
+Iteration 111 running time: 57 seconds
+--------------------------
+Iteration 112. Team 1610612739 Game 21500176, Distance Threshold 4, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 80
+Final # of plays (distinct tids) in dataset: 16
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.0071301565357300015
+Checking significant subtrajectories...
+Iteration 112 running time: 43 seconds
+--------------------------
+Iteration 113. Team 1610612739 Game 21500176, Distance Threshold 4, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 80
+Final # of plays (distinct tids) in dataset: 16
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.009614665738572073
+Checking significant subtrajectories...
+Iteration 113 running time: 36 seconds
+--------------------------
+Iteration 114. Team 1610612739 Game 21500191, Distance Threshold 1.5, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 115
+Final # of plays (distinct tids) in dataset: 23
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 114 running time: 29 seconds
+--------------------------
+Iteration 115. Team 1610612739 Game 21500191, Distance Threshold 1.5, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 115
+Final # of plays (distinct tids) in dataset: 23
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 115 running time: 27 seconds
+--------------------------
+Iteration 116. Team 1610612739 Game 21500191, Distance Threshold 1.5, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 115
+Final # of plays (distinct tids) in dataset: 23
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 116 running time: 21 seconds
+--------------------------
+Iteration 117. Team 1610612739 Game 21500191, Distance Threshold 4, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 115
+Final # of plays (distinct tids) in dataset: 23
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.0033620642886160994
+Checking significant subtrajectories...
+Iteration 117 running time: 107 seconds
+--------------------------
+Iteration 118. Team 1610612739 Game 21500191, Distance Threshold 4, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 115
+Final # of plays (distinct tids) in dataset: 23
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.0033620642886160994
+Checking significant subtrajectories...
+Iteration 118 running time: 86 seconds
+--------------------------
+Iteration 119. Team 1610612739 Game 21500191, Distance Threshold 4, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 115
+Final # of plays (distinct tids) in dataset: 23
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.004876760155794899
+Checking significant subtrajectories...
+Iteration 119 running time: 71 seconds
+--------------------------
+Iteration 120. Team 1610612739 Game 21500203, Distance Threshold 1.5, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 155
+Final # of plays (distinct tids) in dataset: 31
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 120 running time: 49 seconds
+--------------------------
+Iteration 121. Team 1610612739 Game 21500203, Distance Threshold 1.5, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 155
+Final # of plays (distinct tids) in dataset: 31
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 121 running time: 38 seconds
+--------------------------
+Iteration 122. Team 1610612739 Game 21500203, Distance Threshold 1.5, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 155
+Final # of plays (distinct tids) in dataset: 31
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 122 running time: 35 seconds
+--------------------------
+Iteration 123. Team 1610612739 Game 21500203, Distance Threshold 4, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 155
+Final # of plays (distinct tids) in dataset: 31
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.001529813492193236
+Checking significant subtrajectories...
+Iteration 123 running time: 227 seconds
+--------------------------
+Iteration 124. Team 1610612739 Game 21500203, Distance Threshold 4, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 155
+Final # of plays (distinct tids) in dataset: 31
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.0034896806742319058
+Checking significant subtrajectories...
+Iteration 124 running time: 159 seconds
+--------------------------
+Iteration 125. Team 1610612739 Game 21500203, Distance Threshold 4, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 155
+Final # of plays (distinct tids) in dataset: 31
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.0024524563273753746
+Checking significant subtrajectories...
+Iteration 125 running time: 126 seconds
+--------------------------
+Iteration 126. Team 1610612739 Game 21500219, Distance Threshold 1.5, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 130
+Final # of plays (distinct tids) in dataset: 26
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 126 running time: 40 seconds
+--------------------------
+Iteration 127. Team 1610612739 Game 21500219, Distance Threshold 1.5, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 130
+Final # of plays (distinct tids) in dataset: 26
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 127 running time: 31 seconds
+--------------------------
+Iteration 128. Team 1610612739 Game 21500219, Distance Threshold 1.5, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 130
+Final # of plays (distinct tids) in dataset: 26
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 128 running time: 29 seconds
+--------------------------
+Iteration 129. Team 1610612739 Game 21500219, Distance Threshold 4, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 130
+Final # of plays (distinct tids) in dataset: 26
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.002320558976828244
+Checking significant subtrajectories...
+Iteration 129 running time: 139 seconds
+--------------------------
+Iteration 130. Team 1610612739 Game 21500219, Distance Threshold 4, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 130
+Final # of plays (distinct tids) in dataset: 26
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.002320558976828244
+Checking significant subtrajectories...
+Iteration 130 running time: 109 seconds
+--------------------------
+Iteration 131. Team 1610612739 Game 21500219, Distance Threshold 4, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 130
+Final # of plays (distinct tids) in dataset: 26
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.002320558976828244
+Checking significant subtrajectories...
+Iteration 131 running time: 87 seconds
+--------------------------
+Iteration 132. Team 1610612739 Game 21500227, Distance Threshold 1.5, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 175
+Final # of plays (distinct tids) in dataset: 35
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 132 running time: 58 seconds
+--------------------------
+Iteration 133. Team 1610612739 Game 21500227, Distance Threshold 1.5, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 175
+Final # of plays (distinct tids) in dataset: 35
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 133 running time: 53 seconds
+--------------------------
+Iteration 134. Team 1610612739 Game 21500227, Distance Threshold 1.5, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 175
+Final # of plays (distinct tids) in dataset: 35
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 134 running time: 36 seconds
+--------------------------
+Iteration 135. Team 1610612739 Game 21500227, Distance Threshold 4, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 175
+Final # of plays (distinct tids) in dataset: 35
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.0015248873174943279
+Checking significant subtrajectories...
+Iteration 135 running time: 267 seconds
+--------------------------
+Iteration 136. Team 1610612739 Game 21500227, Distance Threshold 4, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 175
+Final # of plays (distinct tids) in dataset: 35
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.0018192394388067824
+Checking significant subtrajectories...
+Iteration 136 running time: 196 seconds
+--------------------------
+Iteration 137. Team 1610612739 Game 21500227, Distance Threshold 4, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 175
+Final # of plays (distinct tids) in dataset: 35
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.0017938047095030158
+Checking significant subtrajectories...
+Iteration 137 running time: 146 seconds
+--------------------------
+Iteration 138. Team 1610612739 Game 21500262, Distance Threshold 1.5, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 65
+Final # of plays (distinct tids) in dataset: 13
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 138 running time: 14 seconds
+--------------------------
+Iteration 139. Team 1610612739 Game 21500262, Distance Threshold 1.5, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 65
+Final # of plays (distinct tids) in dataset: 13
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 139 running time: 11 seconds
+--------------------------
+Iteration 140. Team 1610612739 Game 21500262, Distance Threshold 1.5, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 65
+Final # of plays (distinct tids) in dataset: 13
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 140 running time: 11 seconds
+--------------------------
+Iteration 141. Team 1610612739 Game 21500262, Distance Threshold 4, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 65
+Final # of plays (distinct tids) in dataset: 13
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.008047568727893042
+Checking significant subtrajectories...
+Iteration 141 running time: 32 seconds
+--------------------------
+Iteration 142. Team 1610612739 Game 21500262, Distance Threshold 4, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 65
+Final # of plays (distinct tids) in dataset: 13
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.008047568727893042
+Checking significant subtrajectories...
+Iteration 142 running time: 30 seconds
+--------------------------
+Iteration 143. Team 1610612739 Game 21500262, Distance Threshold 4, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 65
+Final # of plays (distinct tids) in dataset: 13
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.012864581214660538
+Checking significant subtrajectories...
+Iteration 143 running time: 25 seconds
+--------------------------
+Iteration 144. Team 1610612739 Game 21500288, Distance Threshold 1.5, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 125
+Final # of plays (distinct tids) in dataset: 25
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 144 running time: 35 seconds
+--------------------------
+Iteration 145. Team 1610612739 Game 21500288, Distance Threshold 1.5, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 125
+Final # of plays (distinct tids) in dataset: 25
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 145 running time: 34 seconds
+--------------------------
+Iteration 146. Team 1610612739 Game 21500288, Distance Threshold 1.5, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 125
+Final # of plays (distinct tids) in dataset: 25
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 146 running time: 27 seconds
+--------------------------
+Iteration 147. Team 1610612739 Game 21500288, Distance Threshold 4, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 125
+Final # of plays (distinct tids) in dataset: 25
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.0030932141782880514
+Checking significant subtrajectories...
+Iteration 147 running time: 131 seconds
+--------------------------
+Iteration 148. Team 1610612739 Game 21500288, Distance Threshold 4, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 125
+Final # of plays (distinct tids) in dataset: 25
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.0033055310168989384
+Checking significant subtrajectories...
+Iteration 148 running time: 109 seconds
+--------------------------
+Iteration 149. Team 1610612739 Game 21500288, Distance Threshold 4, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 125
+Final # of plays (distinct tids) in dataset: 25
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.004677024540530128
+Checking significant subtrajectories...
+Iteration 149 running time: 87 seconds
+--------------------------
+Iteration 150. Team 1610612739 Game 21500313, Distance Threshold 1.5, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 115
+Final # of plays (distinct tids) in dataset: 23
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 150 running time: 35 seconds
+--------------------------
+Iteration 151. Team 1610612739 Game 21500313, Distance Threshold 1.5, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 115
+Final # of plays (distinct tids) in dataset: 23
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 151 running time: 25 seconds
+--------------------------
+Iteration 152. Team 1610612739 Game 21500313, Distance Threshold 1.5, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 115
+Final # of plays (distinct tids) in dataset: 23
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 152 running time: 22 seconds
+--------------------------
+Iteration 153. Team 1610612739 Game 21500313, Distance Threshold 4, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 115
+Final # of plays (distinct tids) in dataset: 23
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.0024707417931927656
+Checking significant subtrajectories...
+Iteration 153 running time: 110 seconds
+--------------------------
+Iteration 154. Team 1610612739 Game 21500313, Distance Threshold 4, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 115
+Final # of plays (distinct tids) in dataset: 23
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.0033620642886160994
+Checking significant subtrajectories...
+Iteration 154 running time: 80 seconds
+--------------------------
+Iteration 155. Team 1610612739 Game 21500313, Distance Threshold 4, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 115
+Final # of plays (distinct tids) in dataset: 23
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.0033620642886160994
+Checking significant subtrajectories...
+Iteration 155 running time: 70 seconds
+--------------------------
+Iteration 156. Team 1610612739 Game 21500334, Distance Threshold 1.5, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 105
+Final # of plays (distinct tids) in dataset: 21
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 156 running time: 28 seconds
+--------------------------
+Iteration 157. Team 1610612739 Game 21500334, Distance Threshold 1.5, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 105
+Final # of plays (distinct tids) in dataset: 21
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 157 running time: 21 seconds
+--------------------------
+Iteration 158. Team 1610612739 Game 21500334, Distance Threshold 1.5, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 105
+Final # of plays (distinct tids) in dataset: 21
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 158 running time: 20 seconds
+--------------------------
+Iteration 159. Team 1610612739 Game 21500334, Distance Threshold 4, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 105
+Final # of plays (distinct tids) in dataset: 21
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.00390731277323994
+Checking significant subtrajectories...
+Iteration 159 running time: 91 seconds
+--------------------------
+Iteration 160. Team 1610612739 Game 21500334, Distance Threshold 4, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 105
+Final # of plays (distinct tids) in dataset: 21
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.004037834588080619
+Checking significant subtrajectories...
+Iteration 160 running time: 73 seconds
+--------------------------
+Iteration 161. Team 1610612739 Game 21500334, Distance Threshold 4, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 105
+Final # of plays (distinct tids) in dataset: 21
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.003987537531594393
+Checking significant subtrajectories...
+Iteration 161 running time: 58 seconds
+--------------------------
+Iteration 162. Team 1610612739 Game 21500367, Distance Threshold 1.5, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 135
+Final # of plays (distinct tids) in dataset: 27
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 162 running time: 41 seconds
+--------------------------
+Iteration 163. Team 1610612739 Game 21500367, Distance Threshold 1.5, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 135
+Final # of plays (distinct tids) in dataset: 27
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 163 running time: 36 seconds
+--------------------------
+Iteration 164. Team 1610612739 Game 21500367, Distance Threshold 1.5, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 135
+Final # of plays (distinct tids) in dataset: 27
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 164 running time: 29 seconds
+--------------------------
+Iteration 165. Team 1610612739 Game 21500367, Distance Threshold 4, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 135
+Final # of plays (distinct tids) in dataset: 27
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.0022493239135888557
+Checking significant subtrajectories...
+Iteration 165 running time: 152 seconds
+--------------------------
+Iteration 166. Team 1610612739 Game 21500367, Distance Threshold 4, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 135
+Final # of plays (distinct tids) in dataset: 27
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.0023357463528329947
+Checking significant subtrajectories...
+Iteration 166 running time: 117 seconds
+--------------------------
+Iteration 167. Team 1610612739 Game 21500367, Distance Threshold 4, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 135
+Final # of plays (distinct tids) in dataset: 27
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.003478229586107768
+Checking significant subtrajectories...
+Iteration 167 running time: 94 seconds
+--------------------------
+Iteration 168. Team 1610612739 Game 21500384, Distance Threshold 1.5, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 90
+Final # of plays (distinct tids) in dataset: 18
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 168 running time: 23 seconds
+--------------------------
+Iteration 169. Team 1610612739 Game 21500384, Distance Threshold 1.5, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 90
+Final # of plays (distinct tids) in dataset: 18
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 169 running time: 17 seconds
+--------------------------
+Iteration 170. Team 1610612739 Game 21500384, Distance Threshold 1.5, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 90
+Final # of plays (distinct tids) in dataset: 18
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 170 running time: 16 seconds
+--------------------------
+Iteration 171. Team 1610612739 Game 21500384, Distance Threshold 4, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 90
+Final # of plays (distinct tids) in dataset: 18
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.006288072579119874
+Checking significant subtrajectories...
+Iteration 171 running time: 73 seconds
+--------------------------
+Iteration 172. Team 1610612739 Game 21500384, Distance Threshold 4, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 90
+Final # of plays (distinct tids) in dataset: 18
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.006288072579119874
+Checking significant subtrajectories...
+Iteration 172 running time: 57 seconds
+--------------------------
+Iteration 173. Team 1610612739 Game 21500384, Distance Threshold 4, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 90
+Final # of plays (distinct tids) in dataset: 18
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.00393247625659832
+Checking significant subtrajectories...
+Iteration 173 running time: 46 seconds
+--------------------------
+Iteration 174. Team 1610612739 Game 21500405, Distance Threshold 1.5, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 100
+Final # of plays (distinct tids) in dataset: 20
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 174 running time: 26 seconds
+--------------------------
+Iteration 175. Team 1610612739 Game 21500405, Distance Threshold 1.5, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 100
+Final # of plays (distinct tids) in dataset: 20
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 175 running time: 22 seconds
+--------------------------
+Iteration 176. Team 1610612739 Game 21500405, Distance Threshold 1.5, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 100
+Final # of plays (distinct tids) in dataset: 20
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 176 running time: 17 seconds
+--------------------------
+Iteration 177. Team 1610612739 Game 21500405, Distance Threshold 4, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 100
+Final # of plays (distinct tids) in dataset: 20
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.004725117525054829
+Checking significant subtrajectories...
+Iteration 177 running time: 85 seconds
+--------------------------
+Iteration 178. Team 1610612739 Game 21500405, Distance Threshold 4, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 100
+Final # of plays (distinct tids) in dataset: 20
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.005138932025441363
+Checking significant subtrajectories...
+Iteration 178 running time: 65 seconds
+--------------------------
+Iteration 179. Team 1610612739 Game 21500405, Distance Threshold 4, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 100
+Final # of plays (distinct tids) in dataset: 20
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.007585384334486876
+Checking significant subtrajectories...
+Iteration 179 running time: 55 seconds
+--------------------------
+Iteration 180. Team 1610612739 Game 21500424, Distance Threshold 1.5, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 95
+Final # of plays (distinct tids) in dataset: 19
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 180 running time: 25 seconds
+--------------------------
+Iteration 181. Team 1610612739 Game 21500424, Distance Threshold 1.5, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 95
+Final # of plays (distinct tids) in dataset: 19
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 181 running time: 18 seconds
+--------------------------
+Iteration 182. Team 1610612739 Game 21500424, Distance Threshold 1.5, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 95
+Final # of plays (distinct tids) in dataset: 19
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 182 running time: 19 seconds
+--------------------------
+Iteration 183. Team 1610612739 Game 21500424, Distance Threshold 4, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 95
+Final # of plays (distinct tids) in dataset: 19
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.0038207866242739893
+Checking significant subtrajectories...
+Iteration 183 running time: 69 seconds
+--------------------------
+Iteration 184. Team 1610612739 Game 21500424, Distance Threshold 4, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 95
+Final # of plays (distinct tids) in dataset: 19
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.004345598812535264
+Checking significant subtrajectories...
+Iteration 184 running time: 58 seconds
+--------------------------
+Iteration 185. Team 1610612739 Game 21500424, Distance Threshold 4, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 95
+Final # of plays (distinct tids) in dataset: 19
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.008213442928728611
+Checking significant subtrajectories...
+Iteration 185 running time: 44 seconds
+--------------------------
+Iteration 186. Team 1610612739 Game 21500438, Distance Threshold 1.5, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 140
+Final # of plays (distinct tids) in dataset: 28
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 186 running time: 44 seconds
+--------------------------
+Iteration 187. Team 1610612739 Game 21500438, Distance Threshold 1.5, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 140
+Final # of plays (distinct tids) in dataset: 28
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 187 running time: 30 seconds
+--------------------------
+Iteration 188. Team 1610612739 Game 21500438, Distance Threshold 1.5, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 140
+Final # of plays (distinct tids) in dataset: 28
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 188 running time: 30 seconds
+--------------------------
+Iteration 189. Team 1610612739 Game 21500438, Distance Threshold 4, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 140
+Final # of plays (distinct tids) in dataset: 28
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.002190894423513375
+Checking significant subtrajectories...
+Iteration 189 running time: 165 seconds
+--------------------------
+Iteration 190. Team 1610612739 Game 21500438, Distance Threshold 4, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 140
+Final # of plays (distinct tids) in dataset: 28
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.002190894423513375
+Checking significant subtrajectories...
+Iteration 190 running time: 124 seconds
+--------------------------
+Iteration 191. Team 1610612739 Game 21500438, Distance Threshold 4, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 140
+Final # of plays (distinct tids) in dataset: 28
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.003156579354254639
+Checking significant subtrajectories...
+Iteration 191 running time: 100 seconds
+--------------------------
+Iteration 192. Team 1610612739 Game 21500453, Distance Threshold 1.5, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 150
+Final # of plays (distinct tids) in dataset: 30
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 192 running time: 46 seconds
+--------------------------
+Iteration 193. Team 1610612739 Game 21500453, Distance Threshold 1.5, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 150
+Final # of plays (distinct tids) in dataset: 30
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 193 running time: 39 seconds
+--------------------------
+Iteration 194. Team 1610612739 Game 21500453, Distance Threshold 1.5, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 150
+Final # of plays (distinct tids) in dataset: 30
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 194 running time: 33 seconds
+--------------------------
+Iteration 195. Team 1610612739 Game 21500453, Distance Threshold 4, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 150
+Final # of plays (distinct tids) in dataset: 30
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.0025600238585627524
+Checking significant subtrajectories...
+Iteration 195 running time: 185 seconds
+--------------------------
+Iteration 196. Team 1610612739 Game 21500453, Distance Threshold 4, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 150
+Final # of plays (distinct tids) in dataset: 30
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.0033358758834490993
+Checking significant subtrajectories...
+Iteration 196 running time: 135 seconds
+--------------------------
+Iteration 197. Team 1610612739 Game 21500453, Distance Threshold 4, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 150
+Final # of plays (distinct tids) in dataset: 30
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.0033358758834490993
+Checking significant subtrajectories...
+Iteration 197 running time: 107 seconds
+--------------------------
+Iteration 198. Team 1610612739 Game 21500466, Distance Threshold 1.5, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 115
+Final # of plays (distinct tids) in dataset: 23
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 198 running time: 35 seconds
+--------------------------
+Iteration 199. Team 1610612739 Game 21500466, Distance Threshold 1.5, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 115
+Final # of plays (distinct tids) in dataset: 23
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 199 running time: 26 seconds
+--------------------------
+Iteration 200. Team 1610612739 Game 21500466, Distance Threshold 1.5, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 115
+Final # of plays (distinct tids) in dataset: 23
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 200 running time: 25 seconds
+--------------------------
+Iteration 201. Team 1610612739 Game 21500466, Distance Threshold 4, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 115
+Final # of plays (distinct tids) in dataset: 23
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.0023712246755259463
+Checking significant subtrajectories...
+Iteration 201 running time: 123 seconds
+--------------------------
+Iteration 202. Team 1610612739 Game 21500466, Distance Threshold 4, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 115
+Final # of plays (distinct tids) in dataset: 23
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.0024707417931927656
+Checking significant subtrajectories...
+Iteration 202 running time: 96 seconds
+--------------------------
+Iteration 203. Team 1610612739 Game 21500466, Distance Threshold 4, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 115
+Final # of plays (distinct tids) in dataset: 23
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.004876760155794899
+Checking significant subtrajectories...
+Iteration 203 running time: 78 seconds
+--------------------------
+Iteration 204. Team 1610612739 Game 21500473, Distance Threshold 1.5, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 105
+Final # of plays (distinct tids) in dataset: 21
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 204 running time: 27 seconds
+--------------------------
+Iteration 205. Team 1610612739 Game 21500473, Distance Threshold 1.5, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 105
+Final # of plays (distinct tids) in dataset: 21
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 205 running time: 21 seconds
+--------------------------
+Iteration 206. Team 1610612739 Game 21500473, Distance Threshold 1.5, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 105
+Final # of plays (distinct tids) in dataset: 21
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 206 running time: 26 seconds
+--------------------------
+Iteration 207. Team 1610612739 Game 21500473, Distance Threshold 4, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 105
+Final # of plays (distinct tids) in dataset: 21
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.004213313421024929
+Checking significant subtrajectories...
+Iteration 207 running time: 113 seconds
+--------------------------
+Iteration 208. Team 1610612739 Game 21500473, Distance Threshold 4, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 105
+Final # of plays (distinct tids) in dataset: 21
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.004445935282437927
+Checking significant subtrajectories...
+Iteration 208 running time: 81 seconds
+--------------------------
+Iteration 209. Team 1610612739 Game 21500473, Distance Threshold 4, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 105
+Final # of plays (distinct tids) in dataset: 21
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.004445935282437927
+Checking significant subtrajectories...
+Iteration 209 running time: 66 seconds
+--------------------------
+Iteration 210. Team 1610612739 Game 21500291, Distance Threshold 1.5, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 50
+Final # of plays (distinct tids) in dataset: 10
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 210 running time: 14 seconds
+--------------------------
+Iteration 211. Team 1610612739 Game 21500291, Distance Threshold 1.5, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 50
+Final # of plays (distinct tids) in dataset: 10
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 211 running time: 10 seconds
+--------------------------
+Iteration 212. Team 1610612739 Game 21500291, Distance Threshold 1.5, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 50
+Final # of plays (distinct tids) in dataset: 10
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was FAIL
+Since the output delta was FAIL significant_subtrajectories.py will not be run.
+Iteration 212 running time: 9 seconds
+--------------------------
+Iteration 213. Team 1610612739 Game 21500291, Distance Threshold 4, Min Length 5, Downsampling 4...
+Final # of agent tids in dataset: 50
+Final # of plays (distinct tids) in dataset: 10
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.011854103343465046
+Checking significant subtrajectories...
+Iteration 213 running time: 24 seconds
+--------------------------
+Iteration 214. Team 1610612739 Game 21500291, Distance Threshold 4, Min Length 8, Downsampling 4...
+Final # of agent tids in dataset: 50
+Final # of plays (distinct tids) in dataset: 10
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.013858420333905995
+Checking significant subtrajectories...
+Iteration 214 running time: 23 seconds
+--------------------------
+Iteration 215. Team 1610612739 Game 21500291, Distance Threshold 4, Min Length 10, Downsampling 4...
+Final # of agent tids in dataset: 50
+Final # of plays (distinct tids) in dataset: 10
+Successfully completed data preprocessing
+Running MA stat dsm...
+Finished running MA stat dsm and the output delta was 0.0394134619620281
+Checking significant subtrajectories...
+Iteration 215 running time: 21 seconds
+Total running time: 11592 seconds
