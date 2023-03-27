@@ -30,6 +30,9 @@ To use the NBA data, you can use nba_data_preprocess.py to create trajectory_ma.
 
 However, if you have some other multi-agent trajectory dataset, you can create trajectory_ma.csv and point_ma.csv files with the same structure and use them instead as input to MA-Stat-DSM.
 
+![Alt text](https://drive.google.com/uc?id=1JbXWIkkOEkrzA8rhQ3GO2jVro8zJdkoj)
+
+
 ### nba_data_preprocess.py:
 | Argument | Type | Required | Default | Description |
 | --- | --- | --- | --- | --- |
