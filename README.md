@@ -87,3 +87,17 @@ To run as a batch process, where million2 is the name of the server where postgr
 ```
 sbatch -w million2 ./run.sh
 ```
+
+# Stat-DSM
+| Argument | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `-p`, `--pos_label` | `str` | No | `1` | The label for positive examples |
+| `-n`, `--neg_label` | `str` | No | `0` | The label for negative examples |
+| `-i`, `--max_it` | `int` | No | `1000` | The maximum number of iterations |
+| `-alpha`, `--alph` | `float` | No | `0.05` | The statistical significance level |
+| `-l`, `--min_l` | `int` | Yes |  | The minimum trajectory length |
+| `-d`, `--dist_threshold` | `float` | Yes |  | The distance threshold |
+| `-tr`, `--trajectory_table_name` | `str` | No | `trajectory` | The name of the trajectory table |
+| `-po`, `--point_table_name` | `str` | No | `point` | The name of the point table |
+| `-s`, `--seed` | `int` | No | `0` | The random seed for labels |
+
