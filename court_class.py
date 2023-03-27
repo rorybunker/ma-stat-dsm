@@ -17,7 +17,7 @@ class Court:
         #     Court.ts_value = table_name.rsplit('_', 1)[-1]
         
         self.table_name = table_name
-        table_name_suffix = table_name.rsplit('_', 5)[-5:]
+        table_name_suffix = table_name.rsplit('_', 6)[-6:]
         self.table_name_suffix = "_".join(map(str, table_name_suffix))
         self.court_path = court_path
         self.engine = engine
@@ -120,7 +120,6 @@ class Court:
             if not os.path.exists("figs"):
                 os.makedirs("figs")
             plt.savefig(f"figs/{self.table_name}_{traj_id}_{original_index}.jpg", format='jpg', dpi=300)
-            # plt.savefig(f"figs/{self.table_name}_{traj_id}.jpg", format='jpg', dpi=300)
             plt.show()
             plt.clf()
         
