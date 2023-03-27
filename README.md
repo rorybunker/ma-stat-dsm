@@ -32,7 +32,6 @@ However, if you have some other multi-agent trajectory dataset, you can create t
 
 ![Alt text](https://drive.google.com/uc?id=1JbXWIkkOEkrzA8rhQ3GO2jVro8zJdkoj)
 
-
 ### nba_data_preprocess.py:
 | Argument | Type | Required | Default | Description |
 | --- | --- | --- | --- | --- |
