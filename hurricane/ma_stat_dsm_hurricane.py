@@ -26,7 +26,7 @@ parser.add_argument('-d', '--dist_threshold', type=float, required=True, help='d
 args, _ = parser.parse_known_args()
 
 try:
-    conn = psycopg2.connect("dbname='hurricane' user='postgres' host='localhost' password='1234'")
+    conn = psycopg2.connect("dbname='postgres' user='postgres' host='localhost' password='1234'")
 except:
     print("I am unable to connect to the database")
 

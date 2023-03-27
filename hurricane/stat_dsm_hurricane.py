@@ -6,14 +6,14 @@ import sys
 sys.setrecursionlimit(10000)
 
 import os
-os.chdir("/Users/rorybunker/Google Drive/Research/Applying discriminative sub-trajectory mining to spatio-temporal data in sport/StatDSM")
+# os.chdir("/Users/rorybunker/Google Drive/Research/Applying discriminative sub-trajectory mining to spatio-temporal data in sport/StatDSM")
 
 import max_euclidean
 from scipy.special import comb
 
 
 try:
-    conn = psycopg2.connect("dbname='hurricane' user='postgres' host='localhost' password='1234'")
+    conn = psycopg2.connect("dbname='postgres' user='postgres' host='localhost' password='1234'")
 except:
     print("I am unable to connect to the database")
 
@@ -492,6 +492,7 @@ def main():
     list_permuted_dataset = []
     list_min_p = []
 
+    np.random.seed(0)
     for i in range(max_iter):
         # list_idx = np.random.permutation(len(original_list_label))
         list_idx = np.random.RandomState(seed=None).permutation(len(original_list_label))

@@ -17,10 +17,10 @@ table_definitions = [
     "CREATE TABLE IF NOT EXISTS hurricane_candidates (id serial PRIMARY KEY, candidate json)",
     "CREATE TABLE IF NOT EXISTS hurricane_discriminative_subtraj (index bigint, subtraj json, traj_id bigint, label character varying(5), CONSTRAINT hurricane_discriminative_subtraj_id PRIMARY KEY (index))",
     "CREATE EXTENSION IF NOT EXISTS postgis",
-    "CREATE INDEX IF NOT EXISTS hurricane_point_idx ON hurricane_point USING GIST (geom)",
-    "CREATE INDEX IF NOT EXISTS hurricane_point_ma_idx ON hurricane_point_ma USING GIST (geom)",
-    "CREATE INDEX IF NOT EXISTS hurricane_trajectory_idx ON hurricane_trajectory USING GIST (geom)",
-    "CREATE INDEX IF NOT EXISTS hurricane_trajectory_ma_idx ON hurricane_trajectory_ma USING GIST (geom)"
+    "CREATE INDEX hurricane_point_idx ON hurricane_point USING GIST (geom)",
+    "CREATE INDEX hurricane_point_ma_idx ON hurricane_point_ma USING GIST (geom)",
+    "CREATE INDEX hurricane_trajectory_idx ON hurricane_trajectory USING GIST (geom)",
+    "CREATE INDEX hurricane_trajectory_ma_idx ON hurricane_trajectory_ma USING GIST (geom)"
 ]
 
 for table_definition in table_definitions:
@@ -37,11 +37,12 @@ def run_sql_inserts(insert_script1, insert_script2, insert_script3):
     with open(insert_script2, 'r') as f:
         sql_script2 = f.read()
     with open(insert_script3, 'r') as f:
-        sql_script2 = f.read()
+        sql_script3 = f.read()
 
     # Execute the script
     c.execute(sql_script1)
     c.execute(sql_script2)
+    c.execute(sql_script3)
 
     # Commit the changes
     conn.commit()
