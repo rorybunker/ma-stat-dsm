@@ -89,6 +89,8 @@ sbatch -w million2 ./run.sh
 ```
 
 # Stat-DSM
+
+## stat_dsm.py
 | Argument | Type | Required | Default | Description |
 | --- | --- | --- | --- | --- |
 | `-p`, `--pos_label` | `str` | No | `1` | The label for positive examples |
