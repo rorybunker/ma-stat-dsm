@@ -45,11 +45,11 @@ If you have some other multi-agent trajectory dataset, you can create trajectory
 
 To create trajectory_ma.csv and point_ma.csv files that contain all Cleveland match trajectories (with all points):
 ```
-python data_preprocess.py -t 1610612739
+python nba_data_preprocess.py -t 1610612739
 ```
 To create trajectory_ma.csv and point_ma.csv files that contain all Golden State Warriors match trajectories (with every fourth point, i.e., a downsampling rate of 4):
 ```
-python data_preprocess.py -d 4 -t 1610612744
+python nba_data_preprocess.py -d 4 -t 1610612744
 ```
 ## MA-Stat-DSM
 ### ma_stat_dsm.py:  
