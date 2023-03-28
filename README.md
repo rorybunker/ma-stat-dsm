@@ -2,7 +2,8 @@
 This repository contains the code for MA-Stat-DSM, a multi-agent statistical discriminative sub-trajectory mining method for analyzing the trajectories of multiple agents. 
 The Multi-agent Stat-DSM (MA-Stat-DSM) method is demonstrated on tracking data from NBA basketball to determine sub-matrices, comprised of player (and/or ball) sub-trajectories each of the same length from a matrix representing one play, which discriminate between effective and ineffective plays.
 
-## Environment
+## Requirements
+### Create Environment
 The required environment can be created using the environment.yml file. If you are running on your local machine, you can use Anaconda, in which case it is recommended to install mamba:
 ```
 conda install mamba -n base -c conda-forge
@@ -12,7 +13,7 @@ Then, you can create the environment using the environment.yml file:
 mamba env create -n geoenv -f environment.yml
 ```
 
-## Create the PostgreSQL database
+### Create PostgreSQL Database
 Install PostgreSQL and create a PostgreSQL database with: dbname = 'postgres', user = 'postgres', host = 'localhost', password = 1234, and port = 5432. 
 
 Then, to create the required database tables, run
