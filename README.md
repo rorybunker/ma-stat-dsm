@@ -91,7 +91,7 @@ sbatch -w million2 ./run.sh
 ```
 
 # Stat-DSM
-
+Code for the original Stat-DSM method provided by Le Duy et al. (2020).
 ## stat_dsm.py
 | Argument | Type | Required | Default | Description |
 | --- | --- | --- | --- | --- |
@@ -105,3 +105,5 @@ sbatch -w million2 ./run.sh
 | `-po`, `--point_table_name` | `str` | No | `point` | The name of the point table |
 | `-s`, `--seed` | `int` | No | `0` | The random seed for labels |
 
+# References
+Le Duy, V. N., Sakuma, T., Ishiyama, T., Toda, H., Arai, K., Karasuyama, M., ... & Takeuchi, I. (2020). Stat-DSM: Statistically Discriminative Sub-Trajectory Mining With Multiple Testing Correction. IEEE Transactions on Knowledge and Data Engineering, 34(3), 1477-1488.
