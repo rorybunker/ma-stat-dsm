@@ -107,6 +107,6 @@ Code for the original Stat-DSM method provided by Le Duy et al. (2020).
 
 # References
 
-Bunker et al. (2023). Multi-agent statistical discriminative sub-trajectory mining and an application to NBA basketball. Preprint, April 2023.
+Bunker et al. (2023). Multi-agent statistical discriminative sub-trajectory mining and an application to NBA basketball. Preprint.
 
 Le Duy et al (2020). Stat-DSM: Statistically Discriminative Sub-Trajectory Mining With Multiple Testing Correction. IEEE Transactions on Knowledge and Data Engineering, 34(3), 1477-1488.
