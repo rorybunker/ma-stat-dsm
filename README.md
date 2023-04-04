@@ -106,4 +106,7 @@ Code for the original Stat-DSM method provided by Le Duy et al. (2020).
 | `-s`, `--seed` | `int` | No | `0` | The random seed for labels |
 
 # References
-Le Duy, V. N., Sakuma, T., Ishiyama, T., Toda, H., Arai, K., Karasuyama, M., ... & Takeuchi, I. (2020). Stat-DSM: Statistically Discriminative Sub-Trajectory Mining With Multiple Testing Correction. IEEE Transactions on Knowledge and Data Engineering, 34(3), 1477-1488.
+
+Bunker et al. (2023). Multi-agent statistical discriminative sub-trajectory mining and an application to NBA basketball. Preprint, April 2023.
+
+Le Duy et al (2020). Stat-DSM: Statistically Discriminative Sub-Trajectory Mining With Multiple Testing Correction. IEEE Transactions on Knowledge and Data Engineering, 34(3), 1477-1488.
