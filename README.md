@@ -25,7 +25,7 @@ python create_postgresql_db.py
 ## Data
 
 ### NBA Dataset
-In the (paper)[!https://www.researchgate.net/profile/Rory-Bunker/publication/370062987_Multi-agent_statistical_discriminative_sub-trajectory_mining_and_an_application_to_NBA_basketball/links/643d48bee881690c4bdd1b99/Multi-agent-statistical-discriminative-sub-trajectory-mining-and-an-application-to-NBA-basketball.pdf], trajectories for five agents (ball, shooter, shooter defender, last passer, last passer defender) from 600 NBA games in the 2015/2016 season were used.
+In the ![paper](https://www.researchgate.net/profile/Rory-Bunker/publication/370062987_Multi-agent_statistical_discriminative_sub-trajectory_mining_and_an_application_to_NBA_basketball/links/643d48bee881690c4bdd1b99/Multi-agent-statistical-discriminative-sub-trajectory-mining-and-an-application-to-NBA-basketball.pdf), trajectories for five agents (ball, shooter, shooter defender, last passer, last passer defender) from 600 NBA games in the 2015/2016 season were used.
 (Source: this dataset_as_a_file_600_games.pkl file was generated based  ![this code](https://github.com/keisuke198619/team_representation#for-stat-dsm-preprocessing), which uses the basketball movement data from https://github.com/rajshah4/BasketballData)
 
 To use the NBA data, you can use nba_data_preprocess.py to create trajectory_ma.csv and point_ma.csv files, which are then used as input to MA-Stat-DSM.
