@@ -25,13 +25,16 @@ python create_postgresql_db.py
 ## Data
 
 ### NBA Dataset
-In the paper (https://www.researchgate.net/publication/370062987), trajectories for five agents (ball, shooter, shooter defender, last passer, last passer defender) from 600 NBA games in the 2015/2016 season were used.
-(Source: this dataset_as_a_file_600_games.pkl file was generated based  ![this code](https://github.com/keisuke198619/team_representation#for-stat-dsm-preprocessing), which uses the basketball movement data from https://github.com/rajshah4/BasketballData)
+In the paper (Bunker et al., 2023), trajectories for five agents (ball, shooter, shooter defender, last passer, last passer defender) from 600 NBA games in the 2015/2016 season were used.
 
-To use the NBA data, you can use nba_data_preprocess.py to create trajectory_ma.csv and point_ma.csv files, which are then used as input to MA-Stat-DSM.
+Download the NBA dataset from Google Drive: https://drive.google.com/file/d/19PZPfg-EfXzcsGO6kr2fo-IuwUw9M5-q/view?usp=sharing
+
+(This dataset was created/preprocessed from https://github.com/rajshah4/BasketballData)
+
+To use the NBA dataset, you can use nba_data_preprocess.py to create trajectory_ma.csv and point_ma.csv files, which are then input to MA-Stat-DSM.
 
 ### Other Dataset
-If you have some other multi-agent trajectory dataset, you can create trajectory_ma.csv and point_ma.csv files that have the same structure and use them instead as input to MA-Stat-DSM.
+If you have another multi-agent trajectory dataset, you can create trajectory_ma.csv and point_ma.csv files with the same structure and use them instead as input to MA-Stat-DSM.
 
 ![Alt text](https://drive.google.com/uc?id=1JbXWIkkOEkrzA8rhQ3GO2jVro8zJdkoj)
 
