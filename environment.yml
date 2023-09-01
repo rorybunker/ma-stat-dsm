@@ -20,4 +20,5 @@ dependencies:
   - ca-certificates
   - certifi
   - openssl
+  - gdown
 prefix: /opt/anaconda3/envs/geoenv
