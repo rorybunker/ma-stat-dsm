@@ -25,20 +25,15 @@ python create_postgresql_db.py
 ## Data
 
 ### NBA Dataset
-In the paper (Bunker et al., 2023), trajectories for five agents (ball, shooter, shooter defender, last passer, last passer defender) from 600 NBA games in the 2015/2016 season were used.
-
-Download the NBA dataset from Google Drive: https://drive.google.com/file/d/19PZPfg-EfXzcsGO6kr2fo-IuwUw9M5-q/view?usp=sharing
-
-(This dataset was created/preprocessed from https://github.com/rajshah4/BasketballData)
-
-To use the NBA dataset, you can use nba_data_preprocess.py to create trajectory_ma.csv and point_ma.csv files, which are then input to MA-Stat-DSM.
-
-### Other Dataset
-If you have another multi-agent trajectory dataset, you can create trajectory_ma.csv and point_ma.csv files with the same structure and use them instead as input to MA-Stat-DSM.
-
-![Alt text](https://drive.google.com/uc?id=1JbXWIkkOEkrzA8rhQ3GO2jVro8zJdkoj)
+Download the NBA dataset from [Google Drive](https://drive.google.com/file/d/19PZPfg-EfXzcsGO6kr2fo-IuwUw9M5-q/view?usp=sharing) by running the following command:
+```
+gdown --id 19PZPfg-EfXzcsGO6kr2fo-IuwUw9M5-q -O dataset_as_a_file_600_games.pkl
+```
+(This dataset was created/preprocessed from https://github.com/rajshah4/BasketballData and considers the trajectories for five agents -- ball, shooter, shooter defender, last passer, last passer defender -- from 600 NBA games in the 2015/2016 season.)
 
 ### nba_data_preprocess.py:
+Use nba_data_preprocess.py to create the trajectory_ma.csv and point_ma.csv files, which are input to MA-Stat-DSM.
+
 | Argument | Type | Required | Default | Description |
 | --- | --- | --- | --- | --- |
 | `-y`, `--label` | `str` | Optional | `effective` | Type of label (`effective`, `score`, or `attempt`) |
@@ -56,6 +51,11 @@ To create trajectory_ma.csv and point_ma.csv files that contain all Golden State
 ```
 python nba_data_preprocess.py -d 4 -t 1610612744
 ```
+
+### Other Dataset
+Rather than using the NBA dataset, if you have another multi-agent trajectory dataset you'd like to apply MA-Stat-DSM to, you can create trajectory_ma.csv and point_ma.csv files with the same structure and use them instead as input to MA-Stat-DSM.
+![Alt text](https://drive.google.com/uc?id=1JbXWIkkOEkrzA8rhQ3GO2jVro8zJdkoj)
+
 ## MA-Stat-DSM
 ### ma_stat_dsm.py:  
 | Argument | Type | Required | Default | Description |
