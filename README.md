@@ -94,7 +94,7 @@ sbatch -w million2 ./run.sh
 ```
 
 # Stat-DSM
-Code for the original Stat-DSM method provided by Le Duy et al. (2020).
+Code for the original Stat-DSM method provided by Le Duy et al. (2020). The Stat-DSM code is also available on his repository [here](https://github.com/vonguyenleduy/Stat-DSM) 
 ## stat_dsm.py
 | Argument | Type | Required | Default | Description |
 | --- | --- | --- | --- | --- |
