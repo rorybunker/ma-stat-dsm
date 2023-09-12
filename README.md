@@ -17,6 +17,11 @@ mamba env create -n geoenv -f environment.yml
 ### Create PostgreSQL Database
 Install PostgreSQL and create a PostgreSQL database with: dbname = 'postgres', user = 'postgres', host = 'localhost', password = 1234, and port = 5432. 
 
+Once Postgres has been installed, create the PostGIS extension:
+```
+CREATE EXTENSION postgis;
+```
+
 Then, to create the required database tables, run
 ```
 python create_postgresql_db.py
