@@ -120,7 +120,7 @@ def create_candidates_table():
     cur.execute(sql)
     conn.commit()
 
-    conn.close()
+
 
 def create_discriminative_subtraj_table():
     sql = """create table discriminative_subtraj (
