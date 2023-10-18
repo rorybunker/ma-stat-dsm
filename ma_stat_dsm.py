@@ -147,11 +147,18 @@ def find_length_k_potential_neighbor(trajectory_tid, length_k_sub_trajectory, po
 def confirm_neighbor_hausdorff(length_k_sub_trajectory, list_potential_neighbor, distance_threshold):
     list_neighbor = []
 
+    n_agent = np.array(length_k_sub_trajectory).shape[0]
+    minimum_l = np.array(length_k_sub_trajectory).shape[1]
+    num_coords = np.array(length_k_sub_trajectory).shape[2]
+
     for potential_neighbor in list_potential_neighbor:
-        max_distance = calculate_hausdorff_distance(np.array(length_k_sub_trajectory).reshape(np.array(length_k_sub_trajectory).shape[0]*np.array(length_k_sub_trajectory).shape[1], np.array(length_k_sub_trajectory).shape[2]),potential_neighbor[1], args.hausdorff_base_dist)
-        
-        if max_distance <= distance_threshold:
-            list_neighbor.append(potential_neighbor[0])
+            # Reshapes the 3D array into a 2D array where each row represents a point in space. Total of number of agents * min trajectory length points with 2 coordinates each.
+            # Allows to work with a consistent 2D array format, even if the individual trajectories have varying lengths in oder to calculate Hausdorff distance
+            length_k_sub_trajectory_flattened = np.array(length_k_sub_trajectory).reshape(n_agent*minimum_l, num_coords)
+            max_distance = calculate_hausdorff_distance(length_k_sub_trajectory_flattened, potential_neighbor[1], args.hausdorff_base_dist)
+
+            if max_distance <= distance_threshold:
+                list_neighbor.append(potential_neighbor[0])
 
     return list_neighbor
 
@@ -369,7 +376,7 @@ def ma_stat_dsm(trajectory_table, point_table, candidate_table, original_list_la
 
         if trajectory_length < min_length:
             continue
-
+        
         for i in range(trajectory_length - min_length + 1):
             length_k_sub_trajectory = [[] for a in range(num_agents)]
             
@@ -380,7 +387,7 @@ def ma_stat_dsm(trajectory_table, point_table, candidate_table, original_list_la
             
             list_neighbor = confirm_neighbor_hausdorff(length_k_sub_trajectory, potential_neighbor,
                                                                 distance_threshold)
-
+            
             if len(list_neighbor) == 0:
                 continue
 
@@ -408,7 +415,7 @@ def ma_stat_dsm(trajectory_table, point_table, candidate_table, original_list_la
             current_list_neighbor_tid = list_neighbor_tid
 
             dict_neighbor_full_trajectory_ma = get_neighbor_ma_trajectories(trajectory_table, current_list_neighbor_tid)
-
+            
             root = []
             root.append([[trajectory_tid, candidate_start_idx, candidate_end_idx], current_list_neighbor_tid])
 
@@ -437,7 +444,7 @@ def ma_stat_dsm(trajectory_table, point_table, candidate_table, original_list_la
 
                     dist = calculate_hausdorff_distance([trajectory[a][candidate_end_idx] for a in range(num_agents)],
                                                 [dict_neighbor_full_trajectory_ma[(neighbor_tid,a)][new_neighbor_end_idx] for a in range(num_agents)], args.hausdorff_base_dist)
-
+                    
                     if dist <= distance_threshold:
                         list_new_candidate_neighbor.append(
                             [neighbor_tid, new_neighbor_start_idx, new_neighbor_end_idx])
@@ -468,7 +475,7 @@ def ma_stat_dsm(trajectory_table, point_table, candidate_table, original_list_la
                 current_list_neighbor_tid = list_new_neighbor_tid
 
                 root.append([[trajectory_tid, candidate_start_idx, candidate_end_idx], current_list_neighbor_tid])
-
+                
             list_tree.append({"candidate": json.dumps({'candidates': root})})
 
         insert_list_tree(candidate_table, list_tree)
@@ -479,7 +486,7 @@ def ma_stat_dsm(trajectory_table, point_table, candidate_table, original_list_la
     list_min_p_value = list_min_p[:]
     list_min_p_value.sort()
     idx = int(alpha * max_iter)
-
+    
     while idx > 0:
         if list_min_p_value[idx - 1] < list_min_p_value[idx]:
             return list_min_p_value[idx - 1]
@@ -516,12 +523,12 @@ def main():
 
     positive_number = count_label_number(trajectory_table, positive_label)
     negative_number = count_label_number(trajectory_table, negative_label)
-
+    
     original_list_label = get_list_label(trajectory_table)
     original_list_label = np.array(original_list_label)
     original_list_label = original_list_label[:, 0].tolist()
     original_list_label = np.array(original_list_label)
-
+    
     list_permuted_dataset = []
     list_min_p = []
 
@@ -536,7 +543,7 @@ def main():
     list_phase_tid = get_list_phase_tid(trajectory_table, len_agent_ids)
     list_phase_tid = np.array(list_phase_tid)
     list_phase_tid = list_phase_tid[:, 0].tolist()
-
+    
     parameter = {
         "positive_label": positive_label,
         "negative_label": negative_label,
@@ -549,7 +556,7 @@ def main():
         "negative_number": negative_number,
         "num_agents": len_agent_ids
     }
-
+    
     if len_agent_ids == 1:
         delta = stat_dsm.stat_dsm(trajectory_table, point_table, candidate_table, original_list_label, list_permuted_dataset, list_min_p, list_phase_tid, parameter)
     elif len_agent_ids > 1:
