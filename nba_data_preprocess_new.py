@@ -160,7 +160,7 @@ def main():
     # data = [feature, label, index, game_id, quarter]
     # Position(23:OFxy,DFxy,Ballxyz), player_ID(10), Clock, ShotClock, Ball_OF, Ball_Hold
     # label data is in the format [label_i,t1,t2,shot attempt, score, 2 or 3 point,shooterID,passerID,team_ID]
-    # index: corresponding to the file at root\nba_attack2\nba_datalength.csv
+    # index: corresponding to the file at root\nba_attack2\nba_datalength.csv or ..\meta_data\
     
     trajectories, label, indices, game_id, quarter = np.array(data[0], dtype=object), np.array(data[1], dtype=object), np.array(data[2].astype(int), dtype=object), np.array(data[3].astype(int), dtype=object), np.array(data[4].astype(int), dtype=object)
     trajectories_df, label_df, game_id_df, quarter_df = [pd.DataFrame(data, index=indices) for data in (trajectories, label, game_id, quarter)]
@@ -204,10 +204,19 @@ def main():
 
     # create dataframe for the specified agents
     agent_df_list = create_agent_ma_df(combined_df)
+    agent_df_list = agent_df_list.sort_values(by=['tid', 'pid', 'aid'])
+
+    # Drop the existing 'id' column
+    # agent_df_list = agent_df_list.drop(columns=['id'])
+
+    # # Reset the index and create a new 'id' column with sequential numbers
+    # agent_df_list.reset_index(drop=True, inplace=True)
+    # agent_df_list['id'] = agent_df_list.index + 1
+
     label_only_df = combined_df['label']
     
     agent_df_list = agent_df_list.merge(label_only_df, left_on='play_index', right_index=True, how='left')
-    
+
     point_ma_df = pd.DataFrame({
         'id': agent_df_list.index,
         'aid': agent_df_list['aid'],
@@ -217,6 +226,12 @@ def main():
         'geom': agent_df_list.apply(lambda row: Point(row['x'], row['y']), axis=1)
     })
 
+    point_ma_df['label'] = point_ma_df['label'].astype(int)
+    # point_ma_df['label'] = point_ma_df['label'].astype(str)
+    point_ma_df = point_ma_df.drop(columns=['id'])
+    point_ma_df.reset_index(drop=True, inplace=True)
+    point_ma_df['id'] = point_ma_df.index
+    point_ma_df = point_ma_df[['id', 'aid', 'tid', 'pid', 'label', 'geom']]
     point_ma_df.to_csv('point_ma.csv', index=False)
 
     # Group by 'tid' and 'aid', aggregate 'geom' points as a list
@@ -229,7 +244,8 @@ def main():
     traj_ma_df = grouped_points[['aid', 'tid', 'label', 'geom']]
 
     # Convert label to string in traj_ma_df
-    traj_ma_df['label'] = traj_ma_df['label'].astype(str)
+    traj_ma_df['label'] = traj_ma_df['label'].astype(int)
+    # traj_ma_df['label'] = traj_ma_df['label'].astype(str)
 
     # Add 'id' column and set it as the first column
     traj_ma_df.insert(0, 'id', range(len(traj_ma_df)))
